@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj": {}
+    "C:\\Users\\jmman\\Source\\Repos\\2201-CSBS-Bugit\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj": {
+    "C:\\Users\\jmman\\Source\\Repos\\2201-CSBS-Bugit\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "C:\\Users\\jmman\\Source\\Repos\\2201-CSBS-Bugit\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
-        "outputPath": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\obj\\",
+        "projectPath": "C:\\Users\\jmman\\Source\\Repos\\2201-CSBS-Bugit\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\jmman\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jmman\\Source\\Repos\\2201-CSBS-Bugit\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jmman\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -43,12 +45,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.2.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -59,15 +55,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
