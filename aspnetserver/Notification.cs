@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace aspnetserver
+﻿namespace aspnetserver
 {
     public class Notification
     {
         private string[] urgencies;
         public string message { get; set; }
-        public Notification()
-        {
-            
-        }
+        public int urgency { get; set; }
 
-        public Notification(string m)
+        public Notification(string m, int u)
         {
             message = m;
+            urgency = u;
         }
 
         public string GetUrgency(int id)

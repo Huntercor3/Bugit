@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace aspnetserver
+﻿namespace aspnetserver
 {
     public class Role
     {
         private string[] roles;
-        public Role()
+        public int roleId { get; set; }
+        public Role(int id)
         {
-            
+            roleId = id;
         }
 
-        public string GetRole(int id)
+        public string GetRole()
         {
-            return roles[id];
+            return roles[roleId];
         }
     }
 }

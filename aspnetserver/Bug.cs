@@ -9,12 +9,8 @@ namespace aspnetserver
         public string software { get; set; }
         public int creator { get; set; }
         public DateTime timeCreated { get; set; }
-        public List<string> comments;
+        public List<string> comments = new List<string>();
         public Category category;
-        public Bug()
-        {
-            
-        }
 
         public Bug(int b, string s, int c, DateTime d, Category cat)
         {

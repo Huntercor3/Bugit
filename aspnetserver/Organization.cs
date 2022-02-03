@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
-
-namespace aspnetserver
+﻿namespace aspnetserver
 {
     public class Organization
     {
         public int organizationId { get; set; }
-        private List<Project> projects;
-        public Organization()
-        {
-            
-        }
+        public string organizationName { get; set; }
+        private List<Project> projects = new List<Project>();
         
-        public Organization(int id)
+        public Organization(int id, string name)
         {
             organizationId = id;
+            organizationName = name;
         }
 
         public void AddProject(Project p)

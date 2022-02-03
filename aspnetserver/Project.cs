@@ -10,15 +10,14 @@ namespace aspnetserver
     public class Project
     {
         public int projectId { get; set; }
-        private List<User> users;
-        private List<Bug> bugs;
-        public Project()
-        {
-            
-        }
-        public Project(int id)
+        public string projectName { get; set; }
+        private List<User> users = new List<User>();
+        private List<Bug> bugs = new List<Bug>();
+
+        public Project(int id, string name)
         {
             projectId = id;
+            projectName = name;
         }
 
         public void AddUser(User u)
