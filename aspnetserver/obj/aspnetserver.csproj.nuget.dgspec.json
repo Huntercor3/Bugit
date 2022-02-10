@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj": {}
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj": {
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\aspnetserver.csproj",
+        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
         "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
-        "outputPath": "D:\\aspnetReact\\ASPNetCoreReact\\aspnetserver\\obj\\",
+        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
