@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
     SwaggerGenOptionsExtensions.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Bugit Web Api", Version = "v1" });
 });
 
-var app = builder.Build();
+var  app = builder.Build();
 
 
 
