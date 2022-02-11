@@ -13,7 +13,17 @@ import { Account } from './components/Account'
 export default function App() {
   return (
     <div>
-      <h1>Hello World. Hunter is bad</h1>
+      <Routes>
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<Signup />} />
+        <Route path='/' element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='about' element={<About />} />
+          <Route path='contact' element={<Contact />} />
+          <Route path='account' element={<Account />} />
+          <Route path='*' element={<NoMatch />} />
+        </Route>
+      </Routes>
     </div>
   )
 }

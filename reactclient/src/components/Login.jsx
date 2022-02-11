@@ -1,28 +1,19 @@
 import React from 'react'
 import './Login.css'
+import BugItLogo from './BugItLogo.jpg'
 
 export const Login = () => (
   <React.Fragment>
-    <head>
-      {/* <a rel='icon' href='../BugItLogo.png' sizes='32x32' type='image/png'></a> */}
-      <img src='/BugItLogo.jpg' alt='Logo' width='50px' height='50px' />
-    </head>
     <body class='text-center'>
       <main class='form-signin'>
         <form>
-          {/* <img
-            rel='icon'
-            href='.../src/BugItLogo.png'
-            alt='bugitlogo'
-            sizes='16x16'
-            type='image/png'
-          ></img> */}
           <img
+            class='logo'
             rel='icon'
-            src='/#BugItLogo.jpg'
+            src={BugItLogo}
             alt='Logo'
-            width='300px'
-            height='30px'
+            width='100px'
+            height='100px'
           />
           <h1 class='h3 mb-3 fw-normal'>Please Sign In</h1>
           <div class='form-floating'>
