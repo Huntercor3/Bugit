@@ -15,7 +15,7 @@ namespace aspnetserver
             builder.Password = "CSBS@2201";
             builder.InitialCatalog = "bugit-server";
         }
-        public static async Task<List<User>> GetUsers()
+        public static async Task<List<User>> GetAllUsers()
         {
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -37,6 +37,78 @@ namespace aspnetserver
                 }
             }
             return users;
+        }
+
+        public static async Task<List<Bug>> GetAllBugs()
+        {
+            List<Bug> bugs = new List<Bug>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Bugs";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (DateTime)record[3], new Category((int)record[4]));
+                            bugs.Add(b);
+                        }
+                    }
+                }
+            }
+            return bugs;
+        }
+
+        public static async Task<List<Project>> GetAllProjects()
+        {
+            List<Project> projects = new List<Project>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Projects";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Project p = new Project((int)record[0], (string)record[1]);
+                            projects.Add(p);
+                        }
+                    }
+                }
+            }
+            return projects;
+        }
+
+        public static async Task<List<Organization>> GetAllOrganizations()
+        {
+            List<Organization> organizations = new List<Organization>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Organizations";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Organization o = new Organization((int)record[0], (string)record[1]);
+                            organizations.Add(o);
+                        }
+                    }
+                }
+            }
+            return organizations;
         }
     }
 }

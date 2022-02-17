@@ -30,7 +30,7 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 app.UseHttpsRedirection();
 //var person = Endpoints.
 
-app.MapGet("/get-all-users", async () => await Endpoints.GetUsers())
+app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
     .WithTags("User Endpoints");
 
 app.Run();
