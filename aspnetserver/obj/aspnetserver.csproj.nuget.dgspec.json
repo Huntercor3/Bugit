@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
+    "C:\\Users\\kindb\\OneDrive - Full Sail University\\BugIt\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
+    "C:\\Users\\kindb\\OneDrive - Full Sail University\\BugIt\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "C:\\Users\\kindb\\OneDrive - Full Sail University\\BugIt\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
-        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
+        "projectPath": "C:\\Users\\kindb\\OneDrive - Full Sail University\\BugIt\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\kindb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kindb\\OneDrive - Full Sail University\\BugIt\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\kindb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,13 +45,53 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[4.1.0, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.2, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.15.1, )"
+            },
+            "System.Net.Http.Json": {
+              "target": "Package",
+              "version": "[6.0.2-mauipre.1.22102.15, )"
             }
           },
           "imports": [
@@ -71,7 +112,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
