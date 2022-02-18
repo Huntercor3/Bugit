@@ -1,7 +1,6 @@
 html,
 body {
   height: 100%;
-  width: 100%;
 }
 
 body {
@@ -12,17 +11,18 @@ body {
   background-color: #ffffff;
 }
 
+.logo {
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
 .signuplabel {
   padding-bottom: 5px;
 }
 
-.BugItLogo {
-  padding-bottom: 5px;
-}
-
 .form-signin {
-  width: 100%;
-  max-width: 400px;
+  width: 30%;
+  max-width: 40%;
   padding-left: 5%;
   padding-right: 5%;
   margin: auto;

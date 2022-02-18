@@ -1,0 +1,53 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* display: flex; */
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #ffffff;
+}
+
+.logo {
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.signuplabel {
+  padding-bottom: 5px;
+}
+
+.form-signup {
+  max-width: 50%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin: auto;
+}
+
+.form-signup .checkbox {
+  font-weight: 400;
+}
+
+.form-signup .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signup input[type='email'] {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.form-signup input[type='password'] {
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #4abdac !important;
+}

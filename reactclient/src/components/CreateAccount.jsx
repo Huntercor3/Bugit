@@ -1,8 +1,8 @@
 import React from 'react'
-import './CSS/Login.css'
+import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
 
-export const Account = () => (
+export const CreateAccount = () => (
   <React.Fragment>
     <body>
       <div class='container'>
@@ -20,7 +20,6 @@ export const Account = () => (
                   width='100px'
                   height='100px'
                 />
-                <h1 class='h3 mb-3 fw-normal text-center'>Your Account</h1>
                 <div class='col-6'>
                   <label for='inputFirstName' class='form-label'>
                     First Name
@@ -83,7 +82,7 @@ export const Account = () => (
                     class='w-50 btn btn-md btn-primary'
                     type='submit'
                   >
-                    Save
+                    Sign Up
                   </a>
                 </div>
               </div>

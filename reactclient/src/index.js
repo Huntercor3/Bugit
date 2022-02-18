@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import './components/sidebar.css'
+import './components/CSS/sidebar.css'
 
 import { BrowserRouter } from 'react-router-dom'
 
