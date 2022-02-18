@@ -10,7 +10,8 @@ function Register(props) {
     Hardware: "",
     Role: "",
   });
-  const apiUrl = "http://localhost:1680/api/employee/InsertEmployee";
+  const apiUrl =
+    "https://purple-ground-019dc9c0f.1.azurestaticapps.net/api/register";
   const Registration = (e) => {
     e.preventDefault();
     debugger;
