@@ -15,6 +15,7 @@ namespace aspnetserver
             builder.Password = "CSBS@2201";
             builder.InitialCatalog = "bugit-server";
         }
+
         public static async Task<List<User>> GetUsers()
         {
             List<User> users = new List<User>();
@@ -30,7 +31,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]));
+                            User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]), (string)record[7]);
                             users.Add(u);
                         }
                     }

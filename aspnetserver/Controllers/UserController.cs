@@ -9,7 +9,7 @@ using System.Text;
 namespace aspnetserver.Controllers
 {
     // https://purple-ground-019dc9c0f.1.azurestaticapps.net/api/user
-    [Route("api/user/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -32,8 +32,11 @@ namespace aspnetserver.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] User user)
         {
+            string firstName = user.firstName;
+            string lastName = user.lastName;
             string email = user.email;
             string password = user.password;
+            string phone = user.phoneNumber;
 
             IdentityUser identityUser = new IdentityUser
             {
