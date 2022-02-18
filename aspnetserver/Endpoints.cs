@@ -7,7 +7,7 @@ namespace aspnetserver
     {
         private static SqlConnectionStringBuilder builder;
 
-        public static void Init()
+        static Endpoints()
         {
             builder = new SqlConnectionStringBuilder();
             builder.DataSource = "bugit-server.database.windows.net";

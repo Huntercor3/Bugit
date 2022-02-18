@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
+    "C:\\Users\\jmman\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
+    "C:\\Users\\jmman\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "C:\\Users\\jmman\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
-        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
+        "projectPath": "C:\\Users\\jmman\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\jmman\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jmman\\Source\\Repos\\Bugit\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jmman\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
