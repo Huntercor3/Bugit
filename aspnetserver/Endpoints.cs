@@ -116,7 +116,7 @@ namespace aspnetserver
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString();
+                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString() + " AND dbo.Users.UserId = dbo.ProjectUsers.UserId";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -126,20 +126,8 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            String statement = "SELECT * FROM dbo.Users WHERE UserId=" + (string)record[1];
-                            using(SqlCommand secondCommand = new SqlCommand(statement, connection))
-                            {
-                                connection.Open();
-                                using(SqlDataReader reader2 = secondCommand.ExecuteReader())
-                                {
-                                    while(await reader2.ReadAsync())
-                                    {
-                                        IDataRecord record2 = (IDataRecord)reader2;
-                                        User u = new User((int)record2[0], (string)record2[1], (string)record2[2], (string)record2[3], (string)record2[4], (string)record2[5], new Role((int)record2[6]));
-                                        users.Add(u);
-                                    }
-                                }
-                            }
+                            User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]));
+                            users.Add(u);
                         }
                     }
                 }
