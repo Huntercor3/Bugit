@@ -134,5 +134,76 @@ namespace aspnetserver
             }
             return users;
         }
+
+        public static async Task<List<Bug>> GetBugsInProject(int projectId)
+        {
+            List<Bug> bugs = new List<Bug>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Bugs JOIN dbo.ProjectBugs WHERE ProjectId=" + projectId.ToString() + " AND dbo.Bugs.BugId = dbo.ProjectUsers.BugId";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (DateTime)record[3], new Category((int)record[6]));
+                            bugs.Add(b);
+                        }
+                    }
+                }
+            }
+            return bugs;
+        }
+
+        public static async Task<List<Project>> GetProjectInOrganization(int organizationId)
+        {
+            List<Project> projects = new List<Project>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Projects JOIN dbo.OrganizationProjects WHERE OrganizationId=" + organizationId.ToString() + " AND dbo.Projects.ProjectId = dbo.OrganizationProjects.ProjectId";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Project p = new Project((int)record[0], (string)record[1]);
+                            projects.Add(p);
+                        }
+                    }
+                }
+            }
+            return projects;
+        }
+
+        public static async Task<List<String>> GetCommentsForBug(int bugId)
+        {
+            List<String> comments = new List<String>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            comments.Add((string)record[0]);
+                        }
+                    }
+                }
+            }
+            return comments;
+        }
     }
 }
