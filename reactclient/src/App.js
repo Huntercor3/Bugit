@@ -10,7 +10,7 @@ import { Login } from "./components/Login";
 import { CreateAccount } from "./components/CreateAccount";
 import NewCreateAccount from "./components/NewCreateAccount";
 import { Account } from "./components/Account";
-import { Login1 } from "./components/Login1";
+import Login1 from "./components/Login1";
 
 export default function App() {
   return (
