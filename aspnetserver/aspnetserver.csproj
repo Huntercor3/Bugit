@@ -27,8 +27,4 @@
     <PackageReference Include="System.Net.Http.Json" Version="6.0.2-mauipre.1.22102.15" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
