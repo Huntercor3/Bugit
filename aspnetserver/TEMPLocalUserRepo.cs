@@ -11,7 +11,7 @@
                 EmailAddress = "temp@temp.org",
                 GivenName = "Tempname",
                 Surname = "Tempsurname",
-                Role = "Admin"
+                Role = "1"
             }
         };
     }

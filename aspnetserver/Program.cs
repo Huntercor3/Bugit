@@ -48,8 +48,10 @@ builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
 
 /// <Login>
 builder.Services.AddSingleton<IUserService, UserService>();
+// Setting up authentication for the app using JwtBearer
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
+    // Setting token parameters, the Jwt values will need to be updated for deployment.
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateActor = true,
@@ -61,6 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+// Telling the api the use Authorization
 builder.Services.AddAuthorization();
 /// </Login>
 
@@ -83,9 +86,11 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 app.UseRouting();
 
 /// <MoreLogin>
+// Telling the api to use Authentication and Authorization services
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Login feature
 app.MapPost("/login",
     (UserLogin user, IUserService service) => Login(user, service));
 
@@ -125,6 +130,17 @@ IResult Login(UserLogin user, IUserService service)
     }
     return Results.BadRequest("Invalid user credentials");
 }
+
+// Example function to test authentication works
+IResult ListUsers(IUserService service)
+{
+    var users = service.ListUsers();
+    return Results.Ok(users);
+}
+app.MapGet("/listUsers",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+(IUserService service) => ListUsers(service))
+    .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
 /// </MoreLogin>
 
 app.MapGet("/get-all-users",

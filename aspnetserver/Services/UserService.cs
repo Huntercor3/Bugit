@@ -12,5 +12,11 @@ namespace aspnetserver.Services
 
             return user;
         }
+
+        public List<UserAuth> ListUsers()
+        {
+            var users = TEMPLocalUserRepo.Users;
+            return users;
+        }
     }
 }
