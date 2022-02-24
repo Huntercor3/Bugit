@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
+DBHelper dbHelper = new DBHelper();
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -22,6 +24,8 @@ builder.Services.AddCors(options =>
     .AllowAnyHeader());
 });
 
+Debug.Write("Hello ");
+Debug.Write(builder.Configuration.GetConnectionString("ConnectionStrings"));
 builder.Services.AddDbContext<AppDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 

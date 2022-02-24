@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -32,6 +33,7 @@ namespace aspnetserver.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] User user)
         {
+            Debug.Write("Beeopboop");
             string firstName = user.firstName;
             string lastName = user.lastName;
             string email = user.email;
