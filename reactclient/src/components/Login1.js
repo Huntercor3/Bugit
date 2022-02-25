@@ -58,7 +58,7 @@ function Login1(props) {
                           value={user.Password}
                           onChange={onChange}
                           name="Password"
-                          id="DepPasswordartment"
+                          id="Password"
                           placeholder="Password"
                         />
                       </div>
