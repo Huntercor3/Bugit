@@ -2,55 +2,18 @@ import { render } from '@testing-library/react'
 import React from 'react'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
-const bugsInfo = [
-  {
-    software: 'BugIt',
-    name: 'Jonas',
-    date: 'never',
-    type: 'Optimize',
-    status: 'In Progress',
-    priority: 'Low',
-    estimatedTime: 'trust',
-  },
-  {
-    software: 'BugIt',
-    name: 'Hunter',
-    date: 'never',
-    type: 'Optimize',
-    status: 'In Progress',
-    priority: 'Low',
-    estimatedTime: 'trust',
-  },
-  {
-    software: 'BugIt',
-    name: 'Jarod',
-    date: 'never',
-    type: 'Optimize',
-    status: 'In Progress',
-    priority: 'Low',
-    estimatedTime: 'trust',
-  },
-  {
-    software: 'BugIt',
-    name: 'Ben',
-    date: 'never',
-    type: 'Optimize',
-    status: 'In Progress',
-    priority: 'Low',
-    estimatedTime: 'trust',
-  },
-]
+import Data from './data.json'
 
-function renderBug(bug, index) {
+function readJson(bugs, index) {
   return (
     <tr key={index}>
-      <td>{bug.software}</td>
-      <td>{bug.name}</td>
-      <td>{bug.date}</td>
-      <td>{bug.type}</td>
-      <td>{bug.status}</td>
-      <td>{bug.priority}</td>
-      <td>{bug.estimatedTime}</td>
+      <td>{bugs.software}</td>
+      <td>{bugs.name}</td>
+      <td>{bugs.date}</td>
+      <td>{bugs.type}</td>
+      <td>{bugs.status}</td>
+      <td>{bugs.priority}</td>
+      <td>{bugs.estimatedTime}</td>
     </tr>
   )
 }
@@ -67,18 +30,13 @@ function addBug() {
     estimatedTime: 'trust trust',
   }
   document.getElementById('myTable').insertRow(newBug)
-  bugsInfo.push(newBug)
   document.getElementById('myTbody').insertRow(newBug)
-  renderBug(bugsInfo)
-  console.log(bugsInfo)
   return
 }
 
 function deleteBug() {
   console.log('deleted bug')
-  bugsInfo.pop()
   document.getElementById('myTable').deleteRow(1)
-  console.log(bugsInfo)
   return
 }
 
@@ -98,7 +56,7 @@ export const Home = () => (
             <th>Estimated Time</th>
           </tr>
         </thead>
-        <tbody id='myTbody'>{bugsInfo.map(renderBug)}</tbody>
+        <tbody id='myTbody'>{Data.map(readJson)}</tbody>
       </table>
     </div>
     <div>
