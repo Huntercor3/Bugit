@@ -30,7 +30,41 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 app.UseHttpsRedirection();
 //var person = Endpoints.
 
-app.MapGet("/get-all-users", async () => await Endpoints.GetUsers())
+app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
     .WithTags("User Endpoints");
+
+app.MapGet("/get-all-bugs", async () => await Endpoints.GetAllBugs())
+    .WithTags("User Endpoints");
+
+app.MapGet("/get-all-projects", async () => await Endpoints.GetAllProjects())
+    .WithTags("User Endpoints");
+
+app.MapGet("/get-all-organizations", async () => await Endpoints.GetAllOrganizations())
+    .WithTags("User Endpoints");
+
+app.MapGet("/get-users-in-project-by-id/{projectId}", async (int projectId) =>
+{
+   await Endpoints.GetUsersInProject(projectId);
+
+}).WithTags("User Endpoints");
+
+app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
+{
+    await Endpoints.GetBugsInProject(projectId);
+
+}).WithTags("Project Endpoints");
+
+app.MapGet("/get-project-in-organization-by-id/{organizationId}", async (int organizationId) =>
+{
+    await Endpoints.GetProjectInOrganization(organizationId);
+
+}).WithTags("Project Endpoints");
+
+app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
+{
+    await Endpoints.GetCommentsForBug(bugId);
+
+}).WithTags("Bug Endpoints");
+
 
 app.Run();
