@@ -96,7 +96,7 @@ app.MapPost("/login",
 
 IResult Login(UserLogin user, IUserService service)
 {
-    if (!string.IsNullOrEmpty(user.Username) &&
+    if (!string.IsNullOrEmpty(user.EmailAddress) &&
         !string.IsNullOrEmpty(user.Password))
     {
         // Replace with identity model of some sort
@@ -105,7 +105,7 @@ IResult Login(UserLogin user, IUserService service)
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, loggedInUser.Username),
+            
             new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
             new Claim(ClaimTypes.GivenName, loggedInUser.GivenName),
             new Claim(ClaimTypes.Surname, loggedInUser.Surname),

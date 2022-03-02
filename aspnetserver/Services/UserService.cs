@@ -7,7 +7,7 @@ namespace aspnetserver.Services
         public UserAuth Get(UserLogin userLogin)
         {
             UserAuth user = TEMPLocalUserRepo.Users.FirstOrDefault(o =>
-                o.Username.Equals(userLogin.Username, StringComparison.OrdinalIgnoreCase) &&
+                o.EmailAddress.Equals(userLogin.EmailAddress, StringComparison.OrdinalIgnoreCase) &&
                 o.Password.Equals(userLogin.Password));
 
             return user;
