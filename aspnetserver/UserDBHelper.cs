@@ -16,17 +16,19 @@ namespace aspnetserver
             builder.InitialCatalog = "bugit-server";
         }
 
-        public static async void AddUser(User u)
+        public static async Task<int> AddUser(User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role) values ("
+                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role)" +
+                    "OUTPUT INSERTED.UserId" +
+                    " values ("
                     + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + "," + u.password + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteScalarAsync();
                 }
             }
         }
