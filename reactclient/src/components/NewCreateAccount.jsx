@@ -1,45 +1,45 @@
 import React, { useState } from 'react'
-import BugItLogo from './images/BugItLogo.jpg'
-import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
+import BugItLogo from './images/BugItLogo.jpg'
 
-function NewCreateAccount(props) {
-  const [data, setdata] = useState({
-    Email: '',
-    Password: '',
-    FirstName: '',
-    LastName: '',
-    PhoneNumber: '',
-    Hardware: '',
-    Role: '',
-  })
-  const apiUrl = 'https://purple-ground-019dc9c0f.1.azurestaticapps.net/api/register'
-  const Registration = (e) => {
+const NewCreateAccount = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [hardware, setHardware] = useState('')
+  const [role, setRole] = useState('')
+
+  const submit = async (e) => {
     e.preventDefault()
-    debugger
-    const data1 = {
-      Email: data.Email,
-      Password: data.Password,
-      FirstName: data.FirstName,
-      LastName: data.LastName,
-      PhoneNumber: data.PhoneNumber,
-      Hardware: data.Hardware,
-      Role: data.Role,
-    }
-    axios.post(apiUrl, data1).then((result) => {
-      debugger
-      console.log(result.data)
-      if (result.data.Status == 'Invalid') alert('Invalid User')
-      else props.history.push('/Dashboard')
+
+    await fetch('https://localhost:7075/Register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        hardware: hardware,
+        role: role,
+      }),
+    }).then(function (response) {
+      if (response.status == 200) setRedirect(true)
+      else alert('Invalid credientials, please try again')
     })
   }
-  const onChange = (e) => {
-    e.persist()
-    debugger
-    setdata({ ...data, [e.target.name]: e.target.value })
-  }
+  if (redirect) return <Navigate to='/login1' />
+
   return (
-    <div class='container'>
+    <div className='container'>
       <div class='row'>
         <img
           class='logo'
@@ -54,74 +54,64 @@ function NewCreateAccount(props) {
         </div> */}
       </div>
       <div
-        class='card o-hidden border-0 shadow-lg my-5'
+        className='card o-hidden border-0 shadow-lg my-5'
         style={{ marginTop: '5rem!important;' }}
       >
-        <div class='card-body p-0'>
-          <div class='row'>
-            <div class='col-lg-12'>
-              <div class='p-5'>
-                <div class='text-center'>
-                  <h1 class='h4 text-gray-900 mb-4'>Create a New User</h1>
+        <div className='card-body p-0'>
+          <div className='row'>
+            <div className='col-lg-12'>
+              <div className='p-5'>
+                <div className='text-center'>
+                  <h1 className='h4 text-gray-900 mb-4'>Create a New User</h1>
                 </div>
-                <form onSubmit={Registration} class='user'>
-                  <div class='form-group row'>
-                    <div class='col-sm-6 mb-3 mb-sm-0'>
+                <form onSubmit={submit} className='user'>
+                  <div className='form-group row'>
+                    <div className='col-sm-6 mb-3 mb-sm-0'>
                       <input
-                        type='text'
-                        name='Email'
-                        onChange={onChange}
-                        value={data.Email}
-                        class='form-control'
-                        id='exampleEmail'
+                        type='email'
+                        required
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='form-control'
                         placeholder='Email'
                       />
                     </div>
-                    <div class='col-sm-6'>
+                    <div className='col-sm-6'>
                       <input
-                        type='Password'
-                        name='Password'
-                        onChange={onChange}
-                        value={data.Password}
-                        class='form-control'
-                        id='examplePassword'
+                        type='password'
+                        required
+                        onChange={(e) => setPassword(e.target.value)}
+                        className='form-control'
                         placeholder='Password'
                       />
                     </div>
                   </div>
-                  <div class='form-group row'>
-                    <div class='col-sm-6'>
+                  <div className='form-group row'>
+                    <div className='col-sm-6'>
                       <input
-                        type='text'
-                        name='FirstName'
-                        onChange={onChange}
-                        value={data.FirstName}
-                        class='form-control'
-                        id='exampleFirstName'
+                        type='firstName'
+                        required
+                        onChange={(e) => setFirstName(e.target.value)}
+                        className='form-control'
                         placeholder='First Name'
                       />
                     </div>
-                    <div class='col-sm-6'>
+                    <div className='col-sm-6'>
                       <input
-                        type='text'
-                        name='LastName'
-                        onChange={onChange}
-                        value={data.LastName}
-                        class='form-control'
-                        id='exampleLastName'
+                        type='lastName'
+                        required
+                        onChange={(e) => setLastName(e.target.value)}
+                        className='form-control'
                         placeholder='Last Name'
                       />
                     </div>
                   </div>
                   <div class='form-group row'>
-                    <div class='col-sm-6'>
+                    <div className='col-sm-6'>
                       <input
-                        type='text'
-                        name='PhoneNumber'
-                        onChange={onChange}
-                        value={data.PhoneNumber}
-                        class='form-control'
-                        id='examplePhoneNumber'
+                        type='phoneNumber'
+                        required
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className='form-control'
                         placeholder='Phone Number'
                       />
                     </div>
@@ -129,43 +119,34 @@ function NewCreateAccount(props) {
                       <input
                         type='text'
                         name='test'
-                        onChange={onChange}
                         /*value={data.PhoneNumber}*/
                         class='form-control'
                         id='test'
                         placeholder='test'
                       />
                     </div>
-                    <div class='col-sm-6'>
+                    <div className='col-sm-6'>
                       <input
-                        type='text'
-                        name='Hardware'
-                        onChange={onChange}
-                        value={data.Hardware}
-                        class='form-control'
-                        id='exampleHardware'
+                        type='hardware'
+                        required
+                        onChange={(e) => setHardware(e.target.value)}
+                        className='form-control'
                         placeholder='Hardware'
                       />
                     </div>
-                    <div class='col-sm-6'>
+                    <div className='col-sm-6'>
                       <input
-                        type='text'
-                        name='Role'
-                        onChange={onChange}
-                        value={data.Role}
-                        class='form-control'
-                        id='exampleRole'
+                        type='role'
+                        required
+                        onChange={(e) => setRole(e.target.value)}
+                        className='form-control'
                         placeholder='Role'
                       />
                     </div>
                   </div>
-                  <a
-                    href='/#home'
-                    type='submit'
-                    class='btn btn-primary  btn-block'
-                  >
+                  <button type='submit' className='btn btn-primary  btn-block'>
                     Create User
-                  </a>
+                  </button>
                   <hr />
                 </form>
                 <hr />
@@ -177,5 +158,4 @@ function NewCreateAccount(props) {
     </div>
   )
 }
-
 export default NewCreateAccount

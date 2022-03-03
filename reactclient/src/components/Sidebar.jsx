@@ -93,12 +93,10 @@ export const Sidebar = () => (
               <a
                 href='/nomatch'
                 class='nav-link py-3 border-bottom'
-                title='nomatch'
+                title='NoMatch'
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
-              >
-                {' '}
-              </a>
+              ></a>
             </li>
             <li>
               <a

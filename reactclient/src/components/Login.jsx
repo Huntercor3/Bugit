@@ -1,75 +1,101 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './CSS/Login.css'
 import BugItLogo from './images/BugItLogo.jpg'
+import { Navigate } from 'react-router-dom'
 
-export const Login = () => (
-  <React.Fragment>
-    <body class='text-center'>
-      <div class='container'>
-        <main class='form-signin'>
-          <div class='col'>
-            <form>
-              <img
-                class='logo'
-                rel='icon'
-                src={BugItLogo}
-                alt='Logo'
-                width='100px'
-                height='100px'
-              />
-              <h1 class='h3 mb-3 fw-normal'>Please Sign In</h1>
-              <div class='form-floating'>
-                <input
-                  type='email'
-                  class='form-control'
-                  id='emailInput'
-                  placeholder='name@example.com'
-                ></input>
-                <label for='emailInput'>Email address</label>
-              </div>
-              <div class='form-floating'>
-                <input
-                  type='password'
-                  class='form-control'
-                  id='passwordInput'
-                  placeholder='Password'
-                ></input>
-                <label for='passwordInput'>Password</label>
-              </div>
-              <div class='form-check'>
-                <input
-                  class='form-check-input'
-                  type='checkbox'
-                  value=''
-                  id='flexCheckChecked'
+const Login = () => {
+  const [emailAddress, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
+  const submit = async (e) => {
+    e.preventDefault()
+
+    await fetch('https://localhost:7075/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        emailAddress,
+        password,
+      }),
+    }).then(function (response) {
+      if (response.status == 200) setRedirect(true)
+      else alert('Email address or Password is Incorrect, please try again')
+    })
+  }
+  if (redirect) return <Navigate to='/#home' />
+  return (
+    <React.Fragment>
+      <body className='text-center'>
+        <div className='container'>
+          <main className='form-signin'>
+            <div className='col'>
+              <form onSubmit={submit}>
+                <img
+                  className='logo'
+                  rel='icon'
+                  src={BugItLogo}
+                  alt='Logo'
+                  width='100px'
+                  height='100px'
                 />
-                <label class='form-check-label' for='flexCheckChecked'>
-                  Remember me
-                </label>
-              </div>
-              <a
-                href='/#home'
-                class='w-100 btn btn-md btn-primary'
-                type='submit'
-              >
-                Sign In
-              </a>
-              <div class='border-top my-3'></div>
-              <div>
-                <label class='signuplabel'>Dont Have an Account?</label>
-                <a
-                  href='/createAccount'
-                  class='w-100 btn btn-md btn-primary'
-                  type='submit'
-                >
-                  Create Account
-                </a>
-              </div>
-              <p class='mt-5 mb-3 text-muted'>&copy; BugIt 2022</p>
-            </form>
-          </div>
-        </main>
-      </div>
-    </body>
-  </React.Fragment>
-)
+                <h1 className='h3 mb-3 fw-normal'>Please Sign In</h1>
+                <div className='form-floating'>
+                  <input
+                    type='email'
+                    className='form-control'
+                    id='emailInput'
+                    placeholder='name@example.com'
+                    onChange={(e) => setEmail(e.target.value)}
+                  ></input>
+                  <label for='emailInput'>Email address</label>
+                </div>
+                <div className='form-floating'>
+                  <input
+                    type='password'
+                    className='form-control'
+                    id='passwordInput'
+                    placeholder='Password'
+                    required
+                    onChange={(e) => setPassword(e.target.value)}
+                  ></input>
+                  <label for='passwordInput'>Password</label>
+                </div>
+                <div className='form-check'>
+                  <input
+                    className='form-check-input'
+                    type='checkbox'
+                    value=''
+                    id='flexCheckChecked'
+                  />
+                  <label className='form-check-label' for='flexCheckChecked'>
+                    Remember me
+                  </label>
+                </div>
+                <button className='w-100 btn btn-md btn-primary' type='submit'>
+                  Sign In
+                </button>
+                <div className='border-top my-3'></div>
+                <div>
+                  <label className='signuplabel'>Dont Have an Account?</label>
+                  <a
+                    href='/createAccount'
+                    className='w-100 btn btn-md btn-primary'
+                    type='submit'
+                  >
+                    Create Account
+                  </a>
+                </div>
+                <p className='mt-5 mb-3 text-muted'>&copy; BugIt 2022</p>
+              </form>
+            </div>
+          </main>
+        </div>
+      </body>
+    </React.Fragment>
+  )
+}
+
+export default Login

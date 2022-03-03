@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
 import Data from './data.json'
@@ -40,22 +40,21 @@ function deleteBug() {
   return
 }
 
-function showUser() {  
-  const [user, setuser] = useState({ Email: '', Password: '' });  
-  useEffect(() => {  
-      var a = localStorage.getItem('myData');  
-      var b = JSON.parse(a);  
-      console.log(b.Name);  
-      setuser(b)  
-      console.log(user.Name)  
-
-  }, []);
-  return (  
-    <>  
-       <div class="bottomleft">{user.Name}</div>  
-    </>  
-)  
-}  
+// function showUser() {
+//   const [user, setuser] = useState({ Email: '', Password: '' })
+//   useEffect(() => {
+//     var a = localStorage.getItem('myData')
+//     var b = JSON.parse(a)
+//     console.log(b.Name)
+//     setuser(b)
+//     console.log(user.Name)
+//   }, [])
+//   return (
+//     <>
+//       <div class='bottomleft'>{user.Name}</div>
+//     </>
+//   )
+// }
 
 export const Home = () => (
   <body>
