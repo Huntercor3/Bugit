@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Navigate } from "react-router-dom";
 
 const Login1 = () => {
@@ -22,7 +21,7 @@ const Login1 = () => {
       }),
     });
 
-    setRedirect(true);
+    if (statusCode == '200', setRedirect(true);
   };
   if (redirect) {
     return <Navigate to="/about" />;

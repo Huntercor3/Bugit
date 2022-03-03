@@ -13,6 +13,17 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy", builder =>
+    {
+        builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .WithOrigins("http://localhost:3000", " https://purple-ground-019dc9c0f.1.azurestaticapps.net");
+    });
+});
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -84,6 +95,8 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 
 // HTTP request pipeline
 app.UseRouting();
+app.UseHttpsRedirection();
+app.UseCors("CORSPolicy");
 
 /// <MoreLogin>
 // Telling the api to use Authentication and Authorization services
