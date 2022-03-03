@@ -11,21 +11,19 @@ const Login1 = () => {
     await fetch("https://localhost:7075/login", {
       method: "POST",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
-      credentials: "omit",
+      credentials: "include",
       body: JSON.stringify({
-        emailAddress: emailAddress,
-        password: password,
+        emailAddress,
+        password,
       }),
+    }).then(function (response) {
+      if (response.status == 200) setRedirect(true);
+      else alert("Email address or Password is Incorrect, please try again");
     });
-
-    if (statusCode == '200', setRedirect(true);
   };
-  if (redirect) {
-    return <Navigate to="/about" />;
-  }
+  if (redirect) return <Navigate to="/about" />;
 
   return (
     <div className="container">
