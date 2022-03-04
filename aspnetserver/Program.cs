@@ -118,11 +118,8 @@ IResult Login(UserLogin user, IUserService service)
 
         var claims = new[]
         {
-            
             new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
-            new Claim(ClaimTypes.GivenName, loggedInUser.GivenName),
-            new Claim(ClaimTypes.Surname, loggedInUser.Surname),
-            new Claim(ClaimTypes.Role, loggedInUser.Role),
+            new Claim(ClaimTypes.Role, loggedInUser.Role)
         };
 
         var token = new JwtSecurityToken
