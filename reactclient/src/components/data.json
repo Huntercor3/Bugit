@@ -1,6 +1,10 @@
 [
   {
+<<<<<<< HEAD
     "software": "Bugit",
+=======
+    "software": "test",
+>>>>>>> Feature-Login/Reg-Backend
     "name": "Jonas",
     "date": "never",
     "type": "Optimize",
