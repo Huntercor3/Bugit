@@ -2,6 +2,7 @@
   "format": 1,
   "restore": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "C:\\Users\\jonas\\OneDrive\\Desktop\\Frontend\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
@@ -39,6 +40,25 @@
         "configFilePaths": [
           "C:\\Users\\kindb\\AppData\\Roaming\\NuGet\\NuGet.Config",
 >>>>>>> Feature-Login/Reg-Backend
+=======
+    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "projectName": "aspnetserver",
+        "projectPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\Jarod\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Jarod\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> LoginEndpoints
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -133,10 +153,14 @@
             }
           },
 <<<<<<< HEAD
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
 =======
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.102\\RuntimeIdentifierGraph.json"
 >>>>>>> Feature-Login/Reg-Backend
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+>>>>>>> LoginEndpoints
         }
       }
     }
