@@ -1,70 +1,182 @@
 using aspnetserver;
+using aspnetserver.Services;
+using aspnetserver.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using System.Diagnostics;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy", builder =>
+    {
+        builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .WithOrigins("http://localhost:3000", " https://purple-ground-019dc9c0f.1.azurestaticapps.net");
+    });
+});
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
 {
     SwaggerGenOptionsExtensions.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Bugit Web Api", Version = "v1" });
+
+    SwaggerGenOptionsExtensions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Description = "Bearer Authentication with JWT Token",
+        Type = SecuritySchemeType.Http
+    });
+    SwaggerGenOptionsExtensions.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            new List<string>()
+        }
+    });
 });
 
-var  app = builder.Build();
+/// <Login>
+builder.Services.AddSingleton<IUserService, UserService>();
+// Setting up authentication for the app using JwtBearer
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    // Setting token parameters, the Jwt values will need to be updated for deployment.
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateActor = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+});
+// Telling the api the use Authorization
+builder.Services.AddAuthorization();
+/// </Login>
 
+var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseSwagger();
 app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 {
-
     swaggerUIOptionsrExtensions.DocumentTitle = "BugIt server API";
     swaggerUIOptionsrExtensions.SwaggerEndpoint("/swagger/v1/swagger.json", "web API");
-
 });
 
-
+// HTTP request pipeline
+app.UseRouting();
 app.UseHttpsRedirection();
-//var person = Endpoints.
+app.UseCors("CORSPolicy");
 
-app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
-    .WithTags("User Endpoints");
+/// <MoreLogin>
+// Telling the api to use Authentication and Authorization services
+app.UseAuthentication();
+app.UseAuthorization();
 
-app.MapGet("/get-all-bugs", async () => await Endpoints.GetAllBugs())
-    .WithTags("User Endpoints");
+// Login feature
+app.MapPost("/login",
+    (UserLogin user, IUserService service) => Login(user, service));
 
-app.MapGet("/get-all-projects", async () => await Endpoints.GetAllProjects())
-    .WithTags("User Endpoints");
-
-app.MapGet("/get-all-organizations", async () => await Endpoints.GetAllOrganizations())
-    .WithTags("User Endpoints");
-
-app.MapGet("/get-users-in-project-by-id/{projectId}", async (int projectId) =>
+IResult Login(UserLogin user, IUserService service)
 {
-   await Endpoints.GetUsersInProject(projectId);
+    if (!string.IsNullOrEmpty(user.EmailAddress) &&
+        !string.IsNullOrEmpty(user.Password))
+    {
+        // Replace with identity model of some sort
+<<<<<<< HEAD
+        var loggedInUser = service.Get(user);
+        if (loggedInUser is null) return Results.NotFound("User not found");
 
-}).WithTags("User Endpoints");
+        var claims = new[]
+        {
+            
+            new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
+            new Claim(ClaimTypes.GivenName, loggedInUser.GivenName),
+            new Claim(ClaimTypes.Surname, loggedInUser.Surname),
+            new Claim(ClaimTypes.Role, loggedInUser.Role),
+=======
+        var loggedInUser = service.CheckUserInDBO(user);
+        if (loggedInUser is null) return Results.NotFound("User not found or password incorrect");
 
-app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
+            new Claim(ClaimTypes.Role, loggedInUser.Role)
+>>>>>>> Feature-Login/Reg-Backend
+        };
+
+        var token = new JwtSecurityToken
+            (
+            issuer: builder.Configuration["Jwt:Issuer"],
+            audience: builder.Configuration["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(1),
+            notBefore: DateTime.UtcNow,
+            signingCredentials: new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                SecurityAlgorithms.HmacSha256)
+            );
+
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return Results.Ok(tokenString);
+    }
+    return Results.BadRequest("Invalid user credentials");
+}
+<<<<<<< HEAD
+
+// Example function to test authentication works
+IResult ListUsers(IUserService service)
 {
-    await Endpoints.GetBugsInProject(projectId);
+    var users = service.ListUsers();
+    return Results.Ok(users);
+}
+=======
+// THIS IS AN EXAMPLE HOW TO UTILIZE ROLES
+/*
+>>>>>>> Feature-Login/Reg-Backend
+app.MapGet("/listUsers",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+(IUserService service) => ListUsers(service))
+    .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
+<<<<<<< HEAD
+/// </MoreLogin>
+=======
+*/
+>>>>>>> Feature-Login/Reg-Backend
 
-}).WithTags("Project Endpoints");
-
-app.MapGet("/get-project-in-organization-by-id/{organizationId}", async (int organizationId) =>
-{
-    await Endpoints.GetProjectInOrganization(organizationId);
-
-}).WithTags("Project Endpoints");
-
-app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
-{
-    await Endpoints.GetCommentsForBug(bugId);
-
-}).WithTags("Bug Endpoints");
-
+app.MapGet("/get-all-users",
+    async () => await Endpoints.GetUsers())
+    .WithTags("User Endpoints");
 
 app.Run();

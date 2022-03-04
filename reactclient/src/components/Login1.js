@@ -1,74 +1,123 @@
+<<<<<<< HEAD
+import React, { useState, useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
+
+const Login1 = () => {
+  const [emailAddress, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [redirect, setRedirect] = useState(false)
+  const submit = async (e) => {
+    e.preventDefault()
+
+    await fetch('https://localhost:7075/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+=======
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-function Login1(props) {
-  const [user, setuser] = useState({ Email: "", Password: "" });
-  const apiUrl = "http://localhost:1680/api/user/Login";
-  const Login = (e) => {
+import { Navigate } from "react-router-dom";
+
+const Login1 = () => {
+  const [emailAddress, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const submit = async (e) => {
     e.preventDefault();
-    debugger;
-    const data = { Email: user.Email, Password: user.Password };
-    axios.post(apiUrl, data).then((result) => {
-      debugger;
-      console.log(result.data);
-      const serializedState = JSON.stringify(result.data.UserDetails);
-      var a = localStorage.setItem("myData", serializedState);
-      console.log("A:", a);
-      const user = result.data.UserDetails;
-      console.log(result.data.message);
-      if (result.data.status == "200") props.history.push("/home");
-      else alert("Invalid User");
+
+    await fetch("https://localhost:7075/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+>>>>>>> Feature-Login/Reg-Backend
+      body: JSON.stringify({
+        emailAddress,
+        password,
+      }),
+    }).then(function (response) {
+<<<<<<< HEAD
+      if (response.status == 200) setRedirect(true)
+      else alert('Email address or Password is Incorrect, please try again')
+    })
+  }
+  if (redirect) return <Navigate to='/about' />
+
+  return (
+    <div className='container'>
+      <div className='row justify-content-center'>
+        <div className='col-xl-10 col-lg-12 col-md-9'>
+          <div className='card o-hidden border-0 shadow-lg my-5'>
+            <div className='card-body p-0'>
+              <div className='row'>
+                <div className='col-lg-6 d-none d-lg-block bg-login-image'></div>
+                <div className='col-lg-6'>
+                  <div className='p-5'>
+                    <div className='text-center'>
+                      <h1 className='h4 text-gray-900 mb-4'>Welcome Back!</h1>
+                    </div>
+                    <form onSubmit={submit} className='user'>
+                      <div className='form-group'>
+                        <input
+                          type='email'
+                          className='form-control'
+                          required
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder='Enter Email'
+                        />
+                      </div>
+                      <div className='form-group'>
+                        <input
+                          type='password'
+                          className='form-control'
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder='Password'
+                        />
+                      </div>
+                      <button type='submit' className='btn btn-info mb-1'>
+=======
+      if (response.status == 200) setRedirect(true);
+      else alert("Email address or Password is Incorrect, please try again");
     });
   };
+  if (redirect) return <Navigate to="/about" />;
 
-  const onChange = (e) => {
-    e.persist();
-    debugger;
-    setuser({ ...user, [e.target.name]: e.target.value });
-  };
   return (
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-xl-10 col-lg-12 col-md-9">
-          <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-              <div class="row">
-                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                <div class="col-lg-6">
-                  <div class="p-5">
-                    <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-xl-10 col-lg-12 col-md-9">
+          <div className="card o-hidden border-0 shadow-lg my-5">
+            <div className="card-body p-0">
+              <div className="row">
+                <div className="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                <div className="col-lg-6">
+                  <div className="p-5">
+                    <div className="text-center">
+                      <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                     </div>
-                    <form onSubmit={Login} class="user">
-                      <div class="form-group">
+                    <form onSubmit={submit} className="user">
+                      <div className="form-group">
                         <input
                           type="email"
-                          class="form-control"
-                          value={user.Email}
-                          onChange={onChange}
-                          name="Email"
-                          id="Email"
-                          aria-describedby="emailHelp"
+                          className="form-control"
+                          required
+                          onChange={(e) => setEmail(e.target.value)}
                           placeholder="Enter Email"
                         />
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <input
                           type="password"
-                          class="form-control"
-                          value={user.Password}
-                          onChange={onChange}
-                          name="Password"
-                          id="Password"
+                          className="form-control"
+                          onChange={(e) => setPassword(e.target.value)}
                           placeholder="Password"
                         />
                       </div>
-                      {/* <div class="form-group">  
-                          <div class="custom-control custom-checkbox small">  
-                            <input type="checkbox" class="custom-control-input" id="customCheck"/>  
-                            <label class="custom-control-label" for="customCheck">Remember Me</label>  
-                          </div>  
-                        </div> */}
-                      <button type="submit" className="btn btn-info mb-1" block>
+
+                      <button type="submit" className="btn btn-info mb-1">
+>>>>>>> Feature-Login/Reg-Backend
                         <span>Login</span>
                       </button>
                       <hr />
@@ -82,7 +131,14 @@ function Login1(props) {
         </div>
       </div>
     </div>
-  );
+<<<<<<< HEAD
+  )
 }
 
+export default Login1
+=======
+  );
+};
+
 export default Login1;
+>>>>>>> Feature-Login/Reg-Backend
