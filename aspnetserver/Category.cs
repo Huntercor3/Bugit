@@ -2,11 +2,10 @@
 {
     public class Category
     {
-        public int catId { get; set; }
         private string[] categories;
-        public Category(int c)
+        public Category()
         {
-            catId = c;
+            
         }
 
         public string GetCategory(int id)
