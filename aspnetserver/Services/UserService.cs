@@ -9,6 +9,7 @@ namespace aspnetserver.Services
     {
         private static SqlConnectionStringBuilder builder;
 
+        // Establishes connection to the database
         static UserService()
         {
             builder = new SqlConnectionStringBuilder();
@@ -18,17 +19,20 @@ namespace aspnetserver.Services
             builder.InitialCatalog = "bugit-server";
         }
 
-        public UserAuth Get(UserLogin userLogin)
+        // Checks the database for our user entered credentials
+        // This will be updated to have edge case checking to see if the user doesn't exist
+        // or if the password isn't correct. This will also utilize password encryption down
+        // the road.
+        public UserAuth CheckUserInDBO(UserLogin userLogin)
         {
+            // Creates new user and bool for if the user exists or not.
             UserAuth user = new UserAuth();
             bool check = true;
-            /*
-            UserAuth user = TEMPLocalUserRepo.Users.FirstOrDefault(o =>
-                o.EmailAddress.Equals(userLogin.EmailAddress, StringComparison.OrdinalIgnoreCase) &&
-                o.Password.Equals(userLogin.Password));
-            */
+
+            // Runs the connection to the dbo
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
+                // SQL command
                 String sql = "SELECT email, Role FROM Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + userLogin.Password + "';";
 
                 SqlCommand cmd = new SqlCommand(sql, connection);
@@ -49,16 +53,12 @@ namespace aspnetserver.Services
                 finally
                 { connection.Close(); }
             }
+            // If check is true, a user is returned for Program.cs to know what happened.
             if (check)
                 return user;
+            // Else returns null for Program.cs to say user was not found.
             else
                 return null;
-        }
-
-        public List<UserAuth> ListUsers()
-        {
-            var users = TEMPLocalUserRepo.Users;
-            return users;
         }
     }
 }

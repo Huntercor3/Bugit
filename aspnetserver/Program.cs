@@ -113,8 +113,8 @@ IResult Login(UserLogin user, IUserService service)
         !string.IsNullOrEmpty(user.Password))
     {
         // Replace with identity model of some sort
-        var loggedInUser = service.Get(user);
-        if (loggedInUser is null) return Results.NotFound("User not found");
+        var loggedInUser = service.CheckUserInDBO(user);
+        if (loggedInUser is null) return Results.NotFound("User not found or password incorrect");
 
         var claims = new[]
         {
@@ -140,18 +140,13 @@ IResult Login(UserLogin user, IUserService service)
     }
     return Results.BadRequest("Invalid user credentials");
 }
-
-// Example function to test authentication works
-IResult ListUsers(IUserService service)
-{
-    var users = service.ListUsers();
-    return Results.Ok(users);
-}
+// THIS IS AN EXAMPLE HOW TO UTILIZE ROLES
+/*
 app.MapGet("/listUsers",
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
 (IUserService service) => ListUsers(service))
     .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
-/// </MoreLogin>
+*/
 
 app.MapGet("/get-all-users",
     async () => await Endpoints.GetUsers())
