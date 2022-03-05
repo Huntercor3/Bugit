@@ -68,13 +68,13 @@ export const Sidebar = () => (
             </li>
             <li>
               <a
-                href='/contact'
+                href='/createBug'
                 class='nav-link py-3 border-bottom'
-                title='Contact'
+                title='CreateBug'
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
               >
-                Contact
+                Create Bug
               </a>
             </li>
             <li>

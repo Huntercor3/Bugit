@@ -31,7 +31,7 @@ const Login = () => {
       <body className='text-center'>
         <div className='container'>
           <main className='form-signin'>
-            <div className='col'>
+            <div className='card o-hidden border-0 shadow-lg my-5'>
               <form onSubmit={submit}>
                 <img
                   className='logo'

@@ -3,16 +3,16 @@ import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
 
-const NewCreateAccount = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const CreateBug = () => {
+  const [owner, setOwner] = useState('')
+  const [date, setDate] = useState('')
+  const [type, setType] = useState('')
+  const [status, setStatus] = useState('')
+  const [priority, setPriority] = useState('')
+  const [estimatedTime, setEstimatedTime] = useState('')
+  //const [hardware, setHardware] = useState('')
+  //const [role, setRole] = useState('')
   const [redirect, setRedirect] = useState(false)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [hardware, setHardware] = useState('')
-  const [role, setRole] = useState('')
-
   const submit = async (e) => {
     e.preventDefault()
 
@@ -23,13 +23,12 @@ const NewCreateAccount = () => {
       },
       credentials: 'include',
       body: JSON.stringify({
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phoneNumber,
-        hardware: hardware,
-        role: role,
+        owner: owner,
+        date: date,
+        type: type,
+        status: status,
+        priority: priority,
+        estimatedTime: estimatedTime,
       }),
     }).then(function (response) {
       if (response.status == 200) setRedirect(true)
@@ -40,9 +39,9 @@ const NewCreateAccount = () => {
 
   return (
     <div className='container'>
-      <div class='row'>
+      <div className='row'>
         <img
-          class='logo'
+          className='logo'
           rel='icon'
           src={BugItLogo}
           alt='Logo'
@@ -62,94 +61,88 @@ const NewCreateAccount = () => {
             <div className='col-lg-12'>
               <div className='p-5'>
                 <div className='text-center'>
-                  <h1 className='h4 text-gray-900 mb-4'>Create a New User</h1>
+                  <h1 className='h4 text-gray-900 mb-4'>Create a New Bug</h1>
                 </div>
                 <form onSubmit={submit} className='user'>
                   <div className='form-group row'>
                     <div className='col-sm-6 mb-3 mb-sm-0'>
                       <input
-                        type='email'
+                        type='text'
                         required
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setOwner(e.target.value)}
                         className='form-control'
-                        placeholder='Email'
+                        placeholder='Owner'
                       />
                     </div>
                     <div className='col-sm-6'>
                       <input
-                        type='password'
+                        type='date'
                         required
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setDate(e.target.value)}
                         className='form-control'
-                        placeholder='Password'
+                        placeholder='Todays date'
                       />
                     </div>
                   </div>
                   <div className='form-group row'>
                     <div className='col-sm-6'>
                       <input
-                        type='firstName'
+                        type='text'
                         required
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={(e) => setType(e.target.value)}
                         className='form-control'
-                        placeholder='First Name'
+                        placeholder='Type'
                       />
                     </div>
                     <div className='col-sm-6'>
                       <input
-                        type='lastName'
+                        type='text'
                         required
-                        onChange={(e) => setLastName(e.target.value)}
+                        onChange={(e) => setStatus(e.target.value)}
                         className='form-control'
-                        placeholder='Last Name'
+                        placeholder='Status'
                       />
                     </div>
                   </div>
                   <div class='form-group row'>
                     <div className='col-sm-6'>
                       <input
-                        type='phoneNumber'
+                        type='tel'
                         required
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) => setPriority(e.target.value)}
                         className='form-control'
-                        placeholder='Phone Number'
+                        placeholder='Priority'
                       />
                     </div>
-                    <div class='col-sm-6'>
+                    {/* <div class='col-sm-6'>
                       <input
                         type='text'
                         name='test'
-                        /*value={data.PhoneNumber}*/
+                        value={data.PhoneNumber}
                         class='form-control'
                         id='test'
                         placeholder='test'
                       />
-                    </div>
+                    </div> */}
                     <div className='col-sm-6'>
                       <input
-                        type='hardware'
+                        type='text'
                         required
-                        onChange={(e) => setHardware(e.target.value)}
+                        onChange={(e) => setEstimatedTime(e.target.value)}
                         className='form-control'
-                        placeholder='Hardware'
-                      />
-                    </div>
-                    <div className='col-sm-6'>
-                      <input
-                        type='role'
-                        required
-                        onChange={(e) => setRole(e.target.value)}
-                        className='form-control'
-                        placeholder='Role'
+                        placeholder='Estimated Time'
                       />
                     </div>
                   </div>
-                  <button type='submit' className='btn btn-primary  btn-block'>
-                    Create User
-                  </button>
-                  <hr />
+                  <div className='row justify-content-center'>
+                    <button
+                      className='text-center btn btn-md btn-primary'
+                      type='submit'
+                    >
+                      Create Bug
+                    </button>
+                  </div>
                 </form>
-                <hr />
               </div>
             </div>
           </div>
@@ -158,4 +151,4 @@ const NewCreateAccount = () => {
     </div>
   )
 }
-export default NewCreateAccount
+export default CreateBug
