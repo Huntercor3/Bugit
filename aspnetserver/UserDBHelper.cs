@@ -20,7 +20,7 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role)" +
+                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
                     "OUTPUT INSERTED.UserId" +
                     " values ("
                     + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + "," + u.password + ")";
@@ -29,6 +29,28 @@ namespace aspnetserver
                 {
                     connection.Open();
                     return (int)await command.ExecuteScalarAsync();
+                }
+            }
+        }
+
+        public static async void UpdateUser(User u)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "UPDATE dbo.Users" +
+                    "SET FirstName = " + u.firstName +
+                    ", Lastname = " + u.lastName +
+                    ", email = " + u.email +
+                    ", PhoneNumber = " + u.phoneNumber +
+                    ", Hardware = " + u.hardware +
+                    ", Role = " + u.role.roleId.ToString() +
+                    ", Password = " + u.password +
+                    " WHERE UserId = " + u.userId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
         }
