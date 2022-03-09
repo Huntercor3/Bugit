@@ -59,7 +59,7 @@ function deleteBug() {
 export const Home = () => (
   <body>
     <h1>BugIt</h1>
-    <div class='table-responsive'>
+    <div classname='table-responsive'>
       <table class='table table-striped table-sm' id='myTable'>
         <thead>
           <tr>
