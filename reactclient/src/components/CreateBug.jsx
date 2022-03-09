@@ -107,7 +107,7 @@ const CreateBug = () => {
                   <div class='form-group row'>
                     <div className='col-sm-6'>
                       <input
-                        type='tel'
+                        type='text'
                         required
                         onChange={(e) => setPriority(e.target.value)}
                         className='form-control'

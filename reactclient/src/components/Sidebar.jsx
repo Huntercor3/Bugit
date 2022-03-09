@@ -86,7 +86,7 @@ export const Sidebar = () => (
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
               >
-                New Sign up
+                {' '}
               </a>
             </li>
             <li>
@@ -96,7 +96,9 @@ export const Sidebar = () => (
                 title='NoMatch'
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
-              ></a>
+              >
+                {' '}
+              </a>
             </li>
             <li>
               <a
