@@ -59,8 +59,8 @@ function deleteBug() {
 export const Home = () => (
   <body>
     <h1>BugIt</h1>
-    <div classname='table-responsive'>
-      <table class='table table-striped table-sm' id='myTable'>
+    <div className='table-responsive'>
+      <table className='table table-striped table-sm' id='myTable'>
         <thead>
           <tr>
             <th>Software</th>
@@ -76,10 +76,10 @@ export const Home = () => (
       </table>
     </div>
     <div>
-      <button type='button' class='btn btn-success' onClick={addBug}>
+      <button type='button' className='btn btn-success' onClick={addBug}>
         Add
       </button>
-      <button type='button' class='btn btn-danger' onClick={deleteBug}>
+      <button type='button' className='btn btn-danger' onClick={deleteBug}>
         Delete
       </button>
     </div>
