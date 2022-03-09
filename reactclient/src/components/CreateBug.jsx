@@ -2,12 +2,34 @@ import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
+import Select from 'react-select'
+
+
+const priorityOptions=[
+{label:'High', value:'high'},
+{label:'Moderate', value:'moderate'},
+{label:'Low', value:'low'}
+]
+
+const typeOptions=[
+{label:'Optimize', value:'optimize'},
+{label:'Crash', value:'crash'},
+{label:'Upgrade', value:'upgrade'}
+]
+
+const statusOptions=[
+{label:'In progress', value:'inProgress'},
+{label:'Stuck', value:'stuck'}
+]
+
+
 
 const CreateBug = () => {
+  
   const [owner, setOwner] = useState('')
   const [date, setDate] = useState('')
   const [type, setType] = useState('')
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState({})
   const [priority, setPriority] = useState('')
   const [estimatedTime, setEstimatedTime] = useState('')
   //const [hardware, setHardware] = useState('')
@@ -37,6 +59,14 @@ const CreateBug = () => {
   }
   if (redirect) return <Navigate to='/login1' />
 
+
+  /*onChangeFunc=({value}) =>
+  {
+    (e) => {value(e.target.value)}
+  }
+*/
+  
+
   return (
     <div className='container'>
       <div className='row'>
@@ -48,13 +78,13 @@ const CreateBug = () => {
           width='100px'
           height='100px'
         />
-        {/* <div class='col-sm-12 btn btn-primary' style={{ margin: '6px' }}>
+        {/* <div className='col-sm-12 btn btn-primary' style={{ margin: '6px' }}>
           Add New Contact
         </div> */}
       </div>
       <div
         className='card o-hidden border-0 shadow-lg my-5'
-        style={{ marginTop: '5rem!important;' }}
+        style={{ marginTop: '5rem!important' }}
       >
         <div className='card-body p-0'>
           <div className='row'>
@@ -69,7 +99,7 @@ const CreateBug = () => {
                       <input
                         type='text'
                         required
-                        onChange={(e) => setOwner(e.target.value)}
+                        onChange = {(e) => setOwner(e.target.value)}
                         className='form-control'
                         placeholder='Owner'
                       />
@@ -78,61 +108,49 @@ const CreateBug = () => {
                       <input
                         type='date'
                         required
-                        onChange={(e) => setDate(e.target.value)}
+                        onChange = {(e) => setDate(e.target.value)}
                         className='form-control'
                         placeholder='Todays date'
                       />
                     </div>
                   </div>
                   <div className='form-group row'>
-                    <div className='col-sm-6'>
-                      <input
-                        type='text'
-                        required
-                        onChange={(e) => setType(e.target.value)}
-                        className='form-control'
-                        placeholder='Type'
-                      />
+                    <div className='col-sm-6 '>
+                    <Select
+                       options={typeOptions} 
+                       onChange = {setType}
+                       placeholder = 'Set Type' 
+                       />         
                     </div>
                     <div className='col-sm-6'>
-                      <input
-                        type='text'
-                        required
-                        onChange={(e) => setStatus(e.target.value)}
-                        className='form-control'
-                        placeholder='Status'
-                      />
+                      <Select
+                       options={statusOptions} 
+                       onChange = {setStatus}
+                       placeholder = 'Set status'
+                       className='form-control'
+
+                       />                    
                     </div>
                   </div>
-                  <div class='form-group row'>
+                  <div className='form-group row'>
                     <div className='col-sm-6'>
-                      <input
-                        type='tel'
-                        required
-                        onChange={(e) => setPriority(e.target.value)}
-                        className='form-control'
-                        placeholder='Priority'
-                      />
+                    <Select
+                       options={priorityOptions} 
+                       onChange = {setPriority}
+                       placeholder = 'Set Priority' 
+                       className='form-control'
+                       />              
                     </div>
-                    {/* <div class='col-sm-6'>
-                      <input
-                        type='text'
-                        name='test'
-                        value={data.PhoneNumber}
-                        class='form-control'
-                        id='test'
-                        placeholder='test'
-                      />
-                    </div> */}
                     <div className='col-sm-6'>
                       <input
                         type='text'
                         required
-                        onChange={(e) => setEstimatedTime(e.target.value)}
+                        onChange = {(e) => setEstimatedTime(e.target.value)}
                         className='form-control'
                         placeholder='Estimated Time'
                       />
                     </div>
+                    
                   </div>
                   <div className='row justify-content-center'>
                     <button
