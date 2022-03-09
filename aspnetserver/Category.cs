@@ -3,14 +3,15 @@
     public class Category
     {
         private string[] categories;
-        public Category()
+        public int categoryId { get; set; }
+        public Category(int c)
         {
-            
+            categoryId = c;
         }
 
         public string GetCategory(int id)
         {
-            return categories[id];
+            return categories[categoryId];
         }
     }
 }
