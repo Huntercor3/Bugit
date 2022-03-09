@@ -8,7 +8,7 @@ import { NoMatch } from './components/NoMatch'
 import { Component } from 'react'
 import Login from './components/Login'
 import CreateAccount from './components/CreateAccount'
-import { Account } from './components/Account'
+import Account from './components/Account'
 import Login1 from './components/Login1'
 
 export default function App() {

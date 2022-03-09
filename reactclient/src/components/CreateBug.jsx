@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import './CSS/CreateAccount.css'
+//import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
 
 const CreateBug = () => {
