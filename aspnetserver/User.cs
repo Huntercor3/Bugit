@@ -22,7 +22,6 @@ namespace aspnetserver
         public string phoneNumber { get; set; }
         public string hardware { get; set; }
         public Role role { get; set; }
-        public string password { get; set; }
 
         public User(int u, string f, string l, string e, string p, string h, Role r, string pass)
         {
