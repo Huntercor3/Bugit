@@ -9,12 +9,12 @@ namespace aspnetserver
         public int creator { get; set; }
         public DateTime timeCreated { get; set; }
         public string description { get; set; }
-        public int type { get; set; }
-        public int status { get; set; }
-        public int priority { get; set; }
+        public string type { get; set; }
+        public string status { get; set; }
+        public string priority { get; set; }
         public string estimatedTime { get; set; }
 
-        public Bug(int b, int c, DateTime d, string desc, int t, int stat, int prio, string e)
+        public Bug(int b, int c, DateTime d, string desc, string t, string stat, string prio, string e)
         {
             bugId = b;
             creator = c;

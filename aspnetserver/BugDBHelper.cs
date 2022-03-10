@@ -23,7 +23,7 @@ namespace aspnetserver
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
                     "OUTPUT INSERTED.BugId" +
                     "values ("
-                    + b.creator + ", " + b.timeCreated.ToString() + ", " + b.description + ", " + b.type.ToString() + ", " + b.status.ToString() + ", " + b.priority.ToString() + ", " + b.estimatedTime + ")";
+                    + b.creator + ", " + b.timeCreated.ToString() + ", " + b.description + ", " + b.type + ", " + b.status + ", " + b.priority + ", " + b.estimatedTime + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
