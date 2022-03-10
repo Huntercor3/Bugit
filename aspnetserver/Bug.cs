@@ -5,25 +5,25 @@ namespace aspnetserver
 {
     public class Bug
     {
-        public int bugId { get; set; }
-        public int creator { get; set; }
-        public DateTime timeCreated { get; set; }
-        public string description { get; set; }
-        public string type { get; set; }
-        public string status { get; set; }
-        public string priority { get; set; }
-        public string estimatedTime { get; set; }
+        public int BugId { get; set; }
+        public int Creator { get; set; }
+        public DateTime TimeCreated { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
+        public string Status { get; set; }
+        public string Priority { get; set; }
+        public string EstimatedTime { get; set; }
 
-        public Bug(int b, int c, DateTime d, string desc, string t, string stat, string prio, string e)
+        public Bug(int bugId, int creator, DateTime timeCreated, string description, string type, string status, string priority, string estimatedTime)
         {
-            bugId = b;
-            creator = c;
-            timeCreated = d;
-            description = desc;
-            type = t;
-            status = stat;
-            priority = prio;
-            estimatedTime = e;
+            BugId = bugId;
+            Creator = creator;
+            TimeCreated = timeCreated;
+            Description = description;
+            Type = type;
+            Status = status;
+            Priority = priority;
+            EstimatedTime = estimatedTime;
         }
     }
 }
