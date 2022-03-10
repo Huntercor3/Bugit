@@ -20,10 +20,10 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated, Description, Type, Status, Priority) " +
+                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
                     "OUTPUT INSERTED.BugId" +
                     "values ("
-                    + b.software + ", " + b.creator + ", " + b.timeCreated.ToString() + ", " + b.description + ", " + b.type.ToString() + ", " + b.status.ToString() + ", " + b.priority.ToString() + ")";
+                    + b.creator + ", " + b.timeCreated.ToString() + ", " + b.description + ", " + b.type.ToString() + ", " + b.status.ToString() + ", " + b.priority.ToString() + ", " + b.estimatedTime + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
