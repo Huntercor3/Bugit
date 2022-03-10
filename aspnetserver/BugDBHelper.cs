@@ -16,7 +16,7 @@ namespace aspnetserver
             builder.InitialCatalog = "bugit-server";
         }
 
-        private static async Task<int> AddBug(Bug b)
+        public static async Task<int> AddBug(Bug b)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
