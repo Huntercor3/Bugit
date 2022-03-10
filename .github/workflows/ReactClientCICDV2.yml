@@ -1,4 +1,4 @@
-name: ReactClientCICD
+name: ReactClientCICDV2
 
 on:
   push:

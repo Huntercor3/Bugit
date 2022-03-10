@@ -1,30 +1,13 @@
 ﻿using aspnetserver.Models;
-<<<<<<< HEAD
-=======
+
 using aspnetserver;
 using Microsoft.Data.SqlClient;
 using System.Data;
->>>>>>> Feature-Login/Reg-Backend
 
 namespace aspnetserver.Services
 {
     public class UserService : IUserService
     {
-<<<<<<< HEAD
-        public UserAuth Get(UserLogin userLogin)
-        {
-            UserAuth user = TEMPLocalUserRepo.Users.FirstOrDefault(o =>
-                o.EmailAddress.Equals(userLogin.EmailAddress, StringComparison.OrdinalIgnoreCase) &&
-                o.Password.Equals(userLogin.Password));
-
-            return user;
-        }
-
-        public List<UserAuth> ListUsers()
-        {
-            var users = TEMPLocalUserRepo.Users;
-            return users;
-=======
         private static SqlConnectionStringBuilder builder;
 
         // Establishes connection to the database
@@ -77,7 +60,6 @@ namespace aspnetserver.Services
             // Else returns null for Program.cs to say user was not found.
             else
                 return null;
->>>>>>> Feature-Login/Reg-Backend
         }
     }
 }
