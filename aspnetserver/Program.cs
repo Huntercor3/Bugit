@@ -154,9 +154,10 @@ app.MapGet("/get-all-users",
     .WithTags("User Endpoints");
 
 
-app.MapGet("/create-bug", async (Bug bugtoCreate) =>
-{
-     int createSuccessful = await BugDBHelper.AddBug(bugtoCreate);
-    
+app.MapPost("/create-bug", async (Bug bugtoCreate) =>
+{ 
+    await BugDBHelper.AddBug(bugtoCreate);
+ 
 }).WithTags("bug Endpoints");
+
 app.Run();

@@ -21,7 +21,7 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
-                    "OUTPUT INSERTED.BugId" +
+                    "OUTPUT INSERTED.BugId " +
                     "values ("
                     + b.creator + ", " + b.timeCreated.ToString() + ", " + b.description + ", " + b.type + ", " + b.status + ", " + b.priority + ", " + b.estimatedTime + ")";
 
