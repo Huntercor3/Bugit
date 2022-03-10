@@ -57,7 +57,7 @@ const CreateBug = () => {
       else alert('Invalid credientials, please try again')
     })
   }
-  if (redirect) return <Navigate to='/login1' />
+  if (redirect) return <Navigate to='/home' />
 
 
   /*onChangeFunc=({value}) =>
@@ -122,13 +122,11 @@ const CreateBug = () => {
                        placeholder = 'Set Type' 
                        />         
                     </div>
-                    <div className='col-sm-6'>
+                    <div className='col-sm-6 '>
                       <Select
                        options={statusOptions} 
                        onChange = {setStatus}
                        placeholder = 'Set status'
-                       className='form-control'
-
                        />                    
                     </div>
                   </div>
@@ -137,8 +135,8 @@ const CreateBug = () => {
                     <Select
                        options={priorityOptions} 
                        onChange = {setPriority}
-                       placeholder = 'Set Priority' 
-                       className='form-control'
+                       placeholder = 'Set Priority'
+                       className='form-controldrop' 
                        />              
                     </div>
                     <div className='col-sm-6'>
