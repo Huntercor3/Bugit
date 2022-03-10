@@ -4,6 +4,6 @@ namespace aspnetserver.Services
 {
     public interface IUserService
     {
-        public UserAuth CheckUserInDBO(UserLogin userLogin);
+        public UserAuth CheckUserInDBO(LoginModel userLogin);
     }
 }

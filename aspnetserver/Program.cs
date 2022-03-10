@@ -1,16 +1,38 @@
 using aspnetserver;
 using aspnetserver.Services;
 using aspnetserver.Models;
+using aspnetserver.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using System.Diagnostics;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+/* LINK TO TUT
+https://www.c-sharpcorner.com/article/login-and-role-based-custom-authentication-in-asp-net-core-3-1/
+*/
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -58,11 +80,14 @@ builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
 });
 
 /// <Login>
+UserAuth UserAuthenticated = new UserAuth();
 builder.Services.AddSingleton<IUserService, UserService>();
 // Setting up authentication for the app using JwtBearer
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     // Setting token parameters, the Jwt values will need to be updated for deployment.
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateActor = true,
@@ -105,9 +130,9 @@ app.UseAuthorization();
 
 // Login feature
 app.MapPost("/login",
-    (UserLogin user, IUserService service) => Login(user, service));
+    (LoginModel user, IUserService service) => Login(user, service));
 
-IResult Login(UserLogin user, IUserService service)
+IResult Login(LoginModel user, IUserService service)
 {
     if (!string.IsNullOrEmpty(user.EmailAddress) &&
         !string.IsNullOrEmpty(user.Password))
@@ -136,6 +161,7 @@ IResult Login(UserLogin user, IUserService service)
 
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
+        UserAuthenticated.JWTString = tokenString;
         return Results.Ok(tokenString);
     }
     return Results.BadRequest("Invalid user credentials");
@@ -148,6 +174,10 @@ app.MapGet("/listUsers",
 (IUserService service) => ListUsers(service))
     .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
 */
+
+app.MapGet("/TESTGET",
+    () => UserAuthenticated.JWTString)
+    .WithTags("Test JWT Token Print");
 
 app.MapGet("/get-all-users",
     async () => await Endpoints.GetUsers())

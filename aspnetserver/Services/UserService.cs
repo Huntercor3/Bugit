@@ -24,7 +24,7 @@ namespace aspnetserver.Services
         // This will be updated to have edge case checking to see if the user doesn't exist
         // or if the password isn't correct. This will also utilize password encryption down
         // the road.
-        public UserAuth CheckUserInDBO(UserLogin userLogin)
+        public UserAuth CheckUserInDBO(LoginModel userLogin)
         {
             // Creates new user and bool for if the user exists or not.
             UserAuth user = new UserAuth();
