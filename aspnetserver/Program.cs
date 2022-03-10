@@ -107,6 +107,9 @@ app.UseAuthorization();
 app.MapPost("/login",
     (LoginModel user, IUserService service) => Login(user, service));
 
+app.MapPost("/login",
+    (RegisterModel user, IUserService service) => Register(user, service));
+
 IResult Login(LoginModel user, IUserService service)
 {
     if (!string.IsNullOrEmpty(user.EmailAddress) &&
@@ -141,6 +144,23 @@ IResult Login(LoginModel user, IUserService service)
         return Results.Ok(tokenString);
     }
     return Results.BadRequest("Invalid user credentials");
+}
+
+IResult Register(RegisterModel userEntry, IUserService service)
+{
+    if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
+        !string.IsNullOrEmpty(userEntry.password))
+        {
+        User userToRegister = new User(userEntry.userId, userEntry.firstName, userEntry.lastName, userEntry.emailAddress, userEntry.phoneNumber, userEntry.hardware, userEntry.role, userEntry.password);
+        UserDBHelper.AddUser(userToRegister);
+
+        LoginModel login = new LoginModel();
+        login.EmailAddress = userToRegister.email;
+        login.Password = userToRegister.password;
+
+        return Results.Ok();
+    }
+    return Results.BadRequest("Invalid registration credentials");
 }
 
 // THIS IS AN EXAMPLE HOW TO UTILIZE ROLES

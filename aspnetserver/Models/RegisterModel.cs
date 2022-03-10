@@ -5,9 +5,18 @@ namespace aspnetserver.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "Email address is required")]
-        public string EmailAddress { get; set; }
+        public string emailAddress { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; }
+        public string password { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string phoneNumber { get; set; }
+
+
+        public string hardware = null;
+        public Role role = new Role(1);
+        public int userId;
+
     }
 }
