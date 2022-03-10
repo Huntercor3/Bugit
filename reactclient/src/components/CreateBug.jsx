@@ -29,11 +29,10 @@ const CreateBug = () => {
   const [owner, setOwner] = useState('')
   const [date, setDate] = useState('')
   const [type, setType] = useState('')
-  const [status, setStatus] = useState({})
+  const [status, setStatus] = useState('')
   const [priority, setPriority] = useState('')
   const [estimatedTime, setEstimatedTime] = useState('')
-  //const [hardware, setHardware] = useState('')
-  //const [role, setRole] = useState('')
+  const [bugDescription, setBugDescription] = useState('')
   const [redirect, setRedirect] = useState(false)
   const submit = async (e) => {
     e.preventDefault()
@@ -51,6 +50,7 @@ const CreateBug = () => {
         status: status,
         priority: priority,
         estimatedTime: estimatedTime,
+        bugDescription: bugDescription
       }),
     }).then(function (response) {
       if (response.status == 200) setRedirect(true)
@@ -136,7 +136,7 @@ const CreateBug = () => {
                        options={priorityOptions} 
                        onChange = {setPriority}
                        placeholder = 'Set Priority'
-                       className='form-controldrop' 
+                       
                        />              
                     </div>
                     <div className='col-sm-6'>
@@ -146,6 +146,16 @@ const CreateBug = () => {
                         onChange = {(e) => setEstimatedTime(e.target.value)}
                         className='form-control'
                         placeholder='Estimated Time'
+                      />
+                    </div>
+                    <div className='col-sm-12'>
+                      <input
+                        type='text'
+                        required
+                        onChange = {(e) => setBugDescription(e.target.value)}
+                        
+                        className="form-control text-center"
+                        placeholder='Bug description'
                       />
                     </div>
                     

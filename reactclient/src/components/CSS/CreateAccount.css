@@ -44,10 +44,15 @@ body {
   width: 20%;
 }
 
-.form-controldrop {
-  margin-bottom: 1px;
+.form-control {
+  margin-bottom: 5px;
 }
 
 .col-sm-6 {
   margin-bottom: 15px;
+}
+.col-sm-12 {
+  margin-bottom: 20px;
+  margin-top: 5px;
+  text-align: center;
 }
