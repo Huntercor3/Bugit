@@ -41,14 +41,14 @@ namespace aspnetserver
             ExecuteCommand(sql);
         }
 
-        public void AddBug(Bug b)
+       /* public void AddBug(Bug b)
         {
             String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) values ("
                 + b.software + ", " + b.creator + ", " + b.timeCreated.ToString() + ")";
 
             ExecuteCommand(sql);
         }
-
+       */
         public void RemoveBug(int id)
         {
             String sql = "DELETE FROM dbo.Bugs WHERE BugId=" + id.ToString();
