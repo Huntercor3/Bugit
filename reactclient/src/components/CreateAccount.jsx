@@ -17,8 +17,8 @@ const CreateAccount = () => (
                   rel='icon'
                   src={BugItLogo}
                   alt='Logo'
-                  width='100px'
-                  height='100px'
+                  width='101px'
+                  height='101px'
                 />
                 <div class='col-6'>
                   <label for='inputFirstName' class='form-label'>
