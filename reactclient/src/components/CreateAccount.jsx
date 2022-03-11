@@ -2,7 +2,7 @@ import React from 'react'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
 
-export const CreateAccount = () => (
+const CreateAccount = () => (
   <React.Fragment>
     <body>
       <div class='container'>
@@ -93,3 +93,5 @@ export const CreateAccount = () => (
     </body>
   </React.Fragment>
 )
+
+export default CreateAccount;

@@ -36,19 +36,23 @@ body {
   z-index: 2;
 }
 
-.form-signup input[type='email'] {
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
-
-.form-signup input[type='password'] {
-  margin-bottom: 5px;
-  border-radius: 5px;
-}
-
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited {
   background-color: #4abdac !important;
+  width: 20%;
+}
+
+.form-control {
+  margin-bottom: 5px;
+}
+
+.col-sm-6 {
+  margin-bottom: 15px;
+}
+.col-sm-12 {
+  margin-bottom: 20px;
+  margin-top: 5px;
+  text-align: center;
 }

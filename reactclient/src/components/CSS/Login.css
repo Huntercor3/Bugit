@@ -21,8 +21,8 @@ body {
 }
 
 .form-signin {
-  width: 30%;
-  max-width: 40%;
+  width: 40%;
+  max-width: 60%;
   padding-left: 5%;
   padding-right: 5%;
   margin: auto;
@@ -36,12 +36,12 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type='email'] {
+.form-signin input[type="email"] {
   margin-bottom: 5px;
   border-radius: 5px;
 }
 
-.form-signin input[type='password'] {
+.form-signin input[type="password"] {
   margin-bottom: 5px;
   border-radius: 5px;
 }

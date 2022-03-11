@@ -31,65 +31,70 @@ const Login = () => {
       <body className='text-center'>
         <div className='container'>
           <main className='form-signin'>
-            <div className='col'>
-              <form onSubmit={submit}>
-                <img
-                  className='logo'
-                  rel='icon'
-                  src={BugItLogo}
-                  alt='Logo'
-                  width='100px'
-                  height='100px'
-                />
-                <h1 className='h3 mb-3 fw-normal'>Please Sign In</h1>
-                <div className='form-floating'>
-                  <input
-                    type='email'
-                    className='form-control'
-                    id='emailInput'
-                    placeholder='name@example.com'
-                    onChange={(e) => setEmail(e.target.value)}
-                  ></input>
-                  <label for='emailInput'>Email address</label>
-                </div>
-                <div className='form-floating'>
-                  <input
-                    type='password'
-                    className='form-control'
-                    id='passwordInput'
-                    placeholder='Password'
-                    required
-                    onChange={(e) => setPassword(e.target.value)}
-                  ></input>
-                  <label for='passwordInput'>Password</label>
-                </div>
-                <div className='form-check'>
-                  <input
-                    className='form-check-input'
-                    type='checkbox'
-                    value=''
-                    id='flexCheckChecked'
-                  />
-                  <label className='form-check-label' for='flexCheckChecked'>
-                    Remember me
-                  </label>
-                </div>
-                <button className='w-100 btn btn-md btn-primary' type='submit'>
-                  Sign In
-                </button>
-                <div className='border-top my-3'></div>
-                <div>
-                  <label className='signuplabel'>Dont Have an Account?</label>
-                  <a
-                    href='/createAccount'
+            <img
+              className='logo'
+              rel='icon'
+              src={BugItLogo}
+              alt='Logo'
+              width='100px'
+              height='100px'
+            />
+            <div className='card o-hidden border-0 shadow-lg my-5'>
+              <div className='p-5'>
+                <form onSubmit={submit}>
+                  <h1 className='h3 mb-3 fw-normal'>Please Sign In</h1>
+                  <div className='form-floating'>
+                    <input
+                      type='email'
+                      className='form-control'
+                      id='emailInput'
+                      placeholder='name@example.com'
+                      onChange={(e) => setEmail(e.target.value)}
+                    ></input>
+                    <label for='emailInput'>Email address</label>
+                  </div>
+                  <div className='form-floating'>
+                    <input
+                      type='password'
+                      className='form-control'
+                      id='passwordInput'
+                      placeholder='Password'
+                      required
+                      onChange={(e) => setPassword(e.target.value)}
+                    ></input>
+                    <label for='passwordInput'>Password</label>
+                  </div>
+                  <div className='form-check'>
+                    <input
+                      className='form-check-input'
+                      type='checkbox'
+                      value=''
+                      id='flexCheckChecked'
+                    />
+                    <label className='form-check-label' for='flexCheckChecked'>
+                      Remember me
+                    </label>
+                  </div>
+                  <button
                     className='w-100 btn btn-md btn-primary'
                     type='submit'
                   >
-                    Create Account
-                  </a>
-                </div>
-                <p className='mt-5 mb-3 text-muted'>&copy; BugIt 2022</p>
-              </form>
+                    Sign In
+                  </button>
+                  <div className='border-top my-3'></div>
+                  <div>
+                    <label className='signuplabel'>Dont Have an Account?</label>
+                    <a
+                      href='/createAccount'
+                      className='w-100 btn btn-md btn-primary'
+                      type='submit'
+                    >
+                      Create Account
+                    </a>
+                  </div>
+                  <p className='mt-5 mb-3 text-muted'>&copy; BugIt 2022</p>
+                </form>
+              </div>
             </div>
           </main>
         </div>
