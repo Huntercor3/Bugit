@@ -37,7 +37,7 @@ const CreateBug = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await fetch('https://localhost:7075/Register', {
+    await fetch('https://localhost:7075/create-bug', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -152,6 +152,7 @@ const CreateBug = () => {
                       <input
                         type='text'
                         required
+                        onChange = {(e) => setBugDescription(e.target.value)}                        
                         className="form-control text-center"
                         placeholder='Bug description'
                       />
