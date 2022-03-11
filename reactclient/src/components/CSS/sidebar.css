@@ -38,7 +38,7 @@ main {
 
 .nav-flush .nav-link {
   border-radius: 0px;
-  background-color: #fc4a1a !important;
+  background-color: #4abdac !important;
   color: #ffffff;
 }
 
@@ -54,7 +54,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(0, 0, 0, 0.85);
-  background-color: #d2f4ea;
+  background-color: #4abdac;
 }
 
 .btn-toggle::before {
@@ -81,7 +81,7 @@ main {
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-  background-color: #d2f4ea;
+  background-color: #4abdac;
 }
 
 .scrollarea {
