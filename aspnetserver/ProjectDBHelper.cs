@@ -102,7 +102,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            Bug b = new Bug((int)record[0], (int)record[1], (DateTime)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
+                            Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
                             bugs.Add(b);
                         }
                     }

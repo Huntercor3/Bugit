@@ -20,8 +20,8 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role)" +
-                    "OUTPUT INSERTED.UserId" +
+                String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
+                    " OUTPUT INSERTED.UserId" +
                     " values ("
                     + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + ", " + u.password + ")";
 

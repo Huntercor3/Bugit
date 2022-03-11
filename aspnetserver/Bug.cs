@@ -7,14 +7,14 @@ namespace aspnetserver
     {
         public int BugId { get; set; }
         public int Creator { get; set; }
-        public DateTime TimeCreated { get; set; }
+        public string TimeCreated { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
         public string Priority { get; set; }
         public string EstimatedTime { get; set; }
 
-        public Bug(int bugId, int creator, DateTime timeCreated, string description, string type, string status, string priority, string estimatedTime)
+        public Bug(int bugId, int creator, string timeCreated, string description, string type, string status, string priority, string estimatedTime)
         {
             BugId = bugId;
             Creator = creator;
