@@ -6,6 +6,19 @@ import './CSS/home.css'
 import Data from './data.json'
 import { Button } from 'react-bootstrap'
 
+const [bugData, setBugData] = useState({});
+
+useEffect(() => {
+  getBugWithAxios();
+}, []);
+
+
+
+const getBugWithAxios = async () => {
+  const response = await axios.get(bugUrl);
+  setUserData(response.data);
+};
+
 function readJson(bugs, index) {
   return (
     <tr key={index}>
