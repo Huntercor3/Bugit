@@ -50,7 +50,7 @@ app.MapGet("/get-all-organizations", async () => await Endpoints.GetAllOrganizat
 */
 app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
 {
-    await Endpoints.GetBugsInProject(projectId);
+    await ProjectDBHelper.GetBugsInProject(projectId);
 
 }).WithTags("Project Endpoints");
 

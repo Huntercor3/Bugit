@@ -22,8 +22,8 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role)" +
                     "OUTPUT INSERTED.UserId" +
-                    " values ("
-                    + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + "," + u.password + ")";
+                    " values ('"
+                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -38,7 +38,7 @@ namespace aspnetserver
             List<Project> projects = new List<Project>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers WHERE UserId=" + userId.ToString() + " AND dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId";
+                String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers ON dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId WHERE dbo.ProjectUsers.userId=" + userId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
