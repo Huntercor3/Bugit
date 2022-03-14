@@ -107,8 +107,8 @@ app.UseAuthorization();
 app.MapPost("/login",
     (LoginModel user, IUserService service) => Login(user, service));
 
-app.MapPost("/login",
-    (RegisterModel user, IUserService service) => Register(user, service));
+app.MapPost("/register",
+    (RegisterModel user, IUserService service) => RegisterAsync(user, service));
 
 IResult Login(LoginModel user, IUserService service)
 {
@@ -146,17 +146,19 @@ IResult Login(LoginModel user, IUserService service)
     return Results.BadRequest("Invalid user credentials");
 }
 
-IResult Register(RegisterModel userEntry, IUserService service)
+async Task<IResult> RegisterAsync(RegisterModel userEntry, IUserService service)
 {
     if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
         !string.IsNullOrEmpty(userEntry.password))
         {
         User userToRegister = new User(userEntry.userId, userEntry.firstName, userEntry.lastName, userEntry.emailAddress, userEntry.phoneNumber, userEntry.hardware, userEntry.role, userEntry.password);
-        UserDBHelper.AddUser(userToRegister);
+        await UserDBHelper.AddUser(userToRegister);
 
+        
         LoginModel login = new LoginModel();
         login.EmailAddress = userToRegister.email;
         login.Password = userToRegister.password;
+        
 
         return Results.Ok();
     }
