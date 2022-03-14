@@ -54,7 +54,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (DateTime)record[3], new Category((int)record[4]));
+                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (string)record[3], new Category((int)record[4]));
                             bugs.Add(b);
                         }
                     }
@@ -150,7 +150,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (DateTime)record[3], new Category((int)record[6]));
+                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (string)record[3], new Category((int)record[6]));
                             bugs.Add(b);
                         }
                     }

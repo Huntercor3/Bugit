@@ -78,5 +78,10 @@ app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
 
 }).WithTags("Project Endpoints");
 
+app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
+{
+    await ProjectDBHelper.GetBugsInProject(projectId);
+
+}).WithTags("Bug Endpoints");
 
 app.Run();
