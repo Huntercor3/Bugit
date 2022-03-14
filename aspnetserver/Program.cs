@@ -30,8 +30,8 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 app.UseHttpsRedirection();
 //var person = Endpoints.
 
-app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
-    .WithTags("User Endpoints");
+//app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
+ //   .WithTags("User Endpoints");
 
 app.MapGet("/get-all-bugs", async () => await Endpoints.GetAllBugs())
     .WithTags("User Endpoints");
@@ -42,12 +42,12 @@ app.MapGet("/get-all-projects", async () => await Endpoints.GetAllProjects())
 app.MapGet("/get-all-organizations", async () => await Endpoints.GetAllOrganizations())
     .WithTags("User Endpoints");
 
-app.MapGet("/get-users-in-project-by-id/{projectId}", async (int projectId) =>
+/*app.MapGet("/get-users-in-project-by-id/{projectId}", async (int projectId) =>
 {
    await Endpoints.GetUsersInProject(projectId);
 
 }).WithTags("User Endpoints");
-
+*/
 app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
 {
     await Endpoints.GetBugsInProject(projectId);
@@ -65,6 +65,18 @@ app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
     await Endpoints.GetCommentsForBug(bugId);
 
 }).WithTags("Bug Endpoints");
+
+app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
+{
+    await ProjectDBHelper.AddBugToProject(projectId, bugId);
+
+}).WithTags("Bug Endpoints");
+
+app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
+{
+    await ProjectDBHelper.AddNewProject(projectName);
+
+}).WithTags("Project Endpoints");
 
 
 app.Run();

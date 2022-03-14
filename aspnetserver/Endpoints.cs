@@ -15,7 +15,7 @@ namespace aspnetserver
             builder.Password = "CSBS@2201";
             builder.InitialCatalog = "bugit-server";
         }
-        public static async Task<List<User>> GetAllUsers()
+       /* public static async Task<List<User>> GetAllUsers()
         {
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -38,7 +38,7 @@ namespace aspnetserver
             }
             return users;
         }
-
+       */
         public static async Task<List<Bug>> GetAllBugs()
         {
             List<Bug> bugs = new List<Bug>();
@@ -110,7 +110,7 @@ namespace aspnetserver
             }
             return organizations;
         }
-
+/*
         public static async Task<List<User>> GetUsersInProject(int projectId)
         {
             List<User> users = new List<User>();
@@ -134,7 +134,7 @@ namespace aspnetserver
             }
             return users;
         }
-
+*/
         public static async Task<List<Bug>> GetBugsInProject(int projectId)
         {
             List<Bug> bugs = new List<Bug>();
