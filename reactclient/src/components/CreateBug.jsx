@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import './CSS/CreateAccount.css'
+//import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
 
 const CreateBug = () => {
@@ -107,7 +107,7 @@ const CreateBug = () => {
                   <div class='form-group row'>
                     <div className='col-sm-6'>
                       <input
-                        type='tel'
+                        type='text'
                         required
                         onChange={(e) => setPriority(e.target.value)}
                         className='form-control'

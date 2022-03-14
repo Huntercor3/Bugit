@@ -1,8 +1,10 @@
 import { render } from '@testing-library/react'
 import React, { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
 import Data from './data.json'
+import { Button } from 'react-bootstrap'
 
 function readJson(bugs, index) {
   return (
@@ -57,31 +59,36 @@ function deleteBug() {
 // }
 
 export const Home = () => (
-  <body>
-    <h1>BugIt</h1>
-    <div class='table-responsive'>
-      <table class='table table-striped table-sm' id='myTable'>
-        <thead>
-          <tr>
-            <th>Software</th>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Priority</th>
-            <th>Estimated Time</th>
-          </tr>
-        </thead>
-        <tbody id='myTbody'>{Data.map(readJson)}</tbody>
-      </table>
-    </div>
-    <div>
-      <button type='button' class='btn btn-success' onClick={addBug}>
-        Add
-      </button>
-      <button type='button' class='btn btn-danger' onClick={deleteBug}>
-        Delete
-      </button>
-    </div>
-  </body>
+  <React.Fragment>
+    <body>
+      <h1>BugIt</h1>
+      <Link to='/createBug'>
+        <Button class='btn btn-success'>New Bug</Button>
+      </Link>
+      <div class='table-responsive'>
+        <table class='table table-striped table-sm' id='myTable'>
+          <thead>
+            <tr>
+              <th>Software</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Estimated Time</th>
+            </tr>
+          </thead>
+          <tbody id='myTbody'>{Data.map(readJson)}</tbody>
+        </table>
+      </div>
+      {/* <div>
+        <button type='button' class='btn btn-success' onClick={addBug}>
+          Add
+        </button>
+        <button type='button' class='btn btn-danger' onClick={deleteBug}>
+          Delete
+        </button>
+      </div> */}
+    </body>
+  </React.Fragment>
 )
