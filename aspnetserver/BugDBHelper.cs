@@ -83,14 +83,13 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "UPDATE dbo.Bugs" + 
-                    "SET Software = " + b.software +
-                    ", Creator = " + b.creator.ToString() +
-                    ", TimeCreated = " + b.timeCreated.ToString() +
-                    ", Description = " + b.description +
-                    ", Type = " + b.type.ToString() +
-                    ", Status = " + b.status.ToString() +
-                    ", Priority = " + b.priority.ToString() +
-                    " WHERE BugId = " + b.bugId.ToString();
+                    "SET Creator = " + b.Creator.ToString() +
+                    ", TimeCreated = " + b.TimeCreated.ToString() +
+                    ", Description = " + b.Description +
+                    ", Type = " + b.Type.ToString() +
+                    ", Status = " + b.Status.ToString() +
+                    ", Priority = " + b.Priority.ToString() +
+                    " WHERE BugId = " + b.BugId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
