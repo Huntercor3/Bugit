@@ -33,6 +33,22 @@ namespace aspnetserver
             }
         }
 
+        public static async void UpdateProject(Project p)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "UPDATE dbo.Projects" +
+                    "SET ProjectName = " + p.projectName +
+                    " WHERE ProjectId = " + p.projectId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
         public static async void AddUserToProject(int projectId, User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))

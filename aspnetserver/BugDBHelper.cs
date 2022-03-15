@@ -77,5 +77,26 @@ namespace aspnetserver
             int bugId = await AddBug(b);
             ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
+
+        public static async void UpdateBug(Bug b)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "UPDATE dbo.Bugs" + 
+                    "SET Creator = " + b.Creator.ToString() +
+                    ", TimeCreated = " + b.TimeCreated.ToString() +
+                    ", Description = " + b.Description +
+                    ", Type = " + b.Type.ToString() +
+                    ", Status = " + b.Status.ToString() +
+                    ", Priority = " + b.Priority.ToString() +
+                    " WHERE BugId = " + b.BugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
     }
 }

@@ -66,17 +66,7 @@ export const Sidebar = () => (
                 About
               </a>
             </li>
-            <li>
-              <a
-                href='/contact'
-                class='nav-link py-3 border-bottom'
-                title='Contact'
-                data-bs-toggle='tooltip'
-                data-bs-placement='right'
-              >
-                Contact
-              </a>
-            </li>
+            
             <li>
               <a
                 href='/newCreateAccount'
@@ -86,7 +76,7 @@ export const Sidebar = () => (
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
               >
-                New Sign up
+                {' '}
               </a>
             </li>
             <li>
@@ -96,7 +86,9 @@ export const Sidebar = () => (
                 title='NoMatch'
                 data-bs-toggle='tooltip'
                 data-bs-placement='right'
-              ></a>
+              >
+                {' '}
+              </a>
             </li>
             <li>
               <a
