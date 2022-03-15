@@ -49,7 +49,7 @@ namespace aspnetserver
             }
         }
 
-        public static async void AddUserToProject(int projectId, User u)
+        public static async Task<int> AddUserToProject(int projectId, User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
@@ -59,12 +59,12 @@ namespace aspnetserver
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public static async void AddBugToProject(int projectId, int bugId)
+        public static async Task<int> AddBugToProject(int projectId, int bugId)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
@@ -74,7 +74,7 @@ namespace aspnetserver
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }
