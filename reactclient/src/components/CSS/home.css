@@ -29,13 +29,8 @@ body {
   width: 100px;
 }
 
-/* .row {
-  margin: 0px;
-  padding: 0px;
-
-} */
 .table {
-  --bs-table-striped-bg: #4abdac83; /*striped color*/
+  margin: 0px;
 }
 
 @media (max-width: 767.98px) {
