@@ -10,7 +10,7 @@ import './CSS/home.css'
 
 export const Sidebar = () => (
   <React.Fragment>
-    <div class='container-fluid'>
+    <div>
       <div class='row'>
         {/* class="d-flex flex-column flex-shrink-0 bg-light" */}
         <nav
@@ -66,7 +66,7 @@ export const Sidebar = () => (
                 About
               </a>
             </li>
-            
+
             <li>
               <a
                 href='/newCreateAccount'
