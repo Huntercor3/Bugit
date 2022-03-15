@@ -22,8 +22,8 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
                     "OUTPUT INSERTED.BugId " +
-                    "values ("
-                    + b.Creator + ", " + b.TimeCreated.ToString() + ", " + b.Description + ", " + b.Type + ", " + b.Status + ", " + b.Priority + ", " + b.EstimatedTime + ")";
+                    "values ('"
+                    + b.Creator + "', '" + b.TimeCreated.ToString() + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -62,7 +62,7 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.BugComments (BugId, Comment) " +
                     "values ("
-                    + bugId.ToString() + ", " + comment + ")";
+                    + bugId.ToString() + ", '" + comment + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {

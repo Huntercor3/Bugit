@@ -22,8 +22,8 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.Projects (ProjectName)" +
                     "OUTPUT INSERTED.ProjectId" +
-                    " values ("
-                    + projectName + ")";
+                    " values ('"
+                    + projectName + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -54,7 +54,7 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.ProjectUsers (ProjectId, UserId) values ("
-                + projectId + ", " + u.userId.ToString() + ")";
+                + projectId.ToString() + ", " + u.userId.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -69,7 +69,7 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.ProjectBugs (ProjectId, BugId) values ("
-                + projectId + ", " + bugId.ToString() + ")";
+                + projectId.ToString() + ", " + bugId.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -84,7 +84,7 @@ namespace aspnetserver
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString() + " AND dbo.Users.UserId = dbo.ProjectUsers.UserId";
+                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers ON dbo.Users.UserId = dbo.ProjectUsers.UserId WHERE dbo.ProjectBugs.ProjectId=" + projectId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -108,7 +108,7 @@ namespace aspnetserver
             List<Bug> bugs = new List<Bug>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Bugs JOIN dbo.ProjectBugs WHERE ProjectId=" + projectId.ToString() + " AND dbo.Bugs.BugId = dbo.ProjectUsers.BugId";
+                String sql = "SELECT * FROM dbo.Bugs JOIN dbo.ProjectBugs ON dbo.Bugs.BugId = dbo.ProjectBugs.BugId WHERE dbo.ProjectBugs.ProjectId=" + projectId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {

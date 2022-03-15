@@ -21,9 +21,9 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
-                    "OUTPUT INSERTED.UserId" +
-                    " values ("
-                    + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + "," + u.password + ")";
+                    " OUTPUT INSERTED.UserId" +
+                    " values ('"
+                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -33,34 +33,12 @@ namespace aspnetserver
             }
         }
 
-        public static async void UpdateUser(User u)
-        {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
-                String sql = "UPDATE dbo.Users" +
-                    "SET FirstName = " + u.firstName +
-                    ", Lastname = " + u.lastName +
-                    ", email = " + u.email +
-                    ", PhoneNumber = " + u.phoneNumber +
-                    ", Hardware = " + u.hardware +
-                    ", Role = " + u.role.roleId.ToString() +
-                    ", Password = " + u.password +
-                    " WHERE UserId = " + u.userId.ToString();
-
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
-        }
-
         public static async Task<List<Project>> GetProjectsForUser(int userId)
         {
             List<Project> projects = new List<Project>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers WHERE UserId=" + userId.ToString() + " AND dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId";
+                String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers ON dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId WHERE dbo.ProjectUsers.userId=" + userId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
