@@ -20,10 +20,17 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
+<<<<<<< HEAD
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
                     "OUTPUT INSERTED.BugId " +
                     "values ("
                     + b.Creator + ", " + b.TimeCreated.ToString() + ", " + b.Description + ", " + b.Type + ", " + b.Status + ", " + b.Priority + ", " + b.EstimatedTime + ")";
+=======
+                String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) " +
+                    "OUTPUT INSERTED.BugId" +
+                    "values ('"
+                    + b.software + "', '" + b.creator + "', '" + b.timeCreated.ToString() + "')";
+>>>>>>> origin/EndpointsRemastered
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -38,7 +45,7 @@ namespace aspnetserver
             List<String> comments = new List<String>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
+                String sql = "SELECT * FROM dbo.BugComments WHERE BugId='" + bugId.ToString() + "'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -61,8 +68,8 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.BugComments (BugId, Comment) " +
-                    "values ("
-                    + bugId.ToString() + ", " + comment + ")";
+                    "values ('"
+                    + bugId.ToString() + "', '" + comment + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -75,7 +82,7 @@ namespace aspnetserver
         public static async void AddBugWithProject(Bug b, int projectId)
         {
             int bugId = await AddBug(b);
-            ProjectDBHelper.AddBugToProject(projectId, bugId);
+            await ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
 
         public static async void UpdateBug(Bug b)

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
@@ -18,6 +19,25 @@
         ],
         "configFilePaths": [
           "C:\\Users\\Jarod\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
+  },
+  "projects": {
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "projectName": "aspnetserver",
+        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
+        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> origin/EndpointsRemastered
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

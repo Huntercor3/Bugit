@@ -22,8 +22,8 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.Projects (ProjectName)" +
                     "OUTPUT INSERTED.ProjectId" +
-                    " values ("
-                    + projectName + ")";
+                    " values ('"
+                    + projectName + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -33,6 +33,7 @@ namespace aspnetserver
             }
         }
 
+<<<<<<< HEAD
         public static async void UpdateProject(Project p)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -50,31 +51,34 @@ namespace aspnetserver
         }
 
         public static async void AddUserToProject(int projectId, User u)
+=======
+        public static async Task<int> AddUserToProject(int projectId, User u)
+>>>>>>> origin/EndpointsRemastered
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.ProjectUsers (ProjectId, UserId) values ("
-                + projectId + ", " + u.userId.ToString() + ")";
+                + projectId.ToString() + ", " + u.userId.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        public static async void AddBugToProject(int projectId, int bugId)
+        public static async Task<int> AddBugToProject(int projectId, int bugId)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.ProjectBugs (ProjectId, BugId) values ("
-                + projectId + ", " + bugId.ToString() + ")";
+                + projectId.ToString() + ", " + bugId.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }
@@ -84,7 +88,7 @@ namespace aspnetserver
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString() + " AND dbo.Users.UserId = dbo.ProjectUsers.UserId";
+                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers ON dbo.Users.UserId = dbo.ProjectUsers.UserId WHERE dbo.ProjectBugs.ProjectId=" + projectId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -108,7 +112,7 @@ namespace aspnetserver
             List<Bug> bugs = new List<Bug>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Bugs JOIN dbo.ProjectBugs WHERE ProjectId=" + projectId.ToString() + " AND dbo.Bugs.BugId = dbo.ProjectUsers.BugId";
+                String sql = "SELECT * FROM dbo.Bugs JOIN dbo.ProjectBugs ON dbo.Bugs.BugId = dbo.ProjectBugs.BugId WHERE dbo.ProjectBugs.ProjectId=" + projectId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -118,7 +122,11 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
+<<<<<<< HEAD
                             Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
+=======
+                            Bug b = new Bug((int)record[0], (string)record[1], (int)record[2], (string)record[3], new Category((int)record[6]));
+>>>>>>> origin/EndpointsRemastered
                             bugs.Add(b);
                         }
                     }
