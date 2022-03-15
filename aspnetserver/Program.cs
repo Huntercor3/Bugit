@@ -149,9 +149,10 @@ app.MapGet("/listUsers",
     .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
 */
 
-app.MapGet("/get-all-users",
+/*app.MapGet("/get-all-users",
     async () => await Endpoints.GetUsers())
     .WithTags("User Endpoints");
+*/
 
 app.MapPost("/create-bug", async (Bug bugtoCreate) =>
 {

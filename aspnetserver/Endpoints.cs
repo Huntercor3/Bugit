@@ -39,6 +39,7 @@ namespace aspnetserver
             return users;
         }
        */
+       /*
         public static async Task<List<Bug>> GetAllBugs()
         {
             List<Bug> bugs = new List<Bug>();
@@ -62,7 +63,7 @@ namespace aspnetserver
             }
             return bugs;
         }
-
+        */
         public static async Task<List<Project>> GetAllProjects()
         {
             List<Project> projects = new List<Project>();
@@ -135,7 +136,7 @@ namespace aspnetserver
             return users;
         }
 */
-        public static async Task<List<Bug>> GetBugsInProject(int projectId)
+       /* public static async Task<List<Bug>> GetBugsInProject(int projectId)
         {
             List<Bug> bugs = new List<Bug>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -158,7 +159,7 @@ namespace aspnetserver
             }
             return bugs;
         }
-
+       */
         public static async Task<List<Project>> GetProjectInOrganization(int organizationId)
         {
             List<Project> projects = new List<Project>();
