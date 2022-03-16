@@ -98,5 +98,30 @@ namespace aspnetserver
                 }
             }
         }
+
+        public static async Task<List<Bug>> GetAllBugs()
+        {
+            List<Bug> bugs = new List<Bug>();
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Bugs";
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
+                            bugs.Add(b);
+                        }
+                    }
+                }
+            }
+            return bugs;
+        }
+
     }
 }
