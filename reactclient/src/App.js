@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
-import { Home } from "./components/Home";
+import Home from "./components/Home";
 import { About } from "./components/About";
 import CreateBug from "./components/CreateBug";
 import { NoMatch } from "./components/NoMatch";

@@ -6,19 +6,23 @@ import './CSS/home.css'
 import Data from './data.json'
 import { Button } from 'react-bootstrap'
 
-function readJson(bugs, index) {
+
+
+function readJson(bug, index) {
+
   return (
     <tr key={index}>
-      <td>{bugs.software}</td>
-      <td>{bugs.name}</td>
-      <td>{bugs.date}</td>
-      <td>{bugs.type}</td>
-      <td>{bugs.status}</td>
-      <td>{bugs.priority}</td>
-      <td>{bugs.estimatedTime}</td>
+      <td>{bug.software}</td>
+      <td>{bug.name}</td>
+      <td>{bug.date}</td>
+      <td>{bug.type}</td>
+      <td>{bug.status}</td>
+      <td>{bug.priority}</td>
+      <td>{bug.estimatedTime}</td>
     </tr>
   )
 }
+
 
 function addBug() {
   console.log('added bug')
@@ -56,10 +60,15 @@ function deleteBug() {
 //       <div class='bottomleft'>{user.Name}</div>
 //     </>
 //   )
-// }
+//}
 
-export const Home = () => (
-  <React.Fragment>
+
+
+ const Home = () => {
+   
+  
+
+  return (
     <body>
       <h1>BugIt</h1>
       <Link to='/createBug'>
@@ -90,5 +99,6 @@ export const Home = () => (
         </button>
       </div> */}
     </body>
-  </React.Fragment>
-)
+  )
+}
+export default Home
