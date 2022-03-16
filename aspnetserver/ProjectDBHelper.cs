@@ -126,5 +126,35 @@ namespace aspnetserver
             }
             return bugs;
         }
+
+        public static async void DeleteProject(int projectId)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "DELETE FROM dbo.Projects WHERE BugId=" + projectId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                String sqlTwo = "DELETE FROM dbo.ProjectBugs WHERE ProjectId=" + projectId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                String sqlThree = "DELETE FROM dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
     }
 }

@@ -56,5 +56,27 @@ namespace aspnetserver
             }
             return projects;
         }
+
+        public static async void DeleteUser(int userId)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "DELETE FROM dbo.Users WHERE UserId=" + userId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                String sqlTwo = "DELETE FROM dbo.ProjectUsers WHERE UserId=" + userId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
     }
 }
