@@ -154,10 +154,10 @@ app.MapGet("/listUsers",
     .WithTags("User Endpoints");
 */
 
-app.MapPost("/create-bug", async (Bug bugtoCreate) =>
-{
-    await BugDBHelper.AddBug(bugtoCreate);
-}).WithTags("bug Endpoints");
+
+
+app.MapPost("/get-all-bugs", async () =>
+ await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
 
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
