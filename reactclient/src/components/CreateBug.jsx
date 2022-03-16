@@ -27,12 +27,12 @@ const statusOptions=[
 const CreateBug = () => {
   
   const [owner, setOwner] = useState('')
-  const [date, setDate] = useState('')
+  const [timeCreated, setDate] = useState('')
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
   const [priority, setPriority] = useState('')
   const [estimatedTime, setEstimatedTime] = useState('')
-  const [bugDescription, setBugDescription] = useState('')
+  const [description, setBugDescription] = useState('')
   const [redirect, setRedirect] = useState(false)
   const submit = async (e) => {
     e.preventDefault()
@@ -45,19 +45,19 @@ const CreateBug = () => {
       credentials: 'include',
       body: JSON.stringify({
         owner: owner,
-        date: date,
+        timeCreated: timeCreated,
         type: type,
         status: status,
         priority: priority,
         estimatedTime: estimatedTime,
-        bugDescription: bugDescription
+        description: description
       }),
     }).then(function (response) {
       if (response.status == 200) setRedirect(true)
       else alert('Invalid credientials, please try again')
     })
   }
-  if (redirect) return <Navigate to='/home' />
+  if (redirect) return <Navigate to='/#home' />
 
 
   /*onChangeFunc=({value}) =>
@@ -116,28 +116,52 @@ const CreateBug = () => {
                   </div>
                   <div className='form-group row'>
                     <div className='col-sm-6 '>
-                    <Select
+                     <input
+                        type='text'
+                        required
+                        onChange = {(e) => setType(e.target.value)}
+                        className='form-control'
+                        placeholder='Set Type'
+                      />
+            
+                   {/* <Select
                        options={typeOptions} 
                        onChange = {setType}
                        placeholder = 'Set Type' 
-                       />         
+                       />  */}   
+          
                     </div>
                     <div className='col-sm-6 '>
-                      <Select
+                      
+                    <input
+                        type='text'
+                        required
+                        onChange = {(e) => setStatus(e.target.value)}
+                        className='form-control'
+                        placeholder='Set Status'
+                      /> 
+                      {/*<Select
                        options={statusOptions} 
                        onChange = {setStatus}
                        placeholder = 'Set status'
-                       />                    
+                       />  */}                  
                     </div>
                   </div>
                   <div className='form-group row'>
                     <div className='col-sm-6'>
-                    <Select
+                    <input
+                        type='text'
+                        required
+                        onChange = {(e) => setPriority(e.target.value)}
+                        className='form-control'
+                        placeholder='Set Priority'
+                      />
+             
+                    {/*<Select
                        options={priorityOptions} 
                        onChange = {setPriority}
-                       placeholder = 'Set Priority'
-                       
-                       />              
+                       placeholder = 'Set Priority'                      
+                       /> */}             
                     </div>
                     <div className='col-sm-6'>
                       <input
