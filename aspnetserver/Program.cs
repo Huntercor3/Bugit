@@ -154,30 +154,30 @@ app.MapGet("/listUsers",
     .WithTags("User Endpoints");
 */
 
+app.MapPost("/get-all-bugs",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+async () =>
+    await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
 
-
-app.MapPost("/get-all-bugs", async () =>
- await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
-
-app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
+app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+async (int projectId, int bugId) =>
 {
     await ProjectDBHelper.AddBugToProject(projectId, bugId);
-
 }).WithTags("Bug Endpoints");
 
-app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
+app.MapPost("/add-new-project-by-project-name",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+async (string projectName) =>
 {
     await ProjectDBHelper.AddNewProject(projectName);
-
 }).WithTags("Project Endpoints");
 
-app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
+app.MapGet("/get-bugs-by-project-id/{projectId}",
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
+async (int projectId) =>
 {
     await ProjectDBHelper.GetBugsInProject(projectId);
-
 }).WithTags("Bug Endpoints");
-
-
-
 
 app.Run();
