@@ -22,8 +22,8 @@ namespace aspnetserver
             {
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
                     " OUTPUT INSERTED.UserId" +
-                    " values ( "
-                    + u.firstName + ", " + u.lastName + ", " + u.email + ", " + u.phoneNumber + ", " + u.hardware + ", " + u.role.roleId.ToString() + ", " + u.password + " )";
+                    " values ('"
+                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
