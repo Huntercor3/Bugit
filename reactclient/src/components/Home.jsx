@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
-import Data from './data.json'
+
 import { Button } from 'react-bootstrap'
 
 
@@ -12,9 +12,10 @@ function readJson(bug, index) {
 
   return (
     <tr key={index}>
-      <td>{bug.software}</td>
-      <td>{bug.name}</td>
-      <td>{bug.date}</td>
+      <td>{bug.bugid}</td>
+      <td>{bug.creator}</td>
+      <td>{bug.timecreated}</td>
+      <td>{bug.description}</td>
       <td>{bug.type}</td>
       <td>{bug.status}</td>
       <td>{bug.priority}</td>
@@ -62,10 +63,41 @@ function deleteBug() {
 //   )
 //}
 
+var myInit = {
+  method: 'POST',
+  Headers: {
+    'Content-Type': 'application/json',
+  },
+  mode: 'cors',
+  cache: 'default',
+}
 
+const getBugUrl = 'https://localhost:7075/get-all-bugs'
 
- const Home = () => {
-   
+let myRequest = new Request(getBugUrl, myInit)
+
+ const Home =() => {
+  const [bugData, setBugData] = useState([]);
+  
+  async function getAllBugs() {
+    fetch(myRequest)
+    .then(response => response.json())
+    .then(bugsFromServer => {
+      setBugData(bugsFromServer);
+      })
+      .then(function (data) {
+        console.log(data)
+      })
+  }
+  
+  console.log("bugData: " + bugData)
+  
+  useEffect(() => {
+    getAllBugs([])
+  }, []);
+    
+    
+      
   
 
   return (
@@ -78,7 +110,8 @@ function deleteBug() {
         <table class='table table-striped table-sm' id='myTable'>
           <thead>
             <tr>
-              <th>Software</th>
+              <th>BugId</th>
+              <th>Creator</th>
               <th>Name</th>
               <th>Date</th>
               <th>Type</th>
@@ -87,18 +120,26 @@ function deleteBug() {
               <th>Estimated Time</th>
             </tr>
           </thead>
-          <tbody id='myTbody'>{Data.map(readJson)}</tbody>
+          <tbody >
+          {bugData.map((bug)=>(
+ <tr key={bug.id}>
+ <th scope="row">{bug.bugId}</th>
+ <td>{bug.creator}</td>
+ <td>{bug.timeCreated}</td>
+ <td>{bug.description}</td>
+ <td>{bug.type}</td>
+ <td>{bug.status}</td>
+ <td>{bug.priority}</td>
+ <td>{bug.estimatedTime}</td>
+ </tr>))}
+    
+          </tbody>
         </table>
+      
       </div>
-      {/* <div>
-        <button type='button' class='btn btn-success' onClick={addBug}>
-          Add
-        </button>
-        <button type='button' class='btn btn-danger' onClick={deleteBug}>
-          Delete
-        </button>
-      </div> */}
+      
     </body>
+    
   )
 }
 export default Home
