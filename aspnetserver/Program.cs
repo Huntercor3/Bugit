@@ -180,4 +180,11 @@ async (int projectId) =>
     await ProjectDBHelper.GetBugsInProject(projectId);
 }).WithTags("Bug Endpoints");
 
+app.MapPost("updateBugTEST",
+    async (Bug bug) =>
+    {
+        BugDBHelper.UpdateBug(bug);
+    }
+    );
+
 app.Run();

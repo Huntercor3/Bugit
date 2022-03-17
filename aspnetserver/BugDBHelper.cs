@@ -82,14 +82,14 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "UPDATE dbo.Bugs" + 
-                    "SET Creator = " + b.Creator.ToString() +
-                    ", TimeCreated = " + b.TimeCreated.ToString() +
-                    ", Description = " + b.Description +
-                    ", Type = " + b.Type.ToString() +
-                    ", Status = " + b.Status.ToString() +
-                    ", Priority = " + b.Priority.ToString() +
-                    " WHERE BugId = " + b.BugId.ToString();
+                String sql = "UPDATE dbo.Bugs " +
+                    "SET Creator = " + b.Creator +
+                    ", TimeCreated = '" + b.TimeCreated.ToString() +
+                    "', Description = '" + b.Description.ToString() +
+                    "', Type = '" + b.Type.ToString() +
+                    "', Status = '" + b.Status.ToString() +
+                    "', Priority = '" + b.Priority.ToString() +
+                    "' WHERE BugId = " + b.BugId;
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -122,6 +122,5 @@ namespace aspnetserver
             }
             return bugs;
         }
-
     }
 }
