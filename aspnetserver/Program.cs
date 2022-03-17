@@ -140,7 +140,7 @@ IResult Login(LoginModel user, IUserService service)
         var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
         UserAuthenticated.JWTString = tokenString;
-        
+
         return Results.Ok(tokenString);
     }
     return Results.BadRequest("Invalid user credentials");
@@ -150,15 +150,13 @@ async Task<IResult> RegisterAsync(RegisterModel userEntry, IUserService service)
 {
     if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
         !string.IsNullOrEmpty(userEntry.password))
-        {
+    {
         User userToRegister = new User(userEntry.userId, userEntry.firstName, userEntry.lastName, userEntry.emailAddress, userEntry.phoneNumber, userEntry.hardware, userEntry.role, userEntry.password);
         await UserDBHelper.AddUser(userToRegister);
 
-        
         LoginModel login = new LoginModel();
         login.EmailAddress = userToRegister.email;
         login.Password = userToRegister.password;
-        
 
         return Results.Ok();
     }
