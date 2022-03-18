@@ -165,6 +165,12 @@ app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int 
 
 }).WithTags("Bug Endpoints");
 
+app.MapPost("/create-bug", async (Bug bugToCreate) =>
+{
+    await BugDBHelper.AddBug(bugToCreate);
+
+}).WithTags("Bug Endpoints");
+
 app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
 {
     await ProjectDBHelper.AddNewProject(projectName);
