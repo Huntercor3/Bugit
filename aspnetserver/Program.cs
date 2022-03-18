@@ -181,7 +181,7 @@ async (int projectId) =>
 }).WithTags("Bug Endpoints");
 
 app.MapPost("updateBugTEST",
-    async (Bug bug) =>
+    (Bug bug) =>
     {
         BugDBHelper.UpdateBug(bug);
     }
