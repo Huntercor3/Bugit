@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("http://localhost:3000", " https://purple-ground-019dc9c0f.1.azurestaticapps.net", "https://localhost:7075/swagger/index.html");
+        .WithOrigins("http://localhost:3000", "https://purple-ground-019dc9c0f.1.azurestaticapps.net", "https://localhost:7075/swagger/index.html");
     });
 });
 // Add services to the container.
