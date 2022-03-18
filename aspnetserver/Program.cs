@@ -22,7 +22,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("http://localhost:3000", " https://purple-ground-019dc9c0f.1.azurestaticapps.net");
+        .WithOrigins("http://localhost:3000", "https://purple-ground-019dc9c0f.1.azurestaticapps.net");
     });
 });
 // Add services to the container.
@@ -94,6 +94,12 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 /// </Login>
 
 var app = builder.Build();
+
+var cookiePolicyOptions = new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.None,
+};
+app.UseCookiePolicy(cookiePolicyOptions);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

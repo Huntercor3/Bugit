@@ -20,10 +20,10 @@ namespace aspnetserver.Controllers
                 var loggedInUser = service.CheckUserInDBO(user);
                 if (loggedInUser is null) return (IActionResult)Results.NotFound("User not found or password incorrect");
 
-                var claims = new[]
+                var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
-                    new Claim(ClaimTypes.Role, loggedInUser.Role)
+                    new Claim(ClaimTypes.Email, loggedInUser.EmailAddress.ToString()),
+                    new Claim(ClaimTypes.Role, loggedInUser.Role.ToString())
                 };
 
                 var claimsIdentity = new ClaimsIdentity(
@@ -32,7 +32,7 @@ namespace aspnetserver.Controllers
                 var authProperties = new AuthenticationProperties
                 {
                     AllowRefresh = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                     IsPersistent = true,
                     IssuedUtc = DateTimeOffset.UtcNow,
                     RedirectUri = "/nomatch"
@@ -42,8 +42,7 @@ namespace aspnetserver.Controllers
                     (
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity),
-                    authProperties
-                    );
+                    authProperties);
 
                 return (IActionResult)Results.Ok(/*tokenString*/);
             }
