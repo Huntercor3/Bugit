@@ -67,7 +67,6 @@ var myInit = {
   method: 'POST',
   Headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://localhost:7075/swagger/index.html'
   },
   mode: 'cors',
   cache: 'default',
