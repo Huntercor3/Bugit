@@ -118,19 +118,19 @@ function handleChange(e){
                   </div>
                   <div className='form-group row'>
                     <div className='col-sm-6 '>
-                     {/*<input
+                     <input
                         type='text'
                         required
                         onChange = {(e) => setType(e.target.value)}
                         className='form-control'
                         placeholder='Set Type'
-                      />*/}
+                      />
             
-                    <Select
+                   {/* <Select
                        options={this.state.typeOptions} 
                        onChange = {setStatus(this.handleChange.bind(this))}
                        placeholder = 'Set Type' 
-                       />     
+                       />     */}
           
                     </div>
                     <div className='col-sm-6 '>
