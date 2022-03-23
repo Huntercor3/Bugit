@@ -1,15 +1,8 @@
 using aspnetserver;
 using aspnetserver.Services;
 using aspnetserver.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
 using aspnetserver.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,7 +26,7 @@ builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
 {
     SwaggerGenOptionsExtensions.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Bugit Web Api", Version = "v1" });
 
-    SwaggerGenOptionsExtensions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    /*SwaggerGenOptionsExtensions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Scheme = "Bearer",
         BearerFormat = "JWT",
@@ -55,7 +48,7 @@ builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
             },
             new List<string>()
         }
-    });
+    });*/
 });
 
 /// <Login>
@@ -83,10 +76,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-        options.SlidingExpiration = true;
-        options.AccessDeniedPath = "/Forbidden/";
+        //options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        //options.SlidingExpiration = true;
+        //options.AccessDeniedPath = "/Forbidden/";
         options.Cookie.HttpOnly = true;
+
+        //options.LoginPath = "file/path.html",
+        options.Cookie.Name = "BugitSessionCookie";
     });
 // Telling the api the use Authorization
 builder.Services.AddAuthorization();
@@ -95,18 +91,11 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 var app = builder.Build();
 
-var cookiePolicyOptions = new CookiePolicyOptions
-{
-    MinimumSameSitePolicy = SameSiteMode.None,
-};
-app.UseCookiePolicy(cookiePolicyOptions);
-
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
-//app.UseCookiePolicy(cookiePolicyOptions);
 
 app.UseSwagger();
 app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
@@ -124,6 +113,8 @@ app.UseCors("CORSPolicy");
 // Telling the api to use Authentication and Authorization services
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCookiePolicy();
 
 // Login feature
 LoginController loginCon = new LoginController();
