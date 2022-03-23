@@ -126,6 +126,9 @@ app.MapPost("/add-new-project-by-project-name", async (string projectName) => { 
 app.MapPost("/register",
     (RegisterModel user, IUserService service) => RegisterAsync(user, service));
 
+app.MapPost("/CheckDBOTest",
+    (string email) => UserService.CheckUserInDBOBool(email));
+
 /*
 async Task<IActionResult> LoginOnPostAsync(LoginModel user, IUserService service)
 {

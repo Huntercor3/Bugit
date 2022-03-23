@@ -3,6 +3,7 @@
 using aspnetserver;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetserver.Services
 {
@@ -60,6 +61,32 @@ namespace aspnetserver.Services
             // Else returns null for Program.cs to say user was not found.
             else
                 return null;
+        }
+
+        public bool CheckUserInDBOBool(string email)
+        {
+            bool check = true;
+
+            // Runs the connection to the dbo
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                // SQL command
+                String sql = "SELECT email FROM Users WHERE email='" + email + "';";
+
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (!reader.HasRows)
+                        check = false;
+                }
+                catch (SqlException ex)
+                { throw; }
+                finally
+                { connection.Close(); }
+            }
+            return check;
         }
     }
 }
