@@ -22,6 +22,42 @@ namespace aspnetserver
                     if (service.CheckUserInDBOBool(loginModel.EmailAddress.ToString()))
                         return (IActionResult)Results.BadRequest("User already exists");
 
+                    int validConditions = 0;
+                    foreach (char c in userEntry.password)
+                    {
+                        if (c >= 'a' && c <= 'z')
+                        {
+                            validConditions++;
+                            break;
+                        }
+                    }
+                    foreach (char c in userEntry.password)
+                    {
+                        if (c >= 'A' && c <= 'Z')
+                        {
+                            validConditions++;
+                            break;
+                        }
+                    }
+                    if (validConditions == 0)
+                        return (IActionResult)Results.BadRequest("Not a valid password.");
+                    foreach (char c in userEntry.password)
+                    {
+                        if (c >= '0' && c <= '9')
+                        {
+                            validConditions++;
+                            break;
+                        }
+                    }
+                    if (validConditions == 1)
+                        return (IActionResult)Results.BadRequest("Not a valid password.");
+                    if (validConditions == 2)
+                    {
+                        char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
+                        if (userEntry.password.IndexOfAny(special) == -1)
+                            return (IActionResult)Results.BadRequest("Not a valid password.");
+                    }
+
                     await UserDBHelper.AddUser(userToRegister);
 
                     login.EmailAddress = userToRegister.email;
