@@ -38,14 +38,14 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "UPDATE dbo.Users" +
-                    "SET FirstName = " + u.firstName +
-                    ", Lastname = " + u.lastName +
-                    ", email = " + u.email +
-                    ", PhoneNumber = " + u.phoneNumber +
-                    ", Hardware = " + u.hardware +
-                    ", Role = " + u.role.roleId.ToString() +
-                    ", Password = " + u.password +
-                    " WHERE UserId = " + u.userId.ToString();
+                    "SET FirstName = '" + u.firstName +
+                    "', Lastname = '" + u.lastName +
+                    "', email = '" + u.email +
+                    "', PhoneNumber = '" + u.phoneNumber +
+                    "', Hardware = '" + u.hardware +
+                    "', Role = " + u.role.roleId.ToString() +
+                    ", Password = '" + u.password +
+                    "' WHERE UserId = " + u.userId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -70,7 +70,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            Project p = new Project((int)record[0], (string)record[1]);
+                            Project p = new Project((int)record[0], (string)record[1], (int)record[2]);
                             projects.Add(p);
                         }
                     }

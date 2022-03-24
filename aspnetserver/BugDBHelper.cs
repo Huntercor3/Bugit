@@ -20,17 +20,10 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-<<<<<<< HEAD
-                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
+                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
                     "OUTPUT INSERTED.BugId " +
                     "values ("
-                    + b.Creator + ", " + b.TimeCreated.ToString() + ", " + b.Description + ", " + b.Type + ", " + b.Status + ", " + b.Priority + ", " + b.EstimatedTime + ")";
-=======
-                String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) " +
-                    "OUTPUT INSERTED.BugId" +
-                    "values ('"
-                    + b.software + "', '" + b.creator + "', '" + b.timeCreated.ToString() + "')";
->>>>>>> origin/EndpointsRemastered
+                    + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -90,14 +83,14 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "UPDATE dbo.Bugs" + 
-                    "SET Software = " + b.software +
-                    ", Creator = " + b.creator.ToString() +
-                    ", TimeCreated = " + b.timeCreated.ToString() +
-                    ", Description = " + b.description +
-                    ", Type = " + b.type.ToString() +
-                    ", Status = " + b.status.ToString() +
-                    ", Priority = " + b.priority.ToString() +
-                    " WHERE BugId = " + b.bugId.ToString();
+                    ", Creator = " + b.Creator.ToString() +
+                    ", TimeCreated = '" + b.TimeCreated +
+                    "', Description = '" + b.Description +
+                    "', Type = '" + b.Type +
+                    "', Status = '" + b.Status +
+                    "', Priority = '" + b.Priority +
+                    "', Archived = " + b.Archived.ToString() +
+                    " WHERE BugId = " + b.BugId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -130,6 +123,27 @@ namespace aspnetserver
                 String sqlThree = "DELETE FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+        public static async void ArchiveBug(int bugId, bool archive)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                int arch = 1;
+                if (!archive)
+                {
+                    arch = 0;
+                }
+                String sql = "UPDATE dbo.Bugs" +
+                    " SET Archived = " + arch.ToString() +
+                    " WHERE ProjectId = " + bugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
