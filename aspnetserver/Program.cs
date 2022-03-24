@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("http://localhost:3000", " https://purple-ground-019dc9c0f.1.azurestaticapps.net");
+        .WithOrigins("http://localhost:3000", "https://purple-ground-019dc9c0f.1.azurestaticapps.net", "https://localhost:7075/swagger/index.html");
     });
 });
 // Add services to the container.
@@ -98,21 +98,15 @@ app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("CORSPolicy");
 
-<<<<<<< HEAD
 /// <MoreLogin>
 // Telling the api to use Authentication and Authorization services
 app.UseAuthentication();
 app.UseAuthorization();
-=======
-//app.MapGet("/get-all-users", async () => await Endpoints.GetAllUsers())
- //   .WithTags("User Endpoints");
->>>>>>> origin/EndpointsRemastered
 
 // Login feature
 app.MapPost("/login",
     (UserLogin user, IUserService service) => Login(user, service));
 
-<<<<<<< HEAD
 IResult Login(UserLogin user, IUserService service)
 {
     if (!string.IsNullOrEmpty(user.EmailAddress) &&
@@ -155,43 +149,25 @@ app.MapGet("/listUsers",
     .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
 */
 
-app.MapGet("/get-all-users",
+/*app.MapGet("/get-all-users",
     async () => await Endpoints.GetUsers())
     .WithTags("User Endpoints");
-=======
-app.MapGet("/get-all-projects", async () => await Endpoints.GetAllProjects())
-    .WithTags("User Endpoints");
-
-app.MapGet("/get-all-organizations", async () => await Endpoints.GetAllOrganizations())
-    .WithTags("User Endpoints");
-
-/*app.MapGet("/get-users-in-project-by-id/{projectId}", async (int projectId) =>
-{
-   await Endpoints.GetUsersInProject(projectId);
-
-}).WithTags("User Endpoints");
 */
-app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
-{
-    await ProjectDBHelper.GetBugsInProject(projectId);
 
-}).WithTags("Project Endpoints");
 
-app.MapGet("/get-project-in-organization-by-id/{organizationId}", async (int organizationId) =>
-{
-    await Endpoints.GetProjectInOrganization(organizationId);
 
-}).WithTags("Project Endpoints");
->>>>>>> origin/EndpointsRemastered
-
-app.MapGet("/create-bug", async (Bug bugtoCreate) =>
-{
-    await BugDBHelper.AddBug(bugtoCreate);
-}).WithTags("bug Endpoints");
+app.MapPost("/get-all-bugs", async () =>
+ await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
 
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
     await ProjectDBHelper.AddBugToProject(projectId, bugId);
+
+}).WithTags("Bug Endpoints");
+
+app.MapPost("/create-bug", async (Bug bugToCreate) =>
+{
+    await BugDBHelper.AddBug(bugToCreate);
 
 }).WithTags("Bug Endpoints");
 
@@ -206,5 +182,8 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
     await ProjectDBHelper.GetBugsInProject(projectId);
 
 }).WithTags("Bug Endpoints");
+
+
+
 
 app.Run();

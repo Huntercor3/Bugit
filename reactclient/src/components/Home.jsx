@@ -3,22 +3,27 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
-import Data from './data.json'
+
 import { Button } from 'react-bootstrap'
 
-function readJson(bugs, index) {
+
+
+function readJson(bug, index) {
+
   return (
     <tr key={index}>
-      <td>{bugs.software}</td>
-      <td>{bugs.name}</td>
-      <td>{bugs.date}</td>
-      <td>{bugs.type}</td>
-      <td>{bugs.status}</td>
-      <td>{bugs.priority}</td>
-      <td>{bugs.estimatedTime}</td>
+      <td>{bug.bugid}</td>
+      <td>{bug.creator}</td>
+      <td>{bug.timecreated}</td>
+      <td>{bug.description}</td>
+      <td>{bug.type}</td>
+      <td>{bug.status}</td>
+      <td>{bug.priority}</td>
+      <td>{bug.estimatedTime}</td>
     </tr>
   )
 }
+
 
 function addBug() {
   console.log('added bug')
@@ -56,10 +61,46 @@ function deleteBug() {
 //       <div class='bottomleft'>{user.Name}</div>
 //     </>
 //   )
-// }
+//}
 
-export const Home = () => (
-  <React.Fragment>
+var myInit = {
+  method: 'POST',
+  Headers: {
+    'Content-Type': 'application/json',
+  },
+  mode: 'cors',
+  cache: 'default',
+}
+
+const getBugUrl = 'https://localhost:7075/get-all-bugs'
+
+let myRequest = new Request(getBugUrl, myInit)
+
+ const Home =() => {
+  const [bugData, setBugData] = useState([]);
+  
+  async function getAllBugs() {
+    fetch(myRequest)
+    .then(response => response.json())
+    .then(bugsFromServer => {
+      setBugData(bugsFromServer);
+      })
+      .then(function (data) {
+        console.log(data)
+      })
+  }
+  
+  console.log("bugData: " + bugData)
+  
+  useEffect(() => {
+    getAllBugs([])
+  }, []);
+    
+    
+      
+  
+
+  return (
     <body>
       <h1>BugIt</h1>
       <Link to='/createBug'>
@@ -69,7 +110,8 @@ export const Home = () => (
         <table class='table table-striped table-sm' id='myTable'>
           <thead>
             <tr>
-              <th>Software</th>
+              <th>BugId</th>
+              <th>Creator</th>
               <th>Name</th>
               <th>Date</th>
               <th>Type</th>
@@ -78,17 +120,26 @@ export const Home = () => (
               <th>Estimated Time</th>
             </tr>
           </thead>
-          <tbody id='myTbody'>{Data.map(readJson)}</tbody>
+          <tbody >
+          {bugData.map((bug)=>(
+ <tr key={bug.id}>
+ <th scope="row">{bug.bugId}</th>
+ <td>{bug.creator}</td>
+ <td>{bug.timeCreated}</td>
+ <td>{bug.description}</td>
+ <td>{bug.type}</td>
+ <td>{bug.status}</td>
+ <td>{bug.priority}</td>
+ <td>{bug.estimatedTime}</td>
+ </tr>))}
+    
+          </tbody>
         </table>
+      
       </div>
-      {/* <div>
-        <button type='button' class='btn btn-success' onClick={addBug}>
-          Add
-        </button>
-        <button type='button' class='btn btn-danger' onClick={deleteBug}>
-          Delete
-        </button>
-      </div> */}
+      
     </body>
-  </React.Fragment>
-)
+    
+  )
+}
+export default Home

@@ -21,7 +21,7 @@ const Login = () => {
         password,
       }),
     }).then(function (response) {
-      if (response.status == 200) setRedirect(true)
+      if (response.status === 200) setRedirect(true)
       else alert('Email address or Password is Incorrect, please try again')
     })
   }

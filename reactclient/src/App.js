@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Sidebar } from "./components/Sidebar";
-import { Home } from "./components/Home";
+import Home from "./components/Home";
+import NewHome from "./components/newHome";
 import { About } from "./components/About";
 import CreateBug from "./components/CreateBug";
 import { NoMatch } from "./components/NoMatch";
@@ -17,7 +18,8 @@ export default function App() {
         <Route path="login" element={<Login />} />
         <Route path="createAccount" element={<CreateAccount />} />
         <Route path="/" element={<Sidebar />}>
-          <Route index element={<Home />} />
+          <Route index element={<NewHome />} />
+          <Route path="homebugtest" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="createBug" element={<CreateBug />} />
           <Route path="account" element={<Account />} />
