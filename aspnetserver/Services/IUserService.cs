@@ -6,6 +6,6 @@ namespace aspnetserver.Services
     {
         public UserAuth CheckUserInDBO(LoginModel userLogin);
 
-        //public static Task<bool> CheckUserInDBOBool(string email);
+        public bool CheckUserInDBOBool(string email);
     }
 }

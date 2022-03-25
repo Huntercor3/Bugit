@@ -126,8 +126,11 @@ app.MapPost("/add-new-project-by-project-name", async (string projectName) => { 
 app.MapPost("/register",
     (RegisterModel user, IUserService service) => RegisterAsync(user, service));
 
+app.MapPost("/registerController",
+    (RegisterModel user) => RegisterController.RegisterOnPostAsync(user));
+
 app.MapPost("/CheckDBOTest",
-    (string email) => UserService.CheckUserInDBOBool(email));
+    (string email, IUserService service) => service.CheckUserInDBOBool(email));
 
 /*
 async Task<IActionResult> LoginOnPostAsync(LoginModel user, IUserService service)
@@ -176,13 +179,16 @@ async Task<IResult> RegisterAsync(RegisterModel userEntry, IUserService service)
         !string.IsNullOrEmpty(userEntry.password))
     {
         User userToRegister = new User(userEntry.userId, userEntry.firstName, userEntry.lastName, userEntry.emailAddress, userEntry.phoneNumber, userEntry.hardware, userEntry.role, userEntry.password);
-        await UserDBHelper.AddUser(userToRegister);
+        if (service.CheckUserInDBOBool(userToRegister.email.ToString()))
+        {
+            await UserDBHelper.AddUser(userToRegister);
 
-        LoginModel login = new LoginModel();
-        login.EmailAddress = userToRegister.email;
-        login.Password = userToRegister.password;
+            LoginModel login = new LoginModel();
+            login.EmailAddress = userToRegister.email;
+            login.Password = userToRegister.password;
 
-        return Results.Ok();
+            return Results.Ok();
+        }
     }
     return Results.BadRequest("Invalid registration credentials");
 }

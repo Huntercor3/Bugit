@@ -6,7 +6,7 @@ namespace aspnetserver
 {
     public class RegisterController : Controller
     {
-        public async Task<IActionResult> RegisterOnPostAsync(RegisterModel userEntry)
+        public static async Task<IActionResult> RegisterOnPostAsync(RegisterModel userEntry)
         {
             LoginModel login = new LoginModel();
             UserService service = new UserService();
