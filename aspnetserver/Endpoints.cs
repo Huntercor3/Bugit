@@ -7,7 +7,7 @@ namespace aspnetserver
     {
         private static SqlConnectionStringBuilder builder;
 
-        static Endpoints()
+        public static void Init()
         {
             builder = new SqlConnectionStringBuilder();
             builder.DataSource = "bugit-server.database.windows.net";
@@ -15,6 +15,10 @@ namespace aspnetserver
             builder.Password = "CSBS@2201";
             builder.InitialCatalog = "bugit-server";
         }
+<<<<<<< HEAD
+
+        public static async Task<List<User>> GetUsers()
+=======
        /* public static async Task<List<User>> GetAllUsers()
         {
             List<User> users = new List<User>();
@@ -39,7 +43,6 @@ namespace aspnetserver
             return users;
         }
        */
-       /*
         public static async Task<List<Bug>> GetAllBugs()
         {
             List<Bug> bugs = new List<Bug>();
@@ -63,7 +66,7 @@ namespace aspnetserver
             }
             return bugs;
         }
-        */
+
         public static async Task<List<Project>> GetAllProjects()
         {
             List<Project> projects = new List<Project>();
@@ -113,11 +116,12 @@ namespace aspnetserver
         }
 /*
         public static async Task<List<User>> GetUsersInProject(int projectId)
+>>>>>>> origin/EndpointsRemastered
         {
             List<User> users = new List<User>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Users JOIN dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString() + " AND dbo.Users.UserId = dbo.ProjectUsers.UserId";
+                String sql = "SELECT * FROM dbo.Users";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -127,7 +131,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]));
+                            User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]), (string)record[7]);
                             users.Add(u);
                         }
                     }
@@ -135,8 +139,10 @@ namespace aspnetserver
             }
             return users;
         }
+<<<<<<< HEAD
+=======
 */
-       /* public static async Task<List<Bug>> GetBugsInProject(int projectId)
+        public static async Task<List<Bug>> GetBugsInProject(int projectId)
         {
             List<Bug> bugs = new List<Bug>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -159,7 +165,7 @@ namespace aspnetserver
             }
             return bugs;
         }
-       */
+
         public static async Task<List<Project>> GetProjectInOrganization(int organizationId)
         {
             List<Project> projects = new List<Project>();
@@ -206,5 +212,6 @@ namespace aspnetserver
             }
             return comments;
         }
+>>>>>>> origin/EndpointsRemastered
     }
 }

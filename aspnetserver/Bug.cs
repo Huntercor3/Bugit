@@ -13,8 +13,9 @@ namespace aspnetserver
         public string Status { get; set; }
         public string Priority { get; set; }
         public string EstimatedTime { get; set; }
+        public int Archived { get; set; }
 
-        public Bug(int bugId, int creator, string timeCreated, string description, string type, string status, string priority, string estimatedTime)
+        public Bug(int bugId, int creator, string timeCreated, string description, string type, string status, string priority, string estimatedTime, int archived)
         {
             BugId = bugId;
             Creator = creator;
@@ -24,6 +25,7 @@ namespace aspnetserver
             Status = status;
             Priority = priority;
             EstimatedTime = estimatedTime;
+            Archived = archived;
         }
     }
 }
