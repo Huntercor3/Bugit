@@ -20,10 +20,10 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
+                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
                     "OUTPUT INSERTED.BugId " +
-                    "values ('"
-                    + b.Creator + "', '" + b.TimeCreated.ToString() + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "')";
+                    "values ("
+                    + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -38,7 +38,7 @@ namespace aspnetserver
             List<String> comments = new List<String>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
+                String sql = "SELECT * FROM dbo.BugComments WHERE BugId='" + bugId.ToString() + "'";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -61,8 +61,8 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.BugComments (BugId, Comment) " +
-                    "values ("
-                    + bugId.ToString() + ", '" + comment + "')";
+                    "values ('"
+                    + bugId.ToString() + "', '" + comment + "')";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -75,7 +75,7 @@ namespace aspnetserver
         public static async void AddBugWithProject(Bug b, int projectId)
         {
             int bugId = await AddBug(b);
-            ProjectDBHelper.AddBugToProject(projectId, bugId);
+            await ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
 
         public static async Task<int> UpdateBug(Bug b)
@@ -100,29 +100,55 @@ namespace aspnetserver
             }
         }
 
-        public static async Task<List<Bug>> GetAllBugs()
+        public static async void DeleteBug(int bugId)
         {
-            List<Bug> bugs = new List<Bug>();
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Bugs";
+                String sql = "DELETE FROM dbo.Bugs WHERE BugId=" + bugId.ToString();
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            IDataRecord record = (IDataRecord)reader;
-                            Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
-                            bugs.Add(b);
-                        }
-                    }
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                String sqlTwo = "DELETE FROM dbo.ProjectBugs WHERE BugId=" + bugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+
+                String sqlThree = "DELETE FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
                 }
             }
-            return bugs;
         }
 
+        public static async void ArchiveBug(int bugId, bool archive)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                int arch = 1;
+                if (!archive)
+                {
+                    arch = 0;
+                }
+                String sql = "UPDATE dbo.Bugs" +
+                    " SET Archived = " + arch.ToString() +
+                    " WHERE ProjectId = " + bugId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
     }
 }

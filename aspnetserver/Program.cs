@@ -149,6 +149,7 @@ app.MapGet("/listUsers",
     .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
 */
 
+<<<<<<< HEAD
 /*app.MapGet("/get-all-users",
     async () => await Endpoints.GetUsers())
     .WithTags("User Endpoints");
@@ -179,6 +180,34 @@ app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
 
 app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 {
+=======
+app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
+{
+    await ProjectDBHelper.GetBugsInProject(projectId);
+
+}).WithTags("Project Endpoints");
+
+app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
+{
+    await BugDBHelper.GetCommentsForBug(bugId);
+
+}).WithTags("Bug Endpoints");
+
+app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
+{
+    ProjectDBHelper.AddBugToProject(projectId, bugId);
+
+}).WithTags("Bug Endpoints");
+
+app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
+{
+    await ProjectDBHelper.AddNewProject(projectName);
+
+}).WithTags("Project Endpoints");
+
+app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
+{
+>>>>>>> origin/Deletions
     await ProjectDBHelper.GetBugsInProject(projectId);
 
 }).WithTags("Bug Endpoints");
