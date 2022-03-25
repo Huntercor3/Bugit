@@ -25,6 +25,8 @@ function readJson(bug, index) {
 }
 
 
+
+
 function addBug() {
   console.log('added bug')
   const newBug = {
