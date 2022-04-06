@@ -78,7 +78,7 @@ namespace aspnetserver
             ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
 
-        public static async void UpdateBug(Bug b)
+        public static async Task<int> UpdateBug(Bug b)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
@@ -94,7 +94,7 @@ namespace aspnetserver
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }

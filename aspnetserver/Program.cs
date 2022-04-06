@@ -183,6 +183,11 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 
 }).WithTags("Bug Endpoints");
 
+app.MapPost("/update-bug", async (Bug bugToUpdate) =>
+{
+    await BugDBHelper.UpdateBug(bugToUpdate);
+
+}).WithTags("Bug Endpoints");
 
 
 
