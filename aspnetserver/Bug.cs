@@ -15,7 +15,7 @@ namespace aspnetserver
         public string EstimatedTime { get; set; }
         public int Archived { get; set; }
 
-        public Bug(int bugId, int creator, string timeCreated, string description, string type, string status, string priority, string estimatedTime, int archived)
+        public Bug(int bugId, int creator, string timeCreated, string description, string type, string status, string priority, string estimatedTime, int archived = 0)
         {
             BugId = bugId;
             Creator = creator;
