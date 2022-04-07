@@ -7,6 +7,7 @@ const Login = () => {
   const [emailAddress, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
+  const [flag, setFlag] = useState(1)
   const submit = async (e) => {
     e.preventDefault()
 
@@ -22,7 +23,7 @@ const Login = () => {
       }),
     }).then(function (response) {
       if (response.status === 200) setRedirect(true)
-      else alert('Email address or Password is Incorrect, please try again')
+      else setFlag(2)
     })
   }
   if (redirect) return <Navigate to='/#home' />
@@ -43,6 +44,7 @@ const Login = () => {
               <div className='p-5'>
                 <form onSubmit={submit}>
                   <h1 className='h3 mb-3 fw-normal'>Please Sign In</h1>
+                  {flag === 2 && <p>Your login credentials are invalid, please try again.</p>}
                   <div className='form-floating'>
                     <input
                       type='email'
