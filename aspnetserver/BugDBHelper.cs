@@ -1,19 +1,31 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace aspnetserver
 {
     public static class BugDBHelper
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
-        static BugDBHelper()
+        /* static BugDBHelper()
         {
             builder = new SqlConnectionStringBuilder();
             builder.DataSource = "bugit-server.database.windows.net";
             builder.UserID = "bugit";
             builder.Password = "CSBS@2201";
             builder.InitialCatalog = "bugit-server";
+        } */
+
+        static BugDBHelper()
+        {
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201",
+                Database = "bugit-sql"
+            };
         }
 
         public static async Task<int> AddBug(Bug b)
@@ -21,7 +33,6 @@ namespace aspnetserver
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
-                    "OUTPUT INSERTED.BugId " +
                     "values ("
                     + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
 
@@ -82,7 +93,7 @@ namespace aspnetserver
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                String sql = "UPDATE dbo.Bugs" + 
+                String sql = "UPDATE dbo.Bugs" +
                     ", Creator = " + b.Creator.ToString() +
                     ", TimeCreated = '" + b.TimeCreated +
                     "', Description = '" + b.Description +
