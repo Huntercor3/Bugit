@@ -24,22 +24,23 @@ namespace aspnetserver
                 Server = "34.67.3.72",
                 UserID = "root",
                 Password = "CSBS@2201",
-                Database = "bugit-sql"
+                Database = "dbo"
             };
         }
 
         public static async Task<int> AddBug(Bug b)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
+                connection.Open();
+                String sql = "INSERT INTO Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
                     "values ("
                     + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    return (int)await command.ExecuteScalarAsync();
+                    command.ExecuteScalar();
+                    return 0;
                 }
             }
         }
