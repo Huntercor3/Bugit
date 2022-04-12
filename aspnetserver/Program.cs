@@ -153,44 +153,34 @@ app.MapGet("/listUsers",
     .WithTags("User Endpoints");
 */
 
-
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
     await ProjectDBHelper.AddBugToProject(projectId, bugId);
-
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/create-bug", async (Bug bugToCreate) =>
 {
     await BugDBHelper.AddBug(bugToCreate);
-
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
 {
     await ProjectDBHelper.AddNewProject(projectName);
-
 }).WithTags("Project Endpoints");
 
 app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
 {
     await ProjectDBHelper.GetBugsInProject(projectId);
-
 }).WithTags("Project Endpoints");
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
     await BugDBHelper.GetCommentsForBug(bugId);
-
 }).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 {
     await ProjectDBHelper.GetBugsInProject(projectId);
-
 }).WithTags("Bug Endpoints");
-
-
-
 
 app.Run();

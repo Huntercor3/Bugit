@@ -8,6 +8,7 @@ namespace aspnetserver
     {
         private static MySqlConnectionStringBuilder builder;
 
+        // Old DB Connection
         /* static BugDBHelper()
         {
             builder = new SqlConnectionStringBuilder();
@@ -23,8 +24,9 @@ namespace aspnetserver
             {
                 Server = "34.67.3.72",
                 UserID = "root",
-                Password = "CSBS@2201",
-                Database = "dbo"
+                Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
             };
         }
 
@@ -33,7 +35,7 @@ namespace aspnetserver
             using (var connection = new MySqlConnection(builder.ConnectionString))
             {
                 connection.Open();
-                String sql = "INSERT INTO Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
+                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
                     "values ("
                     + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
 
