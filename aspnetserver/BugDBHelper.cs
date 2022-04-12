@@ -1,34 +1,38 @@
 ﻿using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace aspnetserver
 {
     public static class BugDBHelper
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
         static BugDBHelper()
         {
-            builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
+            };
         }
 
         public static async Task<int> AddBug(Bug b)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime) " +
-                    "OUTPUT INSERTED.BugId " +
-                    "values ('"
-                    + b.Creator + "', '" + b.TimeCreated.ToString() + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "')";
+                connection.Open();
+                String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
+                    "values ("
+                    + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    return (int)await command.ExecuteScalarAsync();
+                    command.ExecuteScalar();
+                    return 0;
                 }
             }
         }
@@ -36,14 +40,14 @@ namespace aspnetserver
         public static async Task<List<string>> GetCommentsForBug(int bugId)
         {
             List<String> comments = new List<String>();
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "SELECT * FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -58,13 +62,13 @@ namespace aspnetserver
 
         public static async void AddCommentToBug(int bugId, string comment)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.BugComments (BugId, Comment) " +
                     "values ("
                     + bugId.ToString() + ", '" + comment + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -80,9 +84,9 @@ namespace aspnetserver
 
         public static async Task<int> UpdateBug(Bug b)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "UPDATE dbo.Bugs" + 
+                String sql = "UPDATE dbo.Bugs" +
                     "SET Creator = " + b.Creator.ToString() +
                     ", TimeCreated = " + b.TimeCreated.ToString() +
                     ", Description = " + b.Description +
@@ -91,7 +95,7 @@ namespace aspnetserver
                     ", Priority = " + b.Priority.ToString() +
                     " WHERE BugId = " + b.BugId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     return (int)await command.ExecuteNonQueryAsync();
@@ -102,14 +106,14 @@ namespace aspnetserver
         public static async Task<List<Bug>> GetAllBugs()
         {
             List<Bug> bugs = new List<Bug>();
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "SELECT * FROM dbo.Bugs";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -122,6 +126,5 @@ namespace aspnetserver
             }
             return bugs;
         }
-
     }
 }
