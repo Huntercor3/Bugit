@@ -2,13 +2,14 @@ import React, { useState } from "react";
 
 export default function BugUpdateForm(props) {
   const initialFormData = Object.freeze({
-    creator: props.bug.creator,
-    timeCreated: props.bug.timeCreated,
-    type: props.bug.type,
-    status: props.bug.status,
-    priority: props.bug.priority,
-    estimatedTime: props.bug.estimatedTime,
-    description: props.bug.description,
+    bugId: "4",
+    creator: "This",
+    timeCreated: "Project",
+    type: "Project",
+    status: "Needs",
+    priority: "It's",
+    estimatedTime: "Own",
+    description: "BugTracker",
   });
 
   const [formData, setFormData] = useState(initialFormData);
@@ -24,7 +25,7 @@ export default function BugUpdateForm(props) {
     e.preventDefault();
 
     const bugToUpdate = {
-      bugId: props.post.postId,
+      bugId: formData.bugId,
       creator: formData.creator,
       timeCreated: formData.timeCreated,
       type: formData.type,
@@ -55,113 +56,94 @@ export default function BugUpdateForm(props) {
 
   return (
     <form className="w-100 px-5">
+      <h1 className="mt-5">Updating the Bug with ID: {formData.bugId}</h1>
       <div className="form-group row">
-        <div className="col-sm-6 mb-3 mb-sm-0">
+        <div className="col-sm-6">
+          <label className="h3 form-label">Owner</label>
           <input
-            type="text"
-            required
-            name="creator"
             value={formData.creator}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Owner"
-          />
-        </div>
-        <div className="col-sm-6">
-          <input
-            type="date"
-            required
-            name="Date"
-            value={formData.timeCreated}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Date"
-          />
-        </div>
-      </div>
-      <div className="form-group row">
-        <div className="col-sm-6 ">
-          <input
+            name="title"
             type="text"
-            required
-            name="type"
+            className="form-control"
+            onchange={handleChange}
+          />
+        </div>
+
+        <div className="col-sm-6">
+          <label className="h3 form-label">Type</label>
+          <input
             value={formData.type}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="type"
-          />
-
-          {/* <Select
-                       options={this.state.typeOptions} 
-                       onChange = {setStatus(this.handleChange.bind(this))}
-                       placeholder = 'Set Type' 
-                       />     */}
-        </div>
-        <div className="col-sm-6 ">
-          <input
+            name="content"
             type="text"
-            required
-            name="Status"
-            value={formData.status}
-            onChange={handleChange}
             className="form-control"
-            placeholder="Status"
+            onchange={handleChange}
           />
-          {/*<Select
-                       options={statusOptions} 
-                       onChange = {setStatus}
-                       placeholder = 'Set status'
-                       />  */}
         </div>
       </div>
       <div className="form-group row">
         <div className="col-sm-6">
+          <label className="h3 form-label">Status</label>
           <input
+            value={formData.status}
+            name="content"
             type="text"
-            required
-            name="Priority"
-            value={formData.priority}
-            onChange={handleChange}
             className="form-control"
-            placeholder="Priority"
+            onchange={handleChange}
           />
+        </div>
 
-          {/*<Select
-                       options={priorityOptions} 
-                       onChange = {setPriority}
-                       placeholder = 'Set Priority'                      
-                       /> */}
-        </div>
         <div className="col-sm-6">
+          <label className="h3 form-label">Priority</label>
           <input
+            value={formData.priority}
+            name="content"
             type="text"
-            required
-            name="Estimated Time"
-            value={formData.estimatedTime}
-            onChange={handleChange}
             className="form-control"
-            placeholder="Estimated Time"
-          />
-        </div>
-        <div className="col-sm-12">
-          <input
-            type="text"
-            required
-            name="Bug Description"
-            value={formData.description}
-            onChange={handleChange}
-            className="form-control"
-            placeholder="Bug Description"
+            onchange={handleChange}
           />
         </div>
       </div>
-      <div className="row justify-content-center">
+
+      <div className="form-group row">
+        <div className="col-sm-6">
+          <label className="h3 form-label">Esitmated Time</label>
+          <input
+            value={formData.estimatedTime}
+            name="content"
+            type="text"
+            className="form-control"
+            onchange={handleChange}
+          />
+        </div>
+
+        <div className="col-sm-6">
+          <label className="h3 form-label">Description</label>
+          <input
+            value={formData.description}
+            name="content"
+            type="text"
+            className="form-control"
+            onchange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="form-group row">
         <button
-          className="text-center btn btn-md btn-primary"
           onClick={handleSubmit}
+          className="text-center btn btn-md btn-Orange form-control"
         >
           Submit
         </button>
+        <div>
+          <a
+            href="/#home"
+            className="text-center btn btn-md btn-second form-control"
+            type="submit"
+            onClick={() => props.onPostUpdated(null)}
+          >
+            Cancel
+          </a>
+        </div>
       </div>
     </form>
   );

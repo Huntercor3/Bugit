@@ -2,25 +2,25 @@ import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.jpg'
-import Select from 'react-select'
+//import Select from 'react-select'
 
 
-const priorityOptions=[
-{label:'High', value:'high'},
-{label:'Moderate', value:'moderate'},
-{label:'Low', value:'low'}
-]
+//  const priorityOptions=[
+// {label:'High', value:'high'},
+// {label:'Moderate', value:'moderate'},
+// {label:'Low', value:'low'}
+// ]
 
-const typeOptions=[
-{label:'Optimize', value:'optimize'},
-{label:'Crash', value:'crash'},
-{label:'Upgrade', value:'upgrade'}
-]
+// const typeOptions=[
+// {label:'Optimize', value:'optimize'},
+// {label:'Crash', value:'crash'},
+// {label:'Upgrade', value:'upgrade'}
+// ]
 
-const statusOptions=[
-{label:'In progress', value:'inProgress'},
-{label:'Stuck', value:'stuck'}
-]
+// const statusOptions=[
+// {label:'In progress', value:'inProgress'},
+// {label:'Stuck', value:'stuck'}
+// ]
 
 
 
@@ -53,7 +53,7 @@ const CreateBug = () => {
         description: description
       }),
     }).then(function (response) {
-      if (response.status == 200) setRedirect(true)
+      if (response.status === 200) setRedirect(true)
       else alert('Invalid credientials, please try again')
     })
   }
@@ -65,12 +65,13 @@ const CreateBug = () => {
     (e) => {value(e.target.value)}
   }
 */
-function handleChange(e){
-  this.setState({id:e.value, name:e.label})
- }
+// function handleChange(e){
+//   this.setState({id:e.value, name:e.label})
+//  }
 
   return (
     <div className='container'>
+      
       <div className='row'>
         <img
           className='logo'

@@ -14,7 +14,7 @@ import BugUpdateForm from './BugUpdateForm';
 const Home = (props) => {
   const getBugsUrl = 'https://localhost:7075/get-all-bugs'
   const [bugData, setBugData] = useState([])
-  const [bugCurrentlyBeingUpdated, setPostCurrentlyBeingUpdated] =
+  const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] =
   useState(null);
   var myInit = {
     method: 'POST',
@@ -407,6 +407,7 @@ const Home = (props) => {
         keyField="id"
         data={bugData}
         columns={columns}
+        
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
         pagination={paginationFactory(options)}
