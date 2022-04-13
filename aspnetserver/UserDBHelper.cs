@@ -1,34 +1,43 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace aspnetserver
 {
     public static class UserDBHelper
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
         static UserDBHelper()
         {
-            builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+            };
         }
 
-        public static async Task<int> AddUser(User u)
+        public static int AddUser(User u)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new MySqlConnection(builder.ConnectionString))
             {
+                connection.Open();
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
                     " OUTPUT INSERTED.UserId" +
                     " values ('"
                     + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    return (int)await command.ExecuteScalarAsync();
+                    command.ExecuteScalar();
+                }
+
+                String sql2 = "SELECT LAST_INSERT_ID();";
+                using (var command2 = new MySqlCommand(sql2, connection))
+                {
+                    String id = command2.ExecuteScalar().ToString();
+                    return int.Parse(id);
                 }
             }
         }
@@ -36,14 +45,14 @@ namespace aspnetserver
         public static async Task<List<Project>> GetProjectsForUser(int userId)
         {
             List<Project> projects = new List<Project>();
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers ON dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId WHERE dbo.ProjectUsers.userId=" + userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
