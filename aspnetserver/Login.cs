@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace aspnetserver
 {
@@ -31,14 +32,14 @@ namespace aspnetserver
                         IDataRecord record = (IDataRecord)reader;
                         if (record == null)
                         {
-                            return new LoginResponse(false, "User does not exist.");
+                            return new LoginResponse(false, "User does not exist.", 401);
                         }
                         else if((string)record[7] != password)
                         {
-                            return new LoginResponse(false, "Password is not valid.");
+                            return new LoginResponse(false, "Password is not valid.", 401);
                         }
                         User u = new User((int)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], new Role((int)record[6]), (string)record[7]);
-                        return new LoginResponse(true, "Logged in successfully.", u);
+                        return new LoginResponse(true, "Logged in successfully.", u, 200);
                     }
                 }
             }
