@@ -15,7 +15,7 @@ const BrowserRoutes = () => {
     <Routes>
       <Route path="login" element={<Login />} />
       <Route path="createAccount" element={<CreateAccount />} />
-      <Route path="UpdateBug" element={<BugUpdateForm />}></Route>
+      <Route path="UpdateBug/:id" element={<BugUpdateForm />}></Route>
       <Route path="/" element={<NewHome />} />
       <Route path="CreateBug" element={<CreateBug />} />
     </Routes>

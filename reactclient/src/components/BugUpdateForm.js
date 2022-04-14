@@ -21,6 +21,11 @@ export default function BugUpdateForm(props) {
     });
   };
 
+  //set bugIDToSearch to the URL location
+  var bugIDToSearch = window.location.pathname;
+  //set bugIDToSearch to the bug ID       deletes "/showbug/"
+  bugIDToSearch = bugIDToSearch.substring(9);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -56,7 +61,7 @@ export default function BugUpdateForm(props) {
 
   return (
     <form className="w-100 px-5">
-      <h1 className="mt-5">Updating the Bug with ID: {formData.bugId}</h1>
+      <h1 className="mt-5">Updating the Bug with ID: {bugIDToSearch}</h1>
       <div className="form-group row">
         <div className="col-sm-6">
           <label className="h3 form-label">Owner</label>

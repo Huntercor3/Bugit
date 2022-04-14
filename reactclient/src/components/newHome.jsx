@@ -11,7 +11,10 @@ import Select from 'react-select'
 import body from 'react-bootstrap-table-next/lib/src/body'
 import BugUpdateForm from './BugUpdateForm';
 
+import { darkTheme } from './styles/theme'
 const Home = (props) => {
+  
+  
   const getBugsUrl = 'https://localhost:7075/get-all-bugs'
   const [bugData, setBugData] = useState([])
   const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] =
@@ -373,7 +376,33 @@ const Home = (props) => {
       text: 'Description',
       sort: true,
       filter: textFilter(),
+    },
+    {
+      
+        text: 'Modify',
+        formatter: (cell, row, rowIndex, extraData) => (
+          <div>
+            <Link to={'/UpdateBug/' + row.id}>
+              <Button
+                className="text-center btn btn-sm btn-primary"
+                type="button"
+              >
+                Update
+              </Button>
+            </Link>
+            <Button className="text-center btn btn-sm btn-primary" type="button">
+              Delete
+            </Button>
+            <Button className="text-center btn btn-sm btn-primary" type="button">
+              Archive
+            </Button>
+          </div>
+        )
+      
+      
     }
+
+
   ];
 
   // const defaultSorted = [
@@ -407,6 +436,7 @@ const Home = (props) => {
         keyField="id"
         data={bugData}
         columns={columns}
+        //classes='table-dark'
         
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
