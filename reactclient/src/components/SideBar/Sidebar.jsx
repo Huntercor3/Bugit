@@ -128,24 +128,24 @@ const linksArray = [
     notification: 0,
   },
   {
-    label: "Customers",
+    label: "Login",
     icon: <BsPeople />,
     to: "/login",
     notification: 0,
   },
   {
-    label: "Diagrams",
+    label: "Projects",
     icon: <AiOutlineApartment />,
-    to: "/login",
+    to: "/HomePage",
     notification: 1,
   },
 ];
 
 const secondaryLinksArray = [
   {
-    label: "Settings",
+    label: "Profile",
     icon: <AiOutlineSetting />,
-    to: "/settings"
+    to: "/Profile"
   },
   {
     label: "Login",

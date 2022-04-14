@@ -24,13 +24,13 @@ export default function BugUpdateForm(props) {
   //set bugIDToSearch to the URL location
   var bugIDToSearch = window.location.pathname;
   //set bugIDToSearch to the bug ID       deletes "/showbug/"
-  bugIDToSearch = bugIDToSearch.substring(9);
-
+  bugIDToSearch = bugIDToSearch.substring(11);
+  console.log(bugIDToSearch);
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const bugToUpdate = {
-      bugId: formData.bugId,
+      // bugId: props.bug.bugId,
       creator: formData.creator,
       timeCreated: formData.timeCreated,
       type: formData.type,
@@ -141,7 +141,7 @@ export default function BugUpdateForm(props) {
         </button>
         <div>
           <a
-            href="/#home"
+            href="/"
             className="text-center btn btn-md btn-second form-control"
             type="submit"
             onClick={() => props.onPostUpdated(null)}

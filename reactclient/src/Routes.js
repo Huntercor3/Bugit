@@ -8,6 +8,7 @@ import BugUpdateForm from "./components/BugUpdateForm";
 import { Component } from "react";
 //import Sidebar from "./components/SideBar/Sidebar";
 import HomePage from "./components/pages/HomePage";
+import Profile from "./components/pages/Profile";
 import Home from "./components/newHome";
 
 const BrowserRoutes = () => {
@@ -18,6 +19,8 @@ const BrowserRoutes = () => {
       <Route path="UpdateBug/:id" element={<BugUpdateForm />}></Route>
       <Route path="/" element={<NewHome />} />
       <Route path="CreateBug" element={<CreateBug />} />
+      <Route path="HomePage" element={<HomePage />} />
+      <Route path="Profle" element={<Profile />} />
     </Routes>
   );
 };

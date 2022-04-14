@@ -8,17 +8,23 @@ body {
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #ffffff;
 }
 
 main {
-  width: 150%;
+  width: 200%;
 }
 
-.card {
-  margin-left: 35%;
-  width: 30%;
+.card-b {
+  /* margin-left: 35%; */
+  width: 100%;
+  background-color: rgb(255, 255, 255);
 }
+
+.p-5-b {
+  width: 100%;
+  padding: 5%;
+}
+
 .logo {
   margin-bottom: 15px;
   object-fit: contain;
