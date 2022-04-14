@@ -1,34 +1,44 @@
 ﻿using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace aspnetserver
 {
     public static class BugDBHelper
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
         static BugDBHelper()
         {
-            builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
+            };
         }
 
-        public static async Task<int> AddBug(Bug b)
+        public static int AddBug(Bug b)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new MySqlConnection(builder.ConnectionString))
             {
+                connection.Open();
                 String sql = "INSERT INTO dbo.Bugs (Creator, TimeCreated, Description, Type, Status, Priority, EstimatedTime, Archived) " +
-                    "OUTPUT INSERTED.BugId " +
                     "values ("
-                    + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "', " + b.Archived.ToString() + ")";
+                    + b.Creator + ", '" + b.TimeCreated + "', '" + b.Description + "', '" + b.Type + "', '" + b.Status + "', '" + b.Priority + "', '" + b.EstimatedTime + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    return (int)await command.ExecuteScalarAsync();
+                    command.ExecuteScalar();
+                }
+
+                String sql2 = "SELECT LAST_INSERT_ID();";
+                using (var command2 = new MySqlCommand(sql2, connection))
+                {
+                    String id = command2.ExecuteScalar().ToString();
+                    return int.Parse(id);
                 }
             }
         }
@@ -36,14 +46,14 @@ namespace aspnetserver
         public static async Task<List<string>> GetCommentsForBug(int bugId)
         {
             List<String> comments = new List<String>();
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "SELECT * FROM dbo.BugComments WHERE BugId='" + bugId.ToString() + "'";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -58,13 +68,13 @@ namespace aspnetserver
 
         public static async void AddCommentToBug(int bugId, string comment)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "INSERT INTO dbo.BugComments (BugId, Comment) " +
                     "values ('"
                     + bugId.ToString() + "', '" + comment + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -74,15 +84,15 @@ namespace aspnetserver
 
         public static async void AddBugWithProject(Bug b, int projectId)
         {
-            int bugId = await AddBug(b);
-            await ProjectDBHelper.AddBugToProject(projectId, bugId);
+            int bugId = AddBug(b);
+            ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
 
         public static async Task<int> UpdateBug(Bug b)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "UPDATE dbo.Bugs " +
+                String sql = "UPDATE dbo.Bugs" +
                     "SET Creator = " + b.Creator.ToString() +
                     ", TimeCreated = '" + b.TimeCreated.ToString() +
                     "', Description = '" + b.Description.ToString() +
@@ -92,40 +102,33 @@ namespace aspnetserver
                     "', EstimatedTime = '" + b.EstimatedTime.ToString() +
                     "' WHERE BugId = " + b.BugId;
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                     return (int)await command.ExecuteNonQueryAsync();
+                    return (int)await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
         public static async void DeleteBug(int bugId)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            List<Bug> bugs = new List<Bug>();
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "DELETE FROM dbo.Bugs WHERE BugId=" + bugId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                String sqlTwo = "DELETE FROM dbo.ProjectBugs WHERE BugId=" + bugId.ToString();
-
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
-                {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                String sqlThree = "DELETE FROM dbo.BugComments WHERE BugId=" + bugId.ToString();
-
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
-                {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
+                            bugs.Add(b);
+                        }
+                    }
                 }
             }
         }

@@ -10,11 +10,22 @@ import filterFactory, { textFilter,dateFilter, selectFilter } from 'react-bootst
 import Select from 'react-select'
 import body from 'react-bootstrap-table-next/lib/src/body'
 import BugUpdateForm from './BugUpdateForm';
+import {IconButton} from '@material-ui/core';
+//Icons
+import {
+  RiDeleteBin5Fill
+} from "react-icons/ri";
+import {
+  FaRegEdit,FaEdit
+} from "react-icons/fa";
 
+import { darkTheme } from './styles/theme'
 const Home = (props) => {
+  
+  
   const getBugsUrl = 'https://localhost:7075/get-all-bugs'
   const [bugData, setBugData] = useState([])
-  const [bugCurrentlyBeingUpdated, setPostCurrentlyBeingUpdated] =
+  const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] =
   useState(null);
   var myInit = {
     method: 'POST',
@@ -120,7 +131,7 @@ const Home = (props) => {
     setTimeCreated(editedModalInfo.timeCreated)
     setType(editedModalInfo.type)
 
-    setUpdatedBugToSendData(bugToUpdate)
+    
     
     
     console.log('this is whats in editedModalInfo ' + bugToUpdate)
@@ -373,7 +384,28 @@ const Home = (props) => {
       text: 'Description',
       sort: true,
       filter: textFilter(),
+    },
+    {
+      
+        text: 'Modify',
+        formatter: (cell, row, rowIndex, extraData) => (
+          <div>
+            <Link to={'/UpdateBug/' + row.bugId}>
+            <IconButton aria-label="update">
+  <FaEdit />
+</IconButton>
+            </Link>
+            <IconButton aria-label="delete">
+  <RiDeleteBin5Fill />
+</IconButton>
+            
+          </div>
+        )
+      
+      
     }
+
+
   ];
 
   // const defaultSorted = [
@@ -407,14 +439,16 @@ const Home = (props) => {
         keyField="id"
         data={bugData}
         columns={columns}
+        //classes='table-dark'
+        
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
         pagination={paginationFactory(options)}
         rowEvents={rowEvents}
         filter={filterFactory()}
       />
-      {/* {show ? <ModalContent /> : null} */}
-      <div class="border-top my-3"></div>
+      {/* {show ? <ModalContent /> : null} 
+       <div class="border-top my-3"></div>
       <Form className="user">
         <div className="form-group row">
           <div className="col-sm-6 mb-3 mb-sm-0">
@@ -454,7 +488,7 @@ const Home = (props) => {
                        options={this.state.typeOptions} 
                        onChange = {setStatus(this.handleChange.bind(this))}
                        placeholder = 'Set Type' 
-                       />     */}
+                       />     
           </div>
           <div className="col-sm-6 ">
             <input
@@ -469,7 +503,7 @@ const Home = (props) => {
                        options={statusOptions} 
                        onChange = {setStatus}
                        placeholder = 'Set status'
-                       />  */}
+                       />  
           </div>
         </div>
         <div className="form-group row">
@@ -487,7 +521,7 @@ const Home = (props) => {
                        options={priorityOptions} 
                        onChange = {setPriority}
                        placeholder = 'Set Priority'                      
-                       /> */}
+                       /> 
           </div>
           <div className="col-sm-6">
             <input
@@ -515,7 +549,7 @@ const Home = (props) => {
             Create Bug
           </button>
         </div>
-      </Form>
+      </Form> */}
     </React.Fragment>
   );
 };
