@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
+    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
+    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
-        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
+        "projectPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\Jarod\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Jarod\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -115,7 +115,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
+>>>>>>> 1098297c72fd723e06afb1e657d73edec930510c
         }
       }
     }

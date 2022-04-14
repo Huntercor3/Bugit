@@ -20,7 +20,7 @@ namespace aspnetserver
             };
         }
 
-        public static async Task<int> AddBug(Bug b)
+        public static int AddBug(Bug b)
         {
             using (var connection = new MySqlConnection(builder.ConnectionString))
             {
@@ -32,7 +32,13 @@ namespace aspnetserver
                 using (var command = new MySqlCommand(sql, connection))
                 {
                     command.ExecuteScalar();
-                    return 0;
+                }
+
+                String sql2 = "SELECT LAST_INSERT_ID();";
+                using (var command2 = new MySqlCommand(sql2, connection))
+                {
+                    String id = command2.ExecuteScalar().ToString();
+                    return int.Parse(id);
                 }
             }
         }
@@ -78,7 +84,7 @@ namespace aspnetserver
 
         public static async void AddBugWithProject(Bug b, int projectId)
         {
-            int bugId = await AddBug(b);
+            int bugId = AddBug(b);
             ProjectDBHelper.AddBugToProject(projectId, bugId);
         }
 
