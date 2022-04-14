@@ -4,21 +4,23 @@ using aspnetserver;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 
 namespace aspnetserver.Services
 {
     public class UserService : IUserService
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
         // Establishes connection to the database
         static UserService()
         {
-            builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+            };
         }
 
         // Checks the database for our user entered credentials
@@ -32,16 +34,16 @@ namespace aspnetserver.Services
             bool check = true;
 
             // Runs the connection to the dbo
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 // SQL command
-                String sql = "SELECT email, Role FROM Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + userLogin.Password + "';";
+                String sql = "SELECT email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + userLogin.Password + "';";
 
-                SqlCommand cmd = new SqlCommand(sql, connection);
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
                 try
                 {
                     connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
+                    MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.HasRows && reader.Read())
                     {
                         user.EmailAddress = reader["email"].ToString();
@@ -68,20 +70,20 @@ namespace aspnetserver.Services
             bool check = true;
 
             // Runs the connection to the dbo
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 // SQL command
-                String sql = "SELECT email FROM Users WHERE email='" + email + "';";
+                String sql = "SELECT email FROM dbo.Users WHERE email='" + email + "';";
 
-                SqlCommand cmd = new SqlCommand(sql, connection);
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
                 try
                 {
                     connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    if (!reader.HasRows)
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows == true)
                         check = false;
                 }
-                catch (SqlException ex)
+                catch (MySqlException ex)
                 { throw; }
                 finally
                 { connection.Close(); }

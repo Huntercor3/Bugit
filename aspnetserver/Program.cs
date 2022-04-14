@@ -181,7 +181,7 @@ async Task<IResult> RegisterAsync(RegisterModel userEntry, IUserService service)
         User userToRegister = new User(userEntry.userId, userEntry.firstName, userEntry.lastName, userEntry.emailAddress, userEntry.phoneNumber, userEntry.hardware, userEntry.role, userEntry.password);
         if (service.CheckUserInDBOBool(userToRegister.email.ToString()))
         {
-            await UserDBHelper.AddUser(userToRegister);
+            UserDBHelper.AddUser(userToRegister);
 
             LoginModel login = new LoginModel();
             login.EmailAddress = userToRegister.email;
@@ -189,6 +189,7 @@ async Task<IResult> RegisterAsync(RegisterModel userEntry, IUserService service)
 
             return Results.Ok();
         }
+        return Results.BadRequest("User Already Exists");
     }
     return Results.BadRequest("Invalid registration credentials");
 }
