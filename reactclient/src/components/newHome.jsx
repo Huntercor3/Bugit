@@ -52,6 +52,8 @@ const Home = (props) => {
     getAllBugs([])
   }, [])
 
+
+
   //modal stuff
   const data = require('./data.json')
   const [modalInfo, setModalInfo] = useState([])
@@ -310,6 +312,24 @@ const Home = (props) => {
     );
   };
 
+
+////////////////////////DELETE BUG///////////////////////////////////////
+
+ function deleteBug(bugId) {
+  const deleteUrl = `${'https://localhost:7075/delete-bug-by-id'}/${bugId}`;
+console.log(deleteUrl)
+  fetch(deleteUrl, {
+    method: "DELETE",
+  }).then(function (response) {
+    window.location.reload(true);
+    if (response.status === 200) alert (`Bug: ${bugId} has succesfully been deleted.`)
+    else alert(`Bug: ${bugId} was not succesfully deleted.`)
+  
+  });
+}
+
+////////////////////////DELETE BUG///////////////////////////////////////
+
   const typeSelectOptions = {
     0: 'Optimize',
     1: 'Crash',
@@ -344,7 +364,7 @@ const Home = (props) => {
       dataField: 'timeCreated',
       text: 'Date',
       sort: true,
-      filter: dateFilter(),
+      filter: dateFilter()
     },
     {
       dataField: 'type',
@@ -395,7 +415,7 @@ const Home = (props) => {
   <FaEdit />
 </IconButton>
             </Link>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={() => { deleteBug(row.bugId); }}>
   <RiDeleteBin5Fill />
 </IconButton>
             
