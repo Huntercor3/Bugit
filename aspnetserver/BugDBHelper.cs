@@ -144,13 +144,12 @@ namespace aspnetserver
             {
                 String sql = "UPDATE dbo.Bugs" +
                     "SET Creator = " + b.Creator.ToString() +
-                    ", TimeCreated = '" + b.TimeCreated.ToString() +
-                    "', Description = '" + b.Description.ToString() +
-                    "', Type = '" + b.Type.ToString() +
-                    "', Status = '" + b.Status.ToString() +
-                    "', Priority = '" + b.Priority.ToString() +
-                    "', EstimatedTime = '" + b.EstimatedTime.ToString() +
-                    "' WHERE BugId = " + b.BugId;
+                    ", TimeCreated = " + b.TimeCreated.ToString() +
+                    ", Description = " + b.Description +
+                    ", Type = " + b.Type.ToString() +
+                    ", Status = " + b.Status.ToString() +
+                    ", Priority = " + b.Priority.ToString() +
+                    " WHERE BugId = " + b.BugId.ToString();
 
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
