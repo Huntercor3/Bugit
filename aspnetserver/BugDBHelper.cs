@@ -20,6 +20,33 @@ namespace aspnetserver
             };
         }
 
+
+        public static async Task<List<Bug>> GetAllBugs()
+        {
+            List<Bug> bugs = new List<Bug>();
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Bugs";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            Bug b = new Bug((int)record[0], (int)record[1], (string)record[2], (string)record[3], (string)record[4], (string)record[5], (string)record[6], (string)record[7]);
+                            bugs.Add(b);
+                        }
+                    }
+                }
+            }
+            return bugs;
+        }
+
+        
+
         public static int AddBug(Bug b)
         {
             using (var connection = new MySqlConnection(builder.ConnectionString))
@@ -133,25 +160,27 @@ namespace aspnetserver
             }
         }
 
-        public static async void ArchiveBug(int bugId, bool archive)
-        {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
-                int arch = 1;
-                if (!archive)
-                {
-                    arch = 0;
-                }
-                String sql = "UPDATE dbo.Bugs" +
-                    " SET Archived = " + arch.ToString() +
-                    " WHERE ProjectId = " + bugId.ToString();
+        /* public static async void ArchiveBug(int bugId, bool archive)
+         {
+             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+             {
+                 int arch = 1;
+                 if (!archive)
+                 {
+                     arch = 0;
+                 }
+                 String sql = "UPDATE dbo.Bugs" +
+                     " SET Archived = " + arch.ToString() +
+                     " WHERE ProjectId = " + bugId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
-                {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
-                }
-            }
-        }
+                 using (SqlCommand command = new SqlCommand(sql, connection))
+                 {
+                     connection.Open();
+                     await command.ExecuteNonQueryAsync();
+                 }
+             }
+
+         }
+        */
     }
 }
