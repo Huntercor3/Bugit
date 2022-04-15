@@ -190,11 +190,7 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 
 }).WithTags("Bug Endpoints");
 
-app.MapPost("/update-bug", async (Bug bugToUpdate) =>
-{
-    await BugDBHelper.UpdateBug(bugToUpdate);
 
-}).WithTags("Bug Endpoints");
 
 /*app.MapPost("update-bug",
     (Bug bug) =>
@@ -206,12 +202,17 @@ app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 
 app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 {
-    await BugDBHelper.UpdateBug(bugToUpdate);
+     BugDBHelper.UpdateBug(bugToUpdate);
 
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
+
+app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
+{
+    await BugDBHelper.GetBugByID(bugId);
+}).WithTags("Bug Endpoints");
 
 
 
