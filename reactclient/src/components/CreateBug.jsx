@@ -22,7 +22,7 @@ import BugItLogo from './images/BugItLogo.jpg'
 // ]
 
 const CreateBug = () => {
-  const [owner, setOwner] = useState('')
+  const [creator, setCreator] = useState(0)
   const [timeCreated, setDate] = useState('')
   const [type, setType] = useState('')
   const [status, setStatus] = useState('')
@@ -40,7 +40,7 @@ const CreateBug = () => {
       },
       credentials: 'include',
       body: JSON.stringify({
-        owner: owner,
+        creator: creator,
         timeCreated: timeCreated,
         type: type,
         status: status,
@@ -97,7 +97,7 @@ const CreateBug = () => {
                         <input
                           type='text'
                           required
-                          onChange={(e) => setOwner(e.target.value)}
+                          onChange={(e) => setCreator(e.target.value)}
                           className='form-control'
                           placeholder='Owner'
                         />
