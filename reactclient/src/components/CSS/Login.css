@@ -1,7 +1,6 @@
 html,
 body {
   height: 100%;
-  width: 100%;
 }
 
 body {
@@ -12,20 +11,28 @@ body {
   background-color: #ffffff;
 }
 
+main {
+  width: 150%;
+}
+
+.card {
+  margin-left: 35%;
+  width: 30%;
+}
+.logo {
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
 .signuplabel {
   padding-bottom: 5px;
 }
 
-.BugItLogo {
-  padding-bottom: 5px;
-}
-
 .form-signin {
-  width: 100%;
-  max-width: 400px;
+  align-items: center;
+  max-width: 100%;
   padding-left: 5%;
   padding-right: 5%;
-  margin: auto;
 }
 
 .form-signin .checkbox {
