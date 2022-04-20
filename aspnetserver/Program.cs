@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Web;
 using aspnetserver.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,7 @@ app.UseHttpsRedirection();
 app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
+
 LoginController loginCon = new LoginController();
 RegisterController registerCon = new RegisterController();
 
