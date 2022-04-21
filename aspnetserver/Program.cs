@@ -92,6 +92,12 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
     await ProjectDBHelper.GetBugsInProject(projectId);
 }).WithTags("Bug Endpoints");
 
+app.MapDelete("/delete-bug-by-id/{bugId}", async (int bugId) =>
+{
+    BugDBHelper.DeleteBug(bugId);
+
+}).WithTags("Bug Endpoints");
+
 
 
 /*app.MapPost("update-bug",
