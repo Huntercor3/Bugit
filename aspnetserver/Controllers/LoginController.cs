@@ -35,7 +35,7 @@ namespace aspnetserver.Controllers
                 else
                     return BadRequest("Invalid user credentials");
             }
-            return (IActionResult)Results.BadRequest("Invalid user credentials");
+            return BadRequest("Invalid user credentials");
         }
     }
 }

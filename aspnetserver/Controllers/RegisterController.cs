@@ -66,7 +66,8 @@ namespace aspnetserver
                     return Ok();
                 }
             }
-            return (IActionResult)Results.BadRequest("Invalid registration credentials");
+            return BadRequest("Invalid registration credentials");
         }
     }
+}
 }

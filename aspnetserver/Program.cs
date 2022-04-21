@@ -82,6 +82,17 @@ app.MapPost("/create-bug", async (Bug bugToCreate) =>
     BugDBHelper.AddBug(bugToCreate);
 }).WithTags("Bug Endpoints");
 
+app.MapPost("/update-bug", async (Bug bugToUpdate) =>
+{
+    BugDBHelper.UpdateBug(bugToUpdate);
+}).WithTags("Bug Endpoints");
+
+app.MapPost("/get-all-bugs", async () =>
+ await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
+
+app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
+    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
+
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
     await BugDBHelper.GetCommentsForBug(bugId);
@@ -95,29 +106,7 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 app.MapDelete("/delete-bug-by-id/{bugId}", async (int bugId) =>
 {
     BugDBHelper.DeleteBug(bugId);
-
 }).WithTags("Bug Endpoints");
-
-
-
-/*app.MapPost("update-bug",
-    (Bug bug) =>
-    {
-        BugDBHelper.UpdateBug(bug);
-    }
-    ).WithTags("Bug Endpoints");*/
-
-
-app.MapPost("/update-bug", async (Bug bugToUpdate) =>
-{
-    BugDBHelper.UpdateBug(bugToUpdate);
-}).WithTags("Bug Endpoints");
-
-app.MapPost("/get-all-bugs", async () =>
- await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
-
-app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 #endregion Bug Endpoints
 
