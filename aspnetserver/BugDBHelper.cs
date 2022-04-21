@@ -20,7 +20,6 @@ namespace aspnetserver
             };
         }
 
-
         public static async Task<List<Bug>> GetAllBugs()
         {
             List<Bug> bugs = new List<Bug>();
@@ -68,7 +67,6 @@ namespace aspnetserver
             }
             return bug;
         }
-
 
         public static async Task<int> AddBug(Bug b)
         {
@@ -201,7 +199,6 @@ namespace aspnetserver
                      await command.ExecuteNonQueryAsync();
                  }
              }
-
          }
         */
     }

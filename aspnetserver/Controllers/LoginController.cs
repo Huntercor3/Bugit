@@ -11,7 +11,7 @@ namespace aspnetserver.Controllers
 {
     public class LoginController : Controller
     {
-        public IActionResult LoginUser(LoginModel user)
+        public IActionResult LoginUser(LoginModel user, CookieContainer cookieCollection)
         {
             IUserService service = new UserService();
             if (!string.IsNullOrEmpty(user.EmailAddress) &&
@@ -32,9 +32,13 @@ namespace aspnetserver.Controllers
                     var principal = new ClaimsPrincipal(identity);
                     //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
 
-                    /*Cookie cookie = new Cookie("UserName", loggedInUser.EmailAddress.ToString());
-                    cookie.Domain = "https://purple-ground-019dc9c0f.1.azurestaticapps.net";
-                    new CookieContainer().Add(cookie);*/
+                    string domain = "purple-ground-019dc9c0f.1.azurestaticapps.net";
+                    Cookie usernameCookie = new Cookie("Username", loggedInUser.EmailAddress.ToString(), "", domain);
+                    Cookie userRole = new Cookie("UserRole", loggedInUser.Role.ToString(), "", domain);
+                    //usernameCookie.Domain = "purple-ground-019dc9c0f.1.azurestaticapps.net";
+                    //new CookieContainer().Add(cookie);
+                    cookieCollection.Add(usernameCookie);
+                    cookieCollection.Add(userRole);
 
                     return Ok();
                 }

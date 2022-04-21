@@ -62,13 +62,23 @@ app.UseCookiePolicy();
 
 LoginController loginCon = new LoginController();
 RegisterController registerCon = new RegisterController();
+CookieContainer cookies = new CookieContainer();
 
 #region User Endpoints
 
 app.MapPost("/loginController",
-    (LoginModel user) => loginCon.LoginUser(user)).WithTags("User Endpoints");
+    (LoginModel user) =>
+    {
+        loginCon.LoginUser(user, cookies);
+    }).WithTags("User Endpoints");
+
 app.MapPost("/registerController",
     (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
+
+app.MapGet("/GetCookie", async () =>
+{
+    return cookies.GetAllCookies();
+}).WithTags("User Endpoints");
 
 #endregion User Endpoints
 
@@ -103,9 +113,7 @@ app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-{
-    await BugDBHelper.GetBugByID(bugId);
-}).WithTags("Bug Endpoints");
+    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 #endregion Bug Endpoints
 
