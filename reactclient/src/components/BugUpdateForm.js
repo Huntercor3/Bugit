@@ -226,7 +226,7 @@ export default function BugUpdateForm() {
           <textarea
             id='DescriptionInput'
             required
-            defaultValue={bugData.estimatedTime}
+            defaultValue={bugData.description}
             className='form-control'
           ></textarea>
           {/* <Editor
