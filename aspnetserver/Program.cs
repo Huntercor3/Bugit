@@ -101,9 +101,7 @@ app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-{
-    await BugDBHelper.GetBugByID(bugId);
-}).WithTags("Bug Endpoints");
+    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 #endregion Bug Endpoints
 
