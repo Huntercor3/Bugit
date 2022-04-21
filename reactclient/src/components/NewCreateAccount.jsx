@@ -14,7 +14,7 @@ const NewCreateAccount = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await fetch('https://localhost:7075/registerController', {
+    await fetch('https://bugitserver.azurewebsites.net/registerController', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

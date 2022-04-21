@@ -22,7 +22,7 @@ export default function BugUpdateForm() {
     cache: "default",
   };
 
-  const getBugUrl = `${"https://localhost:7075/get-bug-by-bug-id"}/${bugIDToSearch}`;
+  const getBugUrl = `${"https://bugitserver.azurewebsites.net/get-bug-by-bug-id"}/${bugIDToSearch}`;
 
   let myRequest = new Request(getBugUrl, myInit);
 
@@ -101,7 +101,7 @@ export default function BugUpdateForm() {
   const submit = async (e) => {
     e.preventDefault();
 
-    await fetch("https://localhost:7075/update-bug", {
+    await fetch("https://bugitserver.azurewebsites.net/update-bug", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

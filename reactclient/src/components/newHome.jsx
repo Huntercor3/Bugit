@@ -112,7 +112,7 @@ const Home = (props) => {
     setType(editedModalInfo.type)
 
     console.log('this is whats in editedModalInfo ' + bugToUpdate)
-    await fetch('https://localhost:7075/update-bug', {
+    await fetch('https://bugitserver.azurewebsites.net/update-bug', {
       method: 'Post',
       headers: {
         'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ const Home = (props) => {
   ////////////////////////DELETE BUG///////////////////////////////////////
 
   function deleteBug(bugId) {
-    const deleteUrl = `${'https://localhost:7075/delete-bug-by-id'}/${bugId}`
+    const deleteUrl = `${'https://bugitserver.azurewebsites.net/delete-bug-by-id'}/${bugId}`
     console.log(deleteUrl)
     fetch(deleteUrl, {
       method: 'DELETE',

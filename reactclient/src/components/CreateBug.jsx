@@ -34,7 +34,7 @@ const CreateBug = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await fetch('https://localhost:7075/create-bug', {
+    await fetch('https://bugitserver.azurewebsites.net/create-bug', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
