@@ -125,27 +125,7 @@ app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
 
 #endregion Project Endpoints
 
-/*app.MapPost("update-bug",
-    (Bug bug) =>
-    {
-        BugDBHelper.UpdateBug(bug);
-    }
-    ).WithTags("Bug Endpoints");*/
 
-
-app.MapPost("/update-bug", async (Bug bugToUpdate) =>
-{
-     BugDBHelper.UpdateBug(bugToUpdate);
-
-}).WithTags("Bug Endpoints");
-
-app.MapPost("/get-all-bugs", async () =>
- await BugDBHelper.GetAllBugs()).WithTags("bug Endpoints");
-
-app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-{
-    await BugDBHelper.GetBugByID(bugId);
-}).WithTags("Bug Endpoints");
 
 
 
