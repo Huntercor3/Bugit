@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-
+import { Editor } from "@tinymce/tinymce-react";
+import Select from "react-select";
+import "./CSS/CreateAccount.css";
 export default function BugUpdateForm() {
   //////////////////////////////////GET BUG BY ID//////////////////////////////////////////
   //
+
   //set bugIDToSearch to the URL location
   var bugIDToSearch = window.location.pathname;
   //set bugIDToSearch to the bug ID       deletes "/showbug/"
   bugIDToSearch = bugIDToSearch.substring(11);
-  console.log(bugIDToSearch);
+  console.log("Bug ID to Seach: ", bugIDToSearch);
 
   var myInit = {
     method: "POST",
@@ -34,7 +37,7 @@ export default function BugUpdateForm() {
         setBugData(bugFromServer);
       })
       .then(function(data) {
-        console.log(data);
+        console.log("Data: ", data);
       });
   }
 
@@ -93,7 +96,6 @@ export default function BugUpdateForm() {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [estimatedTime, setEstimatedTime] = useState("");
-
   const [redirect, setRedirect] = useState(false);
 
   const submit = async (e) => {
@@ -107,12 +109,12 @@ export default function BugUpdateForm() {
       credentials: "include",
       body: JSON.stringify({
         bugId: bugId,
-        creator: creator,
-        description: description,
-        type: type,
-        status: status,
-        priority: priority,
-        estimatedTime: estimatedTime,
+        creator: document.getElementById("OwnerInput").value,
+        description: document.getElementById("DescriptionInput").value,
+        type: document.getElementById("TypeInput").value,
+        status: document.getElementById("StatusInput").value,
+        priority: document.getElementById("PriorityInput").value,
+        estimatedTime: document.getElementById("EstimatedTimeInput").value,
       }),
     }).then(function(response) {
       console.log(response.status);
@@ -133,6 +135,20 @@ export default function BugUpdateForm() {
 
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
 
+  const typeOptions = [
+    { label: "N/A", value: "N/A" },
+    { label: "Optimize", value: "Optimize" },
+    { label: "Crash", value: "Crash" },
+    { label: "Upgrade", value: "Upgrade" },
+  ];
+
+  //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
+  function removeHTML(str) {
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || "";
+  }
+  //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
   return (
     <form className="w-100 px-5">
       <h1 className="mt-5">Updating the Bug with ID: {bugIDToSearch}</h1>
@@ -140,22 +156,26 @@ export default function BugUpdateForm() {
         <div className="col-sm-6">
           <label className="h3 form-label">Owner</label>
           <input
+            id="OwnerInput"
             type="text"
             required
-            onChange={(e) => setOwner(e.target.value)}
+            defaultValue={bugData.creator}
+            //onChange={(e) => setOwner(e.target.value)}
             className="form-control"
-            placeholder={bugData.creator}
+            //placeholder={bugData.creator}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Type</label>
           <input
+            id="OwnerInput"
             type="text"
             required
-            onChange={(e) => setType(e.target.value)}
+            defaultValue={bugData.type}
+            //onChange={(e) => setOwner(e.target.value)}
             className="form-control"
-            placeholder={bugData.type}
+            //placeholder={bugData.creator}
           />
         </div>
       </div>
@@ -163,53 +183,71 @@ export default function BugUpdateForm() {
         <div className="col-sm-6">
           <label className="h3 form-label">Status</label>
           <input
+            id="StatusInput"
             type="text"
             required
-            onChange={(e) => setStatus(e.target.value)}
+            defaultValue={bugData.status}
+            //onChange={(e) => setStatus(e.target.value)}
             className="form-control"
-            placeholder={bugData.status}
+            //placeholder={bugData.status}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Priority</label>
           <input
+            id="PriorityInput"
             type="text"
             required
-            onChange={(e) => setPriority(e.target.value)}
+            defaultValue={bugData.priority}
+            //onChange={(e) => setPriority(e.target.value)}
             className="form-control"
-            placeholder={bugData.priority}
+            //placeholder={bugData.priority}
           />
         </div>
       </div>
 
       <div className="form-group row">
         <div className="col-sm-6">
-          <label className="h3 form-label">Esitmated Time</label>
+          <label className="h3 form-label text-center">Estimated Time</label>
           <input
+            id="EstimatedTimeInput"
             type="text"
             required
-            onChange={(e) => setEstimatedTime(e.target.value)}
+            defaultValue={bugData.estimatedTime}
+            //onChange={(e) => setEstimatedTime(e.target.value)}
             className="form-control"
-            placeholder={bugData.estimatedTime}
+            //placeholder={bugData.estimatedTime}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Description</label>
-          <input
-            type="text"
+          <Editor
+            //textareaName="Description"
+            //id="BugDescriptionInput"
+            apiKey="i8eqch0ybta5qyoxntbm1vqssmljsl9w4z83li4ia3wv64t3"
+            referrerpolicy="origin"
             required
-            onChange={(e) => setBugDescription(e.target.value)}
+            initialValue={bugData.description}
+            init={{
+              selector: "textarea#default-editor",
+              height: 175,
+              menubar: false,
+              format: "text",
+              toolbar: "undo redo",
+              browser_spellcheck: true,
+            }}
+            onEditorChange={(t) => setBugDescription(removeHTML(t))}
             className="form-control"
-            placeholder={bugData.description}
+            //placeholder={bugData.description}
           />
         </div>
       </div>
       <div className="form-group row">
         <button
           onClick={submit}
-          className="text-center btn btn-md btn-Orange form-control"
+          className=" text-center btn-md btn-Orange form-control "
         >
           Submit
         </button>

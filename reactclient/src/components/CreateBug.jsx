@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
 import BugItLogo from './images/BugItLogo.jpg'
+import { Editor } from "@tinymce/tinymce-react";
 //import Select from 'react-select'
 
 //  const priorityOptions=[
@@ -64,6 +65,15 @@ const CreateBug = () => {
   //   this.setState({id:e.value, name:e.label})
   //  }
 
+
+  //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
+  function removeHTML(str) {
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || "";
+  }
+//////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
+
   return (
     <React.Fragment>
       <div className='container'>
@@ -89,11 +99,12 @@ const CreateBug = () => {
               <div className='col-lg-12'>
                 <div className='p-5-b'>
                   <div className='text-center'>
-                    <h1 className='h4 text-gray-900 mb-4'>Create a New Bug</h1>
+                    <label className='h2 form-label'>Create a New Bug</label>
                   </div>
                   <form onSubmit={submit} className='user'>
                     <div className='form-group row'>
                       <div className='col-sm-6 mb-3 mb-sm-0'>
+                      <label className="h5 form-label">Owner</label>
                         <input
                           type='text'
                           required
@@ -101,8 +112,10 @@ const CreateBug = () => {
                           className='form-control'
                           placeholder='Owner'
                         />
+                        
                       </div>
                       <div className='col-sm-6'>
+                      <label className="h5 form-label">Date</label>
                         <input
                           type='date'
                           required
@@ -114,6 +127,7 @@ const CreateBug = () => {
                     </div>
                     <div className='form-group row'>
                       <div className='col-sm-6 '>
+                      <label className="h5 form-label">Type</label>
                         <input
                           type='text'
                           required
@@ -129,6 +143,7 @@ const CreateBug = () => {
                        />     */}
                       </div>
                       <div className='col-sm-6 '>
+                      <label className="h5 form-label">Status</label>
                         <input
                           type='text'
                           required
@@ -145,6 +160,7 @@ const CreateBug = () => {
                     </div>
                     <div className='form-group row'>
                       <div className='col-sm-6'>
+                      <label className="h5 form-label">Priority</label>
                         <input
                           type='text'
                           required
@@ -160,6 +176,7 @@ const CreateBug = () => {
                        /> */}
                       </div>
                       <div className='col-sm-6'>
+                      <label className="h5 form-label">Estimated Time</label>
                         <input
                           type='text'
                           required
@@ -169,13 +186,24 @@ const CreateBug = () => {
                         />
                       </div>
                       <div className='col-sm-12'>
-                        <input
-                          type='text'
-                          required
-                          onChange={(e) => setBugDescription(e.target.value)}
-                          className='form-control text-center'
-                          placeholder='Bug description'
-                        />
+                      <label className="h5 form-label">Bug Description</label>
+                      <Editor
+           
+            apiKey="i8eqch0ybta5qyoxntbm1vqssmljsl9w4z83li4ia3wv64t3"
+            referrerpolicy="origin"
+            required            
+            init={{
+              selector: "textarea#default-editor",
+              height: 175,
+              menubar: false,
+              format: "text",
+              toolbar: "undo redo",
+              browser_spellcheck: true,
+            }}          
+            onEditorChange={(t) => setBugDescription(removeHTML(t))}
+            className="form-control"
+            placeholder={description}
+          />
                       </div>
                     </div>
                     <div className='row justify-content-center'>
