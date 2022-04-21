@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import NewHome from "./components/newHome";
 import Login from "./components/Login";
 import CreateBug from "./components/CreateBug";
-import CreateAccount from "./components/CreateAccount";
+import NewCreateAccount from "./components/NewCreateAccount";
 import BugUpdateForm from "./components/BugUpdateForm";
 import { Component } from "react";
 //import Sidebar from "./components/SideBar/Sidebar";
@@ -15,7 +15,7 @@ const BrowserRoutes = () => {
   return (
     <Routes>
       <Route path="login" element={<Login />} />
-      <Route path="createAccount" element={<CreateAccount />} />
+      <Route path="createAccount" element={<NewCreateAccount />} />
       <Route path="UpdateBug/:id" element={<BugUpdateForm />}></Route>
       <Route path="/" element={<NewHome />} />
       <Route path="CreateBug" element={<CreateBug />} />

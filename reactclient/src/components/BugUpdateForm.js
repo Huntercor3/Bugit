@@ -1,31 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
+import Select from "react-select";
+import "./CSS/CreateAccount.css";
+export default function BugUpdateForm() {
+  //////////////////////////////////GET BUG BY ID//////////////////////////////////////////
+  //
 
-export default function BugUpdateForm(props) {
-  const initialFormData = Object.freeze({
-    bugId: "4",
-    creator: "This",
-    timeCreated: "Project",
-    type: "Project",
-    status: "Needs",
-    priority: "It's",
-    estimatedTime: "Own",
-    description: "BugTracker",
-  });
+  //set bugIDToSearch to the URL location
+  var bugIDToSearch = window.location.pathname;
+  //set bugIDToSearch to the bug ID       deletes "/showbug/"
+  bugIDToSearch = bugIDToSearch.substring(11);
+  console.log("Bug ID to Seach: ", bugIDToSearch);
 
-  const [formData, setFormData] = useState(initialFormData);
+  var myInit = {
+    method: "POST",
+    Headers: {
+      "Content-Type": "application/json",
+    },
+    mode: "cors",
+    cache: "default",
+  };
 
-  const handleChange = (e) => {
+  const getBugUrl = `${"https://localhost:7075/get-bug-by-bug-id"}/${bugIDToSearch}`;
+
+  let myRequest = new Request(getBugUrl, myInit);
+
+  const [bugData, setBugData] = useState({});
+  const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] = useState({});
+  async function getBugById() {
+    fetch(getBugUrl, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((bugFromServer) => {
+        setBugData(bugFromServer);
+      })
+      .then(function(data) {
+        console.log("Data: ", data);
+      });
+  }
+
+  useEffect(() => {
+    getBugById({});
+  }, []);
+
+  //////////////////////////////////GET BUG BY ID//////////////////////////////////////////
+
+  /* const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  //set bugIDToSearch to the URL location
-  var bugIDToSearch = window.location.pathname;
-  //set bugIDToSearch to the bug ID       deletes "/showbug/"
-  bugIDToSearch = bugIDToSearch.substring(11);
-  console.log(bugIDToSearch);
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -58,7 +86,69 @@ export default function BugUpdateForm(props) {
 
     props.onBugUpdated(bugToUpdate);
   };
+*/
 
+  //////////////////////////////////UPDATE BUG//////////////////////////////////////////
+  const bugId = bugIDToSearch;
+  const [creator, setOwner] = useState(0);
+  const [description, setBugDescription] = useState("");
+  const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [estimatedTime, setEstimatedTime] = useState("");
+  const [redirect, setRedirect] = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+
+    await fetch("https://localhost:7075/update-bug", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        bugId: bugId,
+        creator: document.getElementById("OwnerInput").value,
+        description: document.getElementById("DescriptionInput").value,
+        type: document.getElementById("TypeInput").value,
+        status: document.getElementById("StatusInput").value,
+        priority: document.getElementById("PriorityInput").value,
+        estimatedTime: document.getElementById("EstimatedTimeInput").value,
+      }),
+    }).then(function(response) {
+      console.log(response.status);
+      if (response.status === 200) setRedirect(true);
+      else alert("Invalid credientials, please try again");
+    });
+    console.log(
+      bugId,
+      creator,
+      type,
+      status,
+      priority,
+      estimatedTime,
+      description
+    );
+  };
+  if (redirect) return <Navigate to="/#home" />;
+
+  //////////////////////////////////UPDATE BUG//////////////////////////////////////////
+
+  const typeOptions = [
+    { label: "N/A", value: "N/A" },
+    { label: "Optimize", value: "Optimize" },
+    { label: "Crash", value: "Crash" },
+    { label: "Upgrade", value: "Upgrade" },
+  ];
+
+  //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
+  function removeHTML(str) {
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = str;
+    return tmp.textContent || tmp.innerText || "";
+  }
+  //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
   return (
     <form className="w-100 px-5">
       <h1 className="mt-5">Updating the Bug with ID: {bugIDToSearch}</h1>
@@ -66,22 +156,26 @@ export default function BugUpdateForm(props) {
         <div className="col-sm-6">
           <label className="h3 form-label">Owner</label>
           <input
-            value={formData.creator}
-            name="title"
+            id="OwnerInput"
             type="text"
+            required
+            defaultValue={bugData.creator}
+            //onChange={(e) => setOwner(e.target.value)}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.creator}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Type</label>
           <input
-            value={formData.type}
-            name="content"
+            id="OwnerInput"
             type="text"
+            required
+            defaultValue={bugData.type}
+            //onChange={(e) => setOwner(e.target.value)}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.creator}
           />
         </div>
       </div>
@@ -89,53 +183,71 @@ export default function BugUpdateForm(props) {
         <div className="col-sm-6">
           <label className="h3 form-label">Status</label>
           <input
-            value={formData.status}
-            name="content"
+            id="StatusInput"
             type="text"
+            required
+            defaultValue={bugData.status}
+            //onChange={(e) => setStatus(e.target.value)}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.status}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Priority</label>
           <input
-            value={formData.priority}
-            name="content"
+            id="PriorityInput"
             type="text"
+            required
+            defaultValue={bugData.priority}
+            //onChange={(e) => setPriority(e.target.value)}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.priority}
           />
         </div>
       </div>
 
       <div className="form-group row">
         <div className="col-sm-6">
-          <label className="h3 form-label">Esitmated Time</label>
+          <label className="h3 form-label text-center">Estimated Time</label>
           <input
-            value={formData.estimatedTime}
-            name="content"
+            id="EstimatedTimeInput"
             type="text"
+            required
+            defaultValue={bugData.estimatedTime}
+            //onChange={(e) => setEstimatedTime(e.target.value)}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.estimatedTime}
           />
         </div>
 
         <div className="col-sm-6">
           <label className="h3 form-label">Description</label>
-          <input
-            value={formData.description}
-            name="content"
-            type="text"
+          <Editor
+            //textareaName="Description"
+            //id="BugDescriptionInput"
+            apiKey="i8eqch0ybta5qyoxntbm1vqssmljsl9w4z83li4ia3wv64t3"
+            referrerpolicy="origin"
+            required
+            initialValue={bugData.description}
+            init={{
+              selector: "textarea#default-editor",
+              height: 175,
+              menubar: false,
+              format: "text",
+              toolbar: "undo redo",
+              browser_spellcheck: true,
+            }}
+            onEditorChange={(t) => setBugDescription(removeHTML(t))}
             className="form-control"
-            onchange={handleChange}
+            //placeholder={bugData.description}
           />
         </div>
       </div>
       <div className="form-group row">
         <button
-          onClick={handleSubmit}
-          className="text-center btn btn-md btn-Orange form-control"
+          onClick={submit}
+          className=" text-center btn-md btn-Orange form-control "
         >
           Submit
         </button>
@@ -144,7 +256,6 @@ export default function BugUpdateForm(props) {
             href="/"
             className="text-center btn btn-md btn-second form-control"
             type="submit"
-            onClick={() => props.onPostUpdated(null)}
           >
             Cancel
           </a>

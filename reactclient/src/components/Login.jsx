@@ -10,7 +10,7 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await fetch('https://localhost:7075/login', {
+    await fetch('https://localhost:7075/loginController', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

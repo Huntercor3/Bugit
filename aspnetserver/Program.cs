@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using aspnetserver.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,52 +33,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(SwaggerGenOptionsExtensions =>
 {
     SwaggerGenOptionsExtensions.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Bugit Web Api", Version = "v1" });
-
-    SwaggerGenOptionsExtensions.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Description = "Bearer Authentication with JWT Token",
-        Type = SecuritySchemeType.Http
-    });
-    SwaggerGenOptionsExtensions.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Id = "Bearer",
-                    Type = ReferenceType.SecurityScheme
-                }
-            },
-            new List<string>()
-        }
-    });
 });
 
-/// <Login>
 builder.Services.AddSingleton<IUserService, UserService>();
-// Setting up authentication for the app using JwtBearer
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    // Setting token parameters, the Jwt values will need to be updated for deployment.
-    options.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateActor = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
-// Telling the api the use Authorization
-builder.Services.AddAuthorization();
-/// </Login>
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -99,99 +58,72 @@ app.UseRouting();
 app.UseHttpsRedirection();
 app.UseCors("CORSPolicy");
 
-/// <MoreLogin>
-// Telling the api to use Authentication and Authorization services
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseCookiePolicy();
+LoginController loginCon = new LoginController();
+RegisterController registerCon = new RegisterController();
 
-// Login feature
-app.MapPost("/login",
-    (UserLogin user, IUserService service) => Login(user, service));
+#region User Endpoints
 
-IResult Login(UserLogin user, IUserService service)
-{
-    if (!string.IsNullOrEmpty(user.EmailAddress) &&
-        !string.IsNullOrEmpty(user.Password))
-    {
-        // Replace with identity model of some sort
-        var loggedInUser = service.CheckUserInDBO(user);
-        if (loggedInUser is null) return Results.NotFound("User not found or password incorrect");
+app.MapPost("/loginController",
+    (LoginModel user) => loginCon.LoginUser(user)).WithTags("User Endpoints");
+app.MapPost("/registerController",
+    (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
 
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
-            new Claim(ClaimTypes.Role, loggedInUser.Role)
-        };
+#endregion User Endpoints
 
-        var token = new JwtSecurityToken
-            (
-            issuer: builder.Configuration["Jwt:Issuer"],
-            audience: builder.Configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
-            notBefore: DateTime.UtcNow,
-            signingCredentials: new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-                SecurityAlgorithms.HmacSha256)
-            );
-
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-
-        return Results.Ok(tokenString);
-    }
-    return Results.BadRequest("Invalid user credentials");
-}
-
-// THIS IS AN EXAMPLE HOW TO UTILIZE ROLES
-/*
-app.MapGet("/listUsers",
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "1")]
-(IUserService service) => ListUsers(service))
-    .Produces<List<UserAuth>>(statusCode: 200, contentType: "application/json");
-*/
-/*app.MapGet("/get-all-users",
-    async () => await Endpoints.GetUsers())
-    .WithTags("User Endpoints");
-*/
-
+#region Bug Endpoints
 
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
-     ProjectDBHelper.AddBugToProject(projectId, bugId);
-
+    ProjectDBHelper.AddBugToProject(projectId, bugId);
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/create-bug", async (Bug bugToCreate) =>
 {
-     BugDBHelper.AddBug(bugToCreate);
-
+    BugDBHelper.AddBug(bugToCreate);
 }).WithTags("Bug Endpoints");
 
-app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
+app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 {
-     ProjectDBHelper.AddNewProject(projectName);
+    BugDBHelper.UpdateBug(bugToUpdate);
+}).WithTags("Bug Endpoints");
 
-}).WithTags("Project Endpoints");
+app.MapPost("/get-all-bugs", async () =>
+ await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
 
-app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
-{
-    await ProjectDBHelper.GetBugsInProject(projectId);
-
-}).WithTags("Project Endpoints");
+app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
+    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
     await BugDBHelper.GetCommentsForBug(bugId);
-
 }).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 {
     await ProjectDBHelper.GetBugsInProject(projectId);
-
 }).WithTags("Bug Endpoints");
 
+app.MapDelete("/delete-bug-by-id/{bugId}", async (int bugId) =>
+{
+    BugDBHelper.DeleteBug(bugId);
+}).WithTags("Bug Endpoints");
 
+#endregion Bug Endpoints
+
+#region Project Endpoints
+
+app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
+{
+    ProjectDBHelper.AddNewProject(projectName);
+}).WithTags("Project Endpoints");
+
+app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
+{
+    await ProjectDBHelper.GetBugsInProject(projectId);
+}).WithTags("Project Endpoints");
+
+#endregion Project Endpoints
 
 /*app.MapPost("update-bug",
     (Bug bug) =>
@@ -219,5 +151,3 @@ app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
 
 
 app.Run();
-
-
