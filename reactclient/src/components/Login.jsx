@@ -25,7 +25,7 @@ const Login = () => {
       else alert('Email address or Password is Incorrect, please try again')
     })
   }
-  if (redirect) return <Navigate to='/#home' />
+  if (redirect) return <Navigate to='/newHome' />
   return (
     <React.Fragment>
       <body className='text-center'>

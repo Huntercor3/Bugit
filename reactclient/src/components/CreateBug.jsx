@@ -54,7 +54,7 @@ const CreateBug = () => {
       else alert('Invalid credientials, please try again')
     })
   }
-  if (redirect) return <Navigate to='/#home' />
+  if (redirect) return <Navigate to='/newHome' />
 
   /*onChangeFunc=({value}) =>
   {

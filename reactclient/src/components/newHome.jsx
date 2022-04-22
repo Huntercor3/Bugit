@@ -194,7 +194,12 @@ const Home = (props) => {
           >
             Delete Bug
           </Button>
-          <Button variant='secondary' onClick={closeModalWithOutSaving}>
+          <Button
+            variant='secondary'
+            className='text-center btn btn-md btn-cancel'
+            type='submit'
+            onClick={closeModalWithOutSaving}
+          >
             Cancel
           </Button>
         </Modal.Footer>
@@ -295,11 +300,9 @@ const Home = (props) => {
       filter: textFilter(),
     },
     {
-      
       text: 'Modify',
       formatter: (cell, row, rowIndex, extraData) => (
         <div>
-          
           <Link to={'/UpdateBug/' + row.bugId}>
             <IconButton aria-label='update'>
               <FaEdit />
@@ -308,9 +311,7 @@ const Home = (props) => {
           <IconButton aria-label='delete' onClick={toggleTrueFalse}>
             <RiDeleteBin5Fill />
           </IconButton>
-          
         </div>
-        
       ),
     },
   ]
@@ -341,12 +342,11 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
-      <Button variant='primary'>Test</Button>
       <BootstrapTable
         keyField='id'
         data={bugData}
-        columns={columns}       
-        classes =' table-hover table-bordered table-striped'        
+        columns={columns}
+        classes=' table-hover table-bordered table-striped'
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
         pagination={paginationFactory(options)}
@@ -354,7 +354,7 @@ const Home = (props) => {
         filter={filterFactory()}
       />
       {show ? <ModalContent /> : null}
-      
+
       {/* {show ? <ModalContent /> : null} 
        <div class="border-top my-3"></div>
       <Form className="user">

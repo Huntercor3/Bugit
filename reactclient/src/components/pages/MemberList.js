@@ -1,6 +1,6 @@
 import React from 'react'
 import BugItLogo from '../images/BugItLogo.jpg'
-const HomePage = () => {
+const MemberList = () => {
   return (
     <React.Fragment>
       <div className='container'>
@@ -27,7 +27,7 @@ const HomePage = () => {
                 <div className='p-5-b'>
                   <div className='text-center'>
                     <label className='h2 form-label'>
-                      Projects page coming Second quarter of 2022{' '}
+                      Member List page coming Second quarter of 2022{' '}
                     </label>
                   </div>
                 </div>
@@ -40,4 +40,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default MemberList
