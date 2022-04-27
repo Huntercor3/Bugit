@@ -49,21 +49,7 @@ function deleteBug() {
   return
 }
 
-// function showUser() {
-//   const [user, setuser] = useState({ Email: '', Password: '' })
-//   useEffect(() => {
-//     var a = localStorage.getItem('myData')
-//     var b = JSON.parse(a)
-//     console.log(b.Name)
-//     setuser(b)
-//     console.log(user.Name)
-//   }, [])
-//   return (
-//     <>
-//       <div class='bottomleft'>{user.Name}</div>
-//     </>
-//   )
-//}
+// a
 
 var myInit = {
   method: 'POST',
