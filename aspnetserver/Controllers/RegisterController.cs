@@ -1,11 +1,15 @@
 ﻿using aspnetserver.Services;
 using aspnetserver.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.Swagger.Annotations;
+using System.Net;
 
 namespace aspnetserver
 {
     public class RegisterController : Controller
     {
+        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.BadRequest)]
         public IActionResult RegisterUser(RegisterModel userEntry)
         {
             LoginModel login = new LoginModel();
@@ -66,7 +70,7 @@ namespace aspnetserver
                     return Ok();
                 }
             }
-            return (IActionResult)Results.BadRequest("Invalid registration credentials");
+            return BadRequest("Invalid registration credentials");
         }
     }
 }
