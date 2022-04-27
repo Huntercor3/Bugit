@@ -189,6 +189,11 @@ app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 
 }).WithTags("Bug Endpoints");
 
+app.MapPost("/get-name-for-id", async (int userId) =>
+{
+    await UserDBHelper.GetUserName(userId);
+}).WithTags("User Endpoints");
+
 
 
 app.Run();
