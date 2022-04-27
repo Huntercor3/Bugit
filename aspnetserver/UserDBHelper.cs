@@ -71,7 +71,7 @@ namespace aspnetserver
             String name = "";
             using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT FirstName, LastName FROM dbo.Users WHERE UserId=" + userId.ToString();
+                String sql = "SELECT * FROM dbo.Users WHERE UserId=" + userId.ToString();
 
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
