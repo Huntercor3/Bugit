@@ -23,6 +23,30 @@ import { darkTheme } from './styles/theme'
 const Home = (props) => {
   
   
+ /////////////////////USERDATA//////////////////////////////
+  const getUserUrl = 'https://localhost:7075/GetCookie'
+  
+  const [userData, setUserData] = useState({})
+  
+  async function getUserData() {
+    fetch(getUserUrl, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((UserFromServer) => {
+        setUserData(UserFromServer)
+      })
+      .then(function(data) {
+        console.log('Data: ', data)
+      })
+  }
+
+/////////////////////USERDATA//////////////////////////////
+  
+  
+  
+  
+  
   const getBugsUrl = 'https://localhost:7075/get-all-bugs'
   const [bugData, setBugData] = useState([])
   const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] =
@@ -50,6 +74,7 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllBugs([])
+    getUserData({})
   }, [])
 
   //modal stuff
@@ -431,10 +456,11 @@ const Home = (props) => {
       },
     ], // A numeric array is also available. the purpose of above example is custom the text
   };
-
+console.log(userData.value);
   return (
     <React.Fragment>
       <Button variant="primary">Test</Button>
+      <h1 className="mt-5">Welcome: {userData.value}</h1>
       <BootstrapTable
         keyField="id"
         data={bugData}
