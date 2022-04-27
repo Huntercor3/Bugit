@@ -65,5 +65,28 @@ namespace aspnetserver
             }
             return projects;
         }
+
+        public static async Task<String> GetUserName(int userId)
+        {
+            String name = "";
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT FirstName, LastName FROM dbo.Users WHERE UserId=" + userId.ToString();
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using(MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            name = record[0] + " " + record[1];
+                        }
+                    }
+                }
+            }
+            return name;
+        }
     }
 }
