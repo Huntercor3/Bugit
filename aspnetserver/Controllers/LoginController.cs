@@ -38,7 +38,7 @@ namespace aspnetserver.Controllers
                     //usernameCookie.Domain = "purple-ground-019dc9c0f.1.azurestaticapps.net";
                     //new CookieContainer().Add(cookie);
                     cookieCollection.Add(usernameCookie);
-                    //cookieCollection.Add(userRole);
+                    cookieCollection.Add(userRole);
 
                     return Ok();
                 }

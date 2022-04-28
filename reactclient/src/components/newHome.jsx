@@ -26,26 +26,45 @@ const Home = (props) => {
  /////////////////////USERDATA//////////////////////////////
   const getUserUrl = 'https://localhost:7075/GetCookie'
   
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState([])
   
   async function getUserData() {
     fetch(getUserUrl, {
       method: 'GET',
     })
-      .then((response) => response.json())
-      .then((UserFromServer) => {
-        setUserData(UserFromServer)
-      })
-      .then(function(data) {
-        console.log('Data: ', data)
-      })
+    .then(function (resp) {
+      return resp.json()
+    })
+    .then(function (data) {
+      setUserData(data)
+    })
   }
 
+  
+
 /////////////////////USERDATA//////////////////////////////
-  
-  
-  
-  
+  console.log("Array of user data: ", userData)
+  const user = (userData[0]);
+  console.log("user" , user)
+    //const value = userData[0]['value']
+ // console.log(user.getOwnPropertyNames())
+
+ //console.log(Object.getOwnPropertyNames(user)); 
+ const userob = {
+  comment: userData[0].comment,          
+  commentUri: userData[0].commentUri,
+  httpOnly: userData[0].httpOnly,
+  discard: userData[0].discard,
+  domain: userData[0].domain,
+  expired: userData[0].expired,
+  path: userData[0].path,
+  port: userData[0].port,
+  secure: userData[0].secure,
+  timeStamp: userData[0].timeStamp,
+  value: userData[0].value,
+  version: userData[0].version
+  };
+
   
   const getBugsUrl = 'https://localhost:7075/get-all-bugs'
   const [bugData, setBugData] = useState([])
@@ -59,6 +78,8 @@ const Home = (props) => {
     mode: 'cors',
     cache: 'default',
   }
+
+  
 
   let myRequest = new Request(getBugsUrl, myInit)
 
@@ -74,8 +95,10 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllBugs([])
-    getUserData({})
+    getUserData([])
   }, [])
+  console.log(userData[0]);
+  
 
   //modal stuff
   const data = require('./data.json')
@@ -460,7 +483,7 @@ console.log(userData.value);
   return (
     <React.Fragment>
       <Button variant="primary">Test</Button>
-      <h1 className="mt-5">Welcome: {userData.value}</h1>
+      {/* <h1 className="mt-5">Welcome: {userData[0].value}</h1>  */}
       <BootstrapTable
         keyField="id"
         data={bugData}
