@@ -8,12 +8,11 @@ namespace aspnetserver
 {
     public class RegisterController : Controller
     {
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
         public IActionResult RegisterUser(RegisterModel userEntry)
         {
             LoginModel login = new LoginModel();
             UserService service = new UserService();
+
             if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
                 !string.IsNullOrEmpty(userEntry.password))
             {

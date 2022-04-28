@@ -33,7 +33,8 @@ namespace aspnetserver.Services
             using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 // SQL command
-                String sql = "SELECT email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + userLogin.Password + "';";
+                string password = Encryption.Encrypt(userLogin.Password);
+                String sql = "SELECT email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + password + "';";
 
                 MySqlCommand cmd = new MySqlCommand(sql, connection);
                 try
