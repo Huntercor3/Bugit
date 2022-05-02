@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Web;
 using aspnetserver.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,15 +59,23 @@ app.UseHttpsRedirection();
 app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
+
 LoginController loginCon = new LoginController();
 RegisterController registerCon = new RegisterController();
+CookieContainer cookies = new CookieContainer();
 
 #region User Endpoints
 
 app.MapPost("/loginController",
-    (LoginModel user) => loginCon.LoginUser(user)).WithTags("User Endpoints");
+    (LoginModel user) => loginCon.LoginUser(user, cookies)).WithTags("User Endpoints");
+
 app.MapPost("/registerController",
     (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
+
+app.MapGet("/GetCookie", async () =>
+{
+    return cookies.GetAllCookies();
+}).WithTags("User Endpoints");
 
 #endregion User Endpoints
 
@@ -82,17 +91,6 @@ app.MapPost("/create-bug", async (Bug bugToCreate) =>
     BugDBHelper.AddBug(bugToCreate);
 }).WithTags("Bug Endpoints");
 
-app.MapPost("/update-bug", async (Bug bugToUpdate) =>
-{
-    BugDBHelper.UpdateBug(bugToUpdate);
-}).WithTags("Bug Endpoints");
-
-app.MapPost("/get-all-bugs", async () =>
- await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
-
-app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
-
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
     await BugDBHelper.GetCommentsForBug(bugId);
@@ -103,10 +101,16 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
     await ProjectDBHelper.GetBugsInProject(projectId);
 }).WithTags("Bug Endpoints");
 
-app.MapDelete("/delete-bug-by-id/{bugId}", async (int bugId) =>
+app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 {
-    BugDBHelper.DeleteBug(bugId);
+    BugDBHelper.UpdateBug(bugToUpdate);
 }).WithTags("Bug Endpoints");
+
+app.MapPost("/get-all-bugs", async () =>
+ await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
+
+app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
+    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 #endregion Bug Endpoints
 

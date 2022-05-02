@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
 import BugItLogo from './images/BugItLogo.jpg'
 import { Editor } from '@tinymce/tinymce-react'
+import Select from 'react-select'
 //import Select from 'react-select'
 
 //  const priorityOptions=[
@@ -72,7 +73,27 @@ const CreateBug = () => {
     return tmp.textContent || tmp.innerText || ''
   }
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
+  const priorityOptions = [
+    { label: 'N/A', value: 'N/A' },
+    { label: 'High', value: 'High' },
+    { label: 'Moderate', value: 'Moderate' },
+    { label: 'Low', value: 'Low' },
+  ]
 
+  const typeOptions = [
+    { label: 'N/A', value: 'N/A' },
+    { label: 'Optimize', value: 'Optimize' },
+    { label: 'Crash', value: 'Crash' },
+    { label: 'Upgrade', value: 'Upgrade' },
+  ]
+
+  //modal stuff
+  //modal status select menu
+  const statusOptions = [
+    { label: 'N/A', value: 'N/A' },
+    { label: 'In Progress', value: 'In Progress' },
+    { label: 'Stuck', value: 'Stuck' },
+  ]
   return (
     <React.Fragment>
       <div className='container'>
@@ -126,52 +147,52 @@ const CreateBug = () => {
                     <div className='form-group row'>
                       <div className='col-sm-6 '>
                         <label className='h5 form-label'>Type</label>
-                        <input
+                        {/* <input
                           type='text'
                           required
                           onChange={(e) => setType(e.target.value)}
                           className='form-control'
                           placeholder='Set Type'
-                        />
+                        /> */}
 
-                        {/* <Select
-                       options={this.state.typeOptions} 
-                       onChange = {setStatus(this.handleChange.bind(this))}
+                        <Select
+                       options={typeOptions} 
+                       onChange = {(e) => setType(e.value)}
                        placeholder = 'Set Type' 
-                       />     */}
+                       />    
                       </div>
                       <div className='col-sm-6 '>
                         <label className='h5 form-label'>Status</label>
-                        <input
+                        {/* <input
                           type='text'
                           required
                           onChange={(e) => setStatus(e.target.value)}
                           className='form-control'
                           placeholder='Set Status'
-                        />
-                        {/*<Select
+                        /> */}
+                        <Select
                        options={statusOptions} 
-                       onChange = {setStatus}
+                       onChange = {(e) => setStatus(e.value)}
                        placeholder = 'Set status'
-                       />  */}
+                       /> 
                       </div>
                     </div>
                     <div className='form-group row'>
                       <div className='col-sm-6'>
                         <label className='h5 form-label'>Priority</label>
-                        <input
+                        {/* <input
                           type='text'
                           required
                           onChange={(e) => setPriority(e.target.value)}
                           className='form-control'
                           placeholder='Set Priority'
-                        />
+                        /> */}
 
-                        {/*<Select
+                        <Select
                        options={priorityOptions} 
-                       onChange = {setPriority}
+                       onChange = {(e) => setPriority(e.value)}
                        placeholder = 'Set Priority'                      
-                       /> */}
+                       />
                       </div>
                       <div className='col-sm-6'>
                         <label className='h5 form-label'>Estimated Time</label>

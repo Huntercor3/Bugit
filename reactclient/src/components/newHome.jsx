@@ -346,7 +346,7 @@ const Home = (props) => {
         keyField='id'
         data={bugData}
         columns={columns}
-        classes=' table-hover table-bordered table-striped'
+        classes=' table-hover table-bordered table-striped table-dark'
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
         pagination={paginationFactory(options)}
