@@ -25,7 +25,7 @@ namespace aspnetserver
                 connection.Open();
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
                     " values ('"
-                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
+                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + Encryption.Encrypt(u.password) + "')";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {

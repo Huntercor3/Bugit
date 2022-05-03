@@ -1,6 +1,8 @@
 ﻿using aspnetserver.Services;
 using aspnetserver.Models;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.Swagger.Annotations;
+using System.Net;
 
 namespace aspnetserver
 {
@@ -10,6 +12,7 @@ namespace aspnetserver
         {
             LoginModel login = new LoginModel();
             UserService service = new UserService();
+
             if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
                 !string.IsNullOrEmpty(userEntry.password))
             {

@@ -32,6 +32,8 @@ const Home = (props) => {
     cache: 'default',
   }
 
+  
+
   let myRequest = new Request(getBugsUrl, myInit)
 
   async function getAllBugs() {
@@ -46,7 +48,10 @@ const Home = (props) => {
 
   useEffect(() => {
     getAllBugs([])
+    getUserData([])
   }, [])
+  console.log(userData[0]);
+  
 
   //modal stuff
   const data = require('./data.json')
