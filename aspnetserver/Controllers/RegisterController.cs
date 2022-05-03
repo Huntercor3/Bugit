@@ -1,8 +1,6 @@
 ﻿using aspnetserver.Services;
 using aspnetserver.Models;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.Swagger.Annotations;
-using System.Net;
 
 namespace aspnetserver
 {

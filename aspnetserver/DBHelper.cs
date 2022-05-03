@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 
 namespace aspnetserver
 {
     public class DBHelper
     {
         private SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
         public DBHelper()
         {
             builder.DataSource = "bugit-server.database.windows.net";
@@ -41,14 +38,15 @@ namespace aspnetserver
             ExecuteCommand(sql);
         }
 
-       /* public void AddBug(Bug b)
-        {
-            String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) values ("
-                + b.software + ", " + b.creator + ", " + b.timeCreated.ToString() + ")";
+        /* public void AddBug(Bug b)
+         {
+             String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) values ("
+                 + b.software + ", " + b.creator + ", " + b.timeCreated.ToString() + ")";
 
-            ExecuteCommand(sql);
-        }
-       */
+             ExecuteCommand(sql);
+         }
+        */
+
         public void RemoveBug(int id)
         {
             String sql = "DELETE FROM dbo.Bugs WHERE BugId=" + id.ToString();

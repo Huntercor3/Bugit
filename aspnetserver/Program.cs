@@ -1,16 +1,7 @@
 using aspnetserver;
 using aspnetserver.Services;
 using aspnetserver.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
-using System.Text;
-using System.Diagnostics;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Web;
 using aspnetserver.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -130,12 +121,5 @@ app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
 }).WithTags("Project Endpoints");
 
 #endregion Project Endpoints
-
-/*app.MapPost("update-bug",
-    (Bug bug) =>
-    {
-        BugDBHelper.UpdateBug(bug);
-    }
-    ).WithTags("Bug Endpoints");*/
 
 app.Run();

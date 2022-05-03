@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace aspnetserver
+﻿namespace aspnetserver
 {
     public class Bug
     {
