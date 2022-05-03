@@ -1,5 +1,4 @@
 ﻿using aspnetserver.Models;
-using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace aspnetserver.Services
@@ -16,6 +15,8 @@ namespace aspnetserver.Services
                 Server = "34.67.3.72",
                 UserID = "root",
                 Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
             };
         }
 
@@ -49,7 +50,7 @@ namespace aspnetserver.Services
                     if (!reader.HasRows)
                         check = false;
                 }
-                catch (SqlException ex)
+                catch (MySqlException ex)
                 { throw; }
                 finally
                 { connection.Close(); }

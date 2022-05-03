@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace aspnetserver
@@ -140,11 +139,11 @@ namespace aspnetserver
 
         public static async void DeleteProject(int projectId)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "DELETE FROM dbo.Projects WHERE BugId=" + projectId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -152,7 +151,7 @@ namespace aspnetserver
 
                 String sqlTwo = "DELETE FROM dbo.ProjectBugs WHERE ProjectId=" + projectId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                using (MySqlCommand command = new MySqlCommand(sqlTwo, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -160,7 +159,7 @@ namespace aspnetserver
 
                 String sqlThree = "DELETE FROM dbo.ProjectUsers WHERE ProjectId=" + projectId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                using (MySqlCommand command = new MySqlCommand(sqlTwo, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -170,7 +169,7 @@ namespace aspnetserver
 
         public static async void ArchiveProject(int projectId, bool archive)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 int arch = 1;
                 if (!archive)
@@ -181,7 +180,7 @@ namespace aspnetserver
                     " SET Archived = " + arch.ToString() +
                     " WHERE ProjectId = " + projectId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();

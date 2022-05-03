@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using MySql.Data.MySqlClient;
 
 namespace aspnetserver
@@ -15,6 +14,8 @@ namespace aspnetserver
                 Server = "34.67.3.72",
                 UserID = "root",
                 Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
             };
         }
 
@@ -43,7 +44,7 @@ namespace aspnetserver
 
         public static async void UpdateUser(User u)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "UPDATE dbo.Users" +
                     "SET FirstName = '" + u.firstName +
@@ -55,7 +56,7 @@ namespace aspnetserver
                     ", Password = '" + u.password +
                     "' WHERE UserId = " + u.userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -89,11 +90,11 @@ namespace aspnetserver
 
         public static async void DeleteUser(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "DELETE FROM dbo.Users WHERE UserId=" + userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
@@ -101,7 +102,7 @@ namespace aspnetserver
 
                 String sqlTwo = "DELETE FROM dbo.ProjectUsers WHERE UserId=" + userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
+                using (MySqlCommand command = new MySqlCommand(sqlTwo, connection))
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
