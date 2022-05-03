@@ -60,8 +60,8 @@ app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
 
-LoginController loginCon = new LoginController();
-RegisterController registerCon = new RegisterController();
+//LoginController loginCon = new LoginController();
+//RegisterController registerCon = new RegisterController();
 CookieContainer cookies = new CookieContainer();
 
 #region User Endpoints
@@ -70,7 +70,7 @@ app.MapPost("/loginController",
     async (LoginModel user) => await LoginController.LoginUser(user, cookies)).WithTags("User Endpoints");
 
 app.MapPost("/registerController",
-    (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
+    async (RegisterModel user) => await RegisterController.RegisterUser(user)).WithTags("User Endpoints");
 
 app.MapGet("/GetCookie", async () =>
 {
