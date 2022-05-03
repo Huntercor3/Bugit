@@ -8,7 +8,7 @@ namespace aspnetserver
 {
     public class RegisterController : Controller
     {
-        public IActionResult RegisterUser(RegisterModel userEntry)
+        public static async Task<int> RegisterUser(RegisterModel userEntry)
         {
             LoginModel login = new LoginModel();
             UserService service = new UserService();
@@ -23,7 +23,7 @@ namespace aspnetserver
                     loginModel.EmailAddress = userEntry.emailAddress;
                     loginModel.Password = userEntry.password;
                     if (service.CheckUserInDBOBool(loginModel.EmailAddress.ToString()) == true)
-                        return BadRequest("User already exists");
+                        return 400;
 
                     int validConditions = 0;
                     foreach (char c in userEntry.password)
@@ -43,7 +43,7 @@ namespace aspnetserver
                         }
                     }
                     if (validConditions == 0)
-                        return BadRequest("Not a valid password.");
+                        return 400;
                     foreach (char c in userEntry.password)
                     {
                         if (c >= '0' && c <= '9')
@@ -53,12 +53,12 @@ namespace aspnetserver
                         }
                     }
                     if (validConditions == 1)
-                        return BadRequest("Not a valid password.");
+                        return 400;
                     if (validConditions == 2)
                     {
                         char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
                         if (userEntry.password.IndexOfAny(special) == -1)
-                            return BadRequest("Not a valid password.");
+                            return 400;
                     }
 
                     UserDBHelper.AddUser(userToRegister);
@@ -66,10 +66,10 @@ namespace aspnetserver
                     login.EmailAddress = userToRegister.email;
                     login.Password = userToRegister.password;
 
-                    return Ok();
+                    return 200;
                 }
             }
-            return BadRequest("Invalid registration credentials");
+            return 400;
         }
     }
 }

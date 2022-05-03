@@ -60,8 +60,6 @@ app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
 
-//LoginController loginCon = new LoginController();
-//RegisterController registerCon = new RegisterController();
 CookieContainer cookies = new CookieContainer();
 
 #region User Endpoints
