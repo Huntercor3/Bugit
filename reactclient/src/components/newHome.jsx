@@ -105,8 +105,7 @@ console.log("UserName value: ", userName)
     getAllBugs([])
     getUserData([])
   }, [])
-  console.log(userData[0]);
-  
+  console.log(userData[0])
 
   //modal stuff
   const data = require('./data.json')
@@ -422,8 +421,6 @@ console.log("UserName value: ", userName)
       />
       </div>
       {show ? <ModalContent /> : null}
-
-      
     </React.Fragment>
   )
 }
