@@ -20,6 +20,8 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaRegEdit, FaEdit } from 'react-icons/fa'
 import { darkTheme } from './styles/theme'
 const Home = (props) => {
+  
+  /////////////////GETALLBUGS////////////////////
   const getBugsUrl = 'https://bugitserver.azurewebsites.net/get-all-bugs'
   const [bugData, setBugData] = useState([])
   const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] = useState(null)
@@ -32,8 +34,6 @@ const Home = (props) => {
     cache: 'default',
   }
 
-  
-
   let myRequest = new Request(getBugsUrl, myInit)
 
   async function getAllBugs() {
@@ -45,7 +45,31 @@ const Home = (props) => {
         setBugData(data)
       })
   }
+/////////////////GETALLBUGS////////////////////
 
+/////////////////GETUSERDATA////////////////////
+const getUserUrl = "https://bugitserver.azurewebsites.net/GetCookie"
+const [userData, setUserData] = useState([])
+const [userName, setUserName] = useState("")
+
+async function getUserData() {
+  await fetch(getUserUrl, {
+    method: 'GET',
+  })
+  .then(function (resp) {
+    return resp.json()
+  })
+  
+  .then(async function (data)  {
+   await setUserData(data)
+   console.log("data sent in func ", data)
+   console.log(data[0].value)
+   setUserName(data[0].value)
+  })    
+} 
+console.log("UserName value: ", userName)
+
+/////////////////GETUSERDATA////////////////////
   useEffect(() => {
     getAllBugs([])
     getUserData([])
@@ -347,6 +371,7 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
+      <h3 className="mt-5">Welcome: {userName}</h3>
       <BootstrapTable
         keyField='id'
         data={bugData}
