@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from 'react'
 import {
   SDivider,
   SLink,
@@ -15,9 +15,9 @@ import {
   SThemeLabel,
   SThemeToggler,
   SToggleThumb,
-} from "./styles";
+} from './styles'
 
-import BugItLogo from "../images/BugItLogo.jpg";
+import BugItLogo from '../images/BugItLogo.jpg'
 
 import {
   AiOutlineApartment,
@@ -25,28 +25,28 @@ import {
   AiOutlineLeft,
   AiOutlineSearch,
   AiOutlineSetting,
-  AiOutlinePlusSquare
-} from "react-icons/ai";
-import { MdLogout, MdOutlineAnalytics, MdLogin } from "react-icons/md";
-import { BsPeople } from "react-icons/bs";
+  AiOutlinePlusSquare,
+} from 'react-icons/ai'
+import { MdLogout, MdOutlineAnalytics, MdLogin } from 'react-icons/md'
+import { BsPeople } from 'react-icons/bs'
 
-import { ThemeContext } from "../../App";
-import { useLocation } from "react-router-dom";
+import { ThemeContext } from '../../App'
+import { useLocation } from 'react-router-dom'
 
 const Sidebar = () => {
-  const searchRef = useRef(null);
-  const { setTheme, theme } = useContext(ThemeContext);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { pathname } = useLocation();
+  const searchRef = useRef(null)
+  const { setTheme, theme } = useContext(ThemeContext)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { pathname } = useLocation()
 
   const searchClickHandler = () => {
     if (!sidebarOpen) {
-      setSidebarOpen(true);
-      searchRef.current.focus();
+      setSidebarOpen(true)
+      searchRef.current.focus()
     } else {
       // search functionality
     }
-  };
+  }
 
   return (
     <SSidebar isOpen={sidebarOpen}>
@@ -59,7 +59,7 @@ const Sidebar = () => {
         </SSidebarButton>
       </>
       <SLogo>
-        <img src={BugItLogo} alt="logo" />
+        <img src={BugItLogo} alt='logo' />
       </SLogo>
       <SSearch
         onClick={searchClickHandler}
@@ -70,7 +70,7 @@ const Sidebar = () => {
         </SSearchIcon>
         <input
           ref={searchRef}
-          placeholder="Search"
+          placeholder='Search'
           style={!sidebarOpen ? { width: 0, padding: 0 } : {}}
         />
       </SSearch>
@@ -104,54 +104,54 @@ const Sidebar = () => {
       <STheme>
         {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
         <SThemeToggler
-          isActive={theme === "dark"}
-          onClick={() => setTheme((p) => (p === "light" ? "dark" : "light"))}
+          isActive={theme === 'dark'}
+          onClick={() => setTheme((p) => (p === 'light' ? 'dark' : 'light'))}
         >
-          <SToggleThumb style={theme === "dark" ? { right: "1px" } : {}} />
+          <SToggleThumb style={theme === 'dark' ? { right: '1px' } : {}} />
         </SThemeToggler>
       </STheme>
     </SSidebar>
-  );
-};
+  )
+}
 
 const linksArray = [
   {
-    label: "Home",
+    label: 'Home',
     icon: <AiOutlineHome />,
-    to: "/",
+    to: '/newHome',
     notification: 0,
   },
   {
-    label: "Add Bug",
+    label: 'Add Bug',
     icon: <AiOutlinePlusSquare />,
-    to: "/CreateBug",
+    to: '/CreateBug',
     notification: 0,
   },
   {
-    label: "Login",
+    label: 'Members',
     icon: <BsPeople />,
-    to: "/login",
+    to: '/MemberList',
     notification: 0,
   },
   {
-    label: "Projects",
+    label: 'Projects',
     icon: <AiOutlineApartment />,
-    to: "/HomePage",
+    to: '/HomePage',
     notification: 1,
   },
-];
+]
 
 const secondaryLinksArray = [
   {
-    label: "Profile",
+    label: 'Profile',
     icon: <AiOutlineSetting />,
-    to: "/Profile"
+    to: '/Profile',
   },
   {
-    label: "Login",
+    label: 'Login',
     icon: <MdLogin />,
-    to: "/login",
+    to: '/login',
   },
-];
+]
 
-export default Sidebar;
+export default Sidebar

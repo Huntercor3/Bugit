@@ -22,7 +22,10 @@ main {
 
 .p-5-b {
   width: 100%;
-  padding: 5%;
+  padding-top: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 5%;
 }
 
 .logo {
@@ -32,6 +35,9 @@ main {
 
 .signuplabel {
   padding-bottom: 5px;
+}
+.form-label {
+  margin-top: 15px;
 }
 
 .form-signin {
@@ -59,9 +65,21 @@ main {
   border-radius: 5px;
 }
 
+.btn-cancel {
+  margin-top: 15px;
+  max-width: 250px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .btn-primary,
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited {
   background-color: #4abdac !important;
+  border-color: #343a40;
+  margin-top: 15px;
+  max-width: 250px;
+  margin-left: 5px;
+  margin-right: 5px;
 }

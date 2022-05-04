@@ -349,3 +349,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+aspnetserver/bin/Debug/net6.0/aspnetserver.pdb
+aspnetserver/bin/Debug/net6.0/ref/aspnetserver.dll

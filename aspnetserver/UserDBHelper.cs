@@ -24,9 +24,12 @@ namespace aspnetserver
             {
                 connection.Open();
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
+<<<<<<< HEAD
                     " OUTPUT INSERTED.UserId" +
+=======
+>>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
                     " values ('"
-                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
+                    + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + Encryption.Encrypt(u.password) + "')";
 
                 using (var command = new MySqlCommand(sql, connection))
                 {
@@ -42,6 +45,31 @@ namespace aspnetserver
             }
         }
 
+<<<<<<< HEAD
+=======
+        public static async void UpdateUser(User u)
+        {
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                String sql = "UPDATE dbo.Users" +
+                    "SET FirstName = '" + u.firstName +
+                    "', Lastname = '" + u.lastName +
+                    "', email = '" + u.email +
+                    "', PhoneNumber = '" + u.phoneNumber +
+                    "', Hardware = '" + u.hardware +
+                    "', Role = " + u.role.roleId.ToString() +
+                    ", Password = '" + u.password +
+                    "' WHERE UserId = " + u.userId.ToString();
+
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+        }
+
+>>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
         public static async Task<List<Project>> GetProjectsForUser(int userId)
         {
             List<Project> projects = new List<Project>();
@@ -57,7 +85,7 @@ namespace aspnetserver
                         while (await reader.ReadAsync())
                         {
                             IDataRecord record = (IDataRecord)reader;
-                            Project p = new Project((int)record[0], (string)record[1]);
+                            Project p = new Project((int)record[0], (string)record[1], (int)record[2]);
                             projects.Add(p);
                         }
                     }

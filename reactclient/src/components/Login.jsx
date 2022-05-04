@@ -10,7 +10,7 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault()
 
-    await fetch('https://localhost:7075/login', {
+    await fetch('https://bugitserver.azurewebsites.net/loginController', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,12 +20,12 @@ const Login = () => {
         emailAddress,
         password,
       }),
-    }).then(function (response) {
+    }).then(function(response) {
       if (response.status === 200) setRedirect(true)
       else alert('Email address or Password is Incorrect, please try again')
     })
   }
-  if (redirect) return <Navigate to='/#home' />
+  if (redirect) return <Navigate to='/newHome' />
   return (
     <React.Fragment>
       <body className='text-center'>
