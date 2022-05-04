@@ -162,19 +162,19 @@ app.MapPost("/get-all-bugs", async () =>
 
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
-    await ProjectDBHelper.AddBugToProject(projectId, bugId);
+    ProjectDBHelper.AddBugToProject(projectId, bugId);
 
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/create-bug", async (Bug bugToCreate) =>
 {
-    await BugDBHelper.AddBug(bugToCreate);
+    BugDBHelper.AddBug(bugToCreate);
 
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/add-new-project-by-project-name", async (string projectName) =>
 {
-    await ProjectDBHelper.AddNewProject(projectName);
+    ProjectDBHelper.AddNewProject(projectName);
 
 }).WithTags("Project Endpoints");
 
@@ -212,6 +212,21 @@ app.MapGet("/get-bugs-by-project-id/{projectId}", async (int projectId) =>
 
 }).WithTags("Bug Endpoints");
 
+app.MapPost("/update-bug", async (Bug bugToUpdate) =>
+{
+    await BugDBHelper.UpdateBug(bugToUpdate);
+
+}).WithTags("Bug Endpoints");
+
+app.MapGet("/get-name-for-id/{userId}", async (int userId) =>
+{
+    await UserDBHelper.GetUserName(userId);
+}).WithTags("User Endpoints");
+
+app.MapGet("/get-id-for-name/{firstName},{lastName}", async (string firstName, string lastName) =>
+{
+    await UserDBHelper.GetUserId(firstName, lastName);
+}).WithTags("User Endpoints");
 
 
 

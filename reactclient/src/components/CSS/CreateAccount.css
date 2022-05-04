@@ -43,6 +43,17 @@ body {
   background-color: #4abdac !important;
   width: 20%;
 }
+.btn-second{
+  background-color: #57585c;
+  width: 20%;
+  
+}
+
+.btn-Orange{
+  background-color: #FC4A1A;
+  color: #f8f8f8;
+  width: 20%;
+}
 
 .form-control {
   margin-bottom: 5px;

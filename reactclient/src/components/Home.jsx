@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 //import BugItLogo from './images/BugItLogo.jpg';
 import './CSS/home.css'
-
+import Data from './data.json'
 import { Button } from 'react-bootstrap'
 
 
@@ -23,6 +23,8 @@ function readJson(bug, index) {
     </tr>
   )
 }
+
+
 
 
 function addBug() {
@@ -78,7 +80,8 @@ let myRequest = new Request(getBugUrl, myInit)
 
  const Home =() => {
   const [bugData, setBugData] = useState([]);
-  
+  const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] =
+  useState(null);
   async function getAllBugs() {
     fetch(myRequest)
     .then(response => response.json())
@@ -121,7 +124,7 @@ let myRequest = new Request(getBugUrl, myInit)
             </tr>
           </thead>
           <tbody >
-          {bugData.map((bug)=>(
+          {Data.map((bug)=>(
  <tr key={bug.id}>
  <th scope="row">{bug.bugId}</th>
  <td>{bug.creator}</td>
@@ -131,6 +134,15 @@ let myRequest = new Request(getBugUrl, myInit)
  <td>{bug.status}</td>
  <td>{bug.priority}</td>
  <td>{bug.estimatedTime}</td>
+ <td>
+ <button
+  onClick={() => setBugCurrentlyBeingUpdated(bug)}
+  className="btn btn-dark btn-sm mx-3 my-3"
+  href='/updatebug'
+ >
+Update
+</button>
+ </td>
  </tr>))}
     
           </tbody>

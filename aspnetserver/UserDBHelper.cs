@@ -1,56 +1,43 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace aspnetserver
 {
     public static class UserDBHelper
     {
-        private static SqlConnectionStringBuilder builder;
+        private static MySqlConnectionStringBuilder builder;
 
         static UserDBHelper()
         {
-            builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+            };
         }
 
-        public static async Task<int> AddUser(User u)
+        public static int AddUser(User u)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new MySqlConnection(builder.ConnectionString))
             {
+                connection.Open();
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
-                    "OUTPUT INSERTED.UserId" +
+                    " OUTPUT INSERTED.UserId" +
                     " values ('"
                     + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + u.password + "')";
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (var command = new MySqlCommand(sql, connection))
                 {
-                    connection.Open();
-                    return (int)await command.ExecuteScalarAsync();
+                    command.ExecuteScalar();
                 }
-            }
-        }
 
-        public static async void UpdateUser(User u)
-        {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
-                String sql = "UPDATE dbo.Users" +
-                    "SET FirstName = " + u.firstName +
-                    ", Lastname = " + u.lastName +
-                    ", email = " + u.email +
-                    ", PhoneNumber = " + u.phoneNumber +
-                    ", Hardware = " + u.hardware +
-                    ", Role = " + u.role.roleId.ToString() +
-                    ", Password = " + u.password +
-                    " WHERE UserId = " + u.userId.ToString();
-
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                String sql2 = "SELECT LAST_INSERT_ID();";
+                using (var command2 = new MySqlCommand(sql2, connection))
                 {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    String id = command2.ExecuteScalar().ToString();
+                    return int.Parse(id);
                 }
             }
         }
@@ -58,14 +45,14 @@ namespace aspnetserver
         public static async Task<List<Project>> GetProjectsForUser(int userId)
         {
             List<Project> projects = new List<Project>();
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
                 String sql = "SELECT * FROM dbo.Projects JOIN dbo.ProjectUsers ON dbo.Projects.ProjectId = dbo.ProjectUsers.ProjectId WHERE dbo.ProjectUsers.userId=" + userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -79,26 +66,50 @@ namespace aspnetserver
             return projects;
         }
 
-        public static async void DeleteUser(int userId)
+        public static async Task<String> GetUserName(int userId)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            String name = "";
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "DELETE FROM dbo.Users WHERE UserId=" + userId.ToString();
+                String sql = "SELECT * FROM dbo.Users WHERE UserId=" + userId.ToString();
 
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                String sqlTwo = "DELETE FROM dbo.ProjectUsers WHERE UserId=" + userId.ToString();
-
-                using (SqlCommand command = new SqlCommand(sqlTwo, connection))
-                {
-                    connection.Open();
-                    await command.ExecuteNonQueryAsync();
+                    using(MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            name = record[0] + " " + record[1];
+                        }
+                    }
                 }
             }
+            return name;
+        }
+
+        public static async Task<int> GetUserId(string firstName, string lastName)
+        {
+            int userId = 0;
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Users WHERE FirstName=" + firstName + " AND LastName=" + lastName;
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            userId = (int)reader[0];
+                        }
+                    }
+                }
+            }
+            return userId;
         }
     }
 }
