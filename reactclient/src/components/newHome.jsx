@@ -20,7 +20,6 @@ import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaRegEdit, FaEdit } from 'react-icons/fa'
 import { darkTheme } from './styles/theme'
 const Home = (props) => {
-  
   /////////////////GETALLBUGS////////////////////
   const getBugsUrl = 'https://bugitserver.azurewebsites.net/get-all-bugs'
   const [bugData, setBugData] = useState([])
@@ -45,37 +44,36 @@ const Home = (props) => {
         setBugData(data)
       })
   }
-/////////////////GETALLBUGS////////////////////
+  /////////////////GETALLBUGS////////////////////
 
-/////////////////GETUSERDATA////////////////////
-const getUserUrl = "https://bugitserver.azurewebsites.net/GetCookie"
-const [userData, setUserData] = useState([])
-const [userName, setUserName] = useState("")
+  /////////////////GETUSERDATA////////////////////
+  const getUserUrl = 'https://bugitserver.azurewebsites.net/GetCookie'
+  const [userData, setUserData] = useState([])
+  const [userName, setUserName] = useState('')
 
-async function getUserData() {
-  await fetch(getUserUrl, {
-    method: 'GET',
-  })
-  .then(function (resp) {
-    return resp.json()
-  })
-  
-  .then(async function (data)  {
-   await setUserData(data)
-   console.log("data sent in func ", data)
-   console.log(data[0].value)
-   setUserName(data[0].value)
-  })    
-} 
-console.log("UserName value: ", userName)
+  async function getUserData() {
+    await fetch(getUserUrl, {
+      method: 'GET',
+    })
+      .then(function(resp) {
+        return resp.json()
+      })
 
-/////////////////GETUSERDATA////////////////////
+      .then(async function(data) {
+        await setUserData(data)
+        console.log('data sent in func ', data)
+        console.log(data[0].value)
+        setUserName(data[0].value)
+      })
+  }
+  console.log('UserName value: ', userName)
+
+  /////////////////GETUSERDATA////////////////////
   useEffect(() => {
     getAllBugs([])
     getUserData([])
   }, [])
-  console.log(userData[0]);
-  
+  console.log(userData[0])
 
   //modal stuff
   const data = require('./data.json')
@@ -371,11 +369,12 @@ console.log("UserName value: ", userName)
 
   return (
     <React.Fragment>
-      <h3 className="mt-5">Welcome: {userName}</h3>
+      <h3 className='mt-5'>Welcome: {userName}</h3>
       <BootstrapTable
         keyField='id'
         data={bugData}
         columns={columns}
+        //classes='table-dark'
         classes=' table-hover table-bordered table-striped'
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
@@ -384,110 +383,6 @@ console.log("UserName value: ", userName)
         filter={filterFactory()}
       />
       {show ? <ModalContent /> : null}
-
-      {/* {show ? <ModalContent /> : null} 
-       <div class="border-top my-3"></div>
-      <Form className="user">
-        <div className="form-group row">
-          <div className="col-sm-6 mb-3 mb-sm-0">
-            <input
-            
-              type="text"
-              required
-              defaultValue={modalInfo.creator}
-              onChange={(e) => setCreator(e.target.value)}
-              className="form-control"
-              placeholder="Owner"
-            />
-          </div>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.date}
-              onChange={(e) => setTimeCreated(e.target.value)}
-              className="form-control"
-              
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-6 ">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.type}
-              //onChange={(e) => setType(e.target.value)}
-              className="form-control"
-              placeholder="Set Type"
-            />
-
-            {/* <Select
-                       options={this.state.typeOptions} 
-                       onChange = {setStatus(this.handleChange.bind(this))}
-                       placeholder = 'Set Type' 
-                       />     
-          </div>
-          <div className="col-sm-6 ">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.status}
-              //onChange={(e) => setStatus(e.target.value)}
-              className="form-control"
-              placeholder="Set Status"
-            />
-            {/*<Select
-                       options={statusOptions} 
-                       onChange = {setStatus}
-                       placeholder = 'Set status'
-                       />  
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.priority}
-              //onChange={(e) => setPriority(e.target.value)}
-              className="form-control"
-              placeholder="Set Priority"
-            />
-
-            {/*<Select
-                       options={priorityOptions} 
-                       onChange = {setPriority}
-                       placeholder = 'Set Priority'                      
-                       /> 
-          </div>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.estimatedTime}
-              //onChange={(e) => setEstimatedTime(e.target.value)}
-              className="form-control"
-              placeholder="Estimated Time"
-            />
-          </div>
-          <div className="col-sm-12">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.description}
-              //onChange={(e) => setBugDescription(e.target.value)}
-              className="form-control text-center"
-              placeholder="Bug description"
-            />
-          </div>
-        </div>
-        <div className="row justify-content-center">
-          <button className="text-center btn btn-md btn-primary" type="submit">
-            Create Bug
-          </button>
-        </div>
-      </Form> */}
     </React.Fragment>
   )
 }
