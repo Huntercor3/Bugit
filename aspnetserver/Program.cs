@@ -194,6 +194,11 @@ app.MapGet("/get-name-for-id/{userId}", async (int userId) =>
     await UserDBHelper.GetUserName(userId);
 }).WithTags("User Endpoints");
 
+app.MapGet("/get-id-for-name/{firstName},{lastName}", async (string firstName, string lastName) =>
+{
+    await UserDBHelper.GetUserId(firstName, lastName);
+}).WithTags("User Endpoints");
+
 
 
 app.Run();

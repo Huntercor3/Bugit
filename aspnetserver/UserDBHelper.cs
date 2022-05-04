@@ -88,5 +88,28 @@ namespace aspnetserver
             }
             return name;
         }
+
+        public static async Task<int> GetUserId(string firstName, string lastName)
+        {
+            int userId = 0;
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Users WHERE FirstName=" + firstName + " AND LastName=" + lastName;
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            userId = (int)reader[0];
+                        }
+                    }
+                }
+            }
+            return userId;
+        }
     }
 }
