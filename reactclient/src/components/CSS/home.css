@@ -14,6 +14,27 @@ body {
   bottom: 0;
 }
 
+.scroll {
+  overflow: scroll;
+}
+
+.dark-Modal {
+  /* margin-left: 35%; */
+  width: 80%;
+  color:#333
+}
+
+.light-Modal {
+  /* margin-left: 35%; */
+  width: 80%;
+  background-color: #4abdac
+}
+
+.table-responsive {
+  max-height:800px;
+  overflow-y:scroll;
+}
+
 .sidebar {
   position: fixed;
   top: 0;
