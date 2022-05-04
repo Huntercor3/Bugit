@@ -77,6 +77,10 @@ app.MapGet("/GetCookie", async () =>
     return cookies.GetAllCookies();
 }).WithTags("User Endpoints");
 
+
+app.MapGet("/get-userID-by-first-last/{firstName}/{lastName}", async (string firstName, string lastName) =>
+    await UserDBHelper.GetUserId(firstName, lastName)).WithTags("User Endpoints");
+
 #endregion User Endpoints
 
 #region Bug Endpoints
@@ -84,37 +88,21 @@ app.MapGet("/GetCookie", async () =>
 app.MapPost("/add-bug-to-project-by-project-id/{bugId},{projectId}", async (int projectId, int bugId) =>
 {
     ProjectDBHelper.AddBugToProject(projectId, bugId);
-<<<<<<< HEAD
-
-=======
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/create-bug", async (Bug bugToCreate) =>
 {
     BugDBHelper.AddBug(bugToCreate);
-<<<<<<< HEAD
-
-=======
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 {
-<<<<<<< HEAD
-    ProjectDBHelper.AddNewProject(projectName);
-
-}).WithTags("Project Endpoints");
-=======
     BugDBHelper.UpdateBug(bugToUpdate);
 }).WithTags("Bug Endpoints");
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
 
 app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
 
-app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
@@ -145,28 +133,7 @@ app.MapGet("/get-bugs-in-project-by-id/{projectId}", async (int projectId) =>
     await ProjectDBHelper.GetBugsInProject(projectId);
 }).WithTags("Project Endpoints");
 
-<<<<<<< HEAD
-}).WithTags("Bug Endpoints");
-
-app.MapPost("/update-bug", async (Bug bugToUpdate) =>
-{
-    await BugDBHelper.UpdateBug(bugToUpdate);
-
-}).WithTags("Bug Endpoints");
-
-app.MapGet("/get-name-for-id/{userId}", async (int userId) =>
-{
-    await UserDBHelper.GetUserName(userId);
-}).WithTags("User Endpoints");
-
-app.MapGet("/get-id-for-name/{firstName},{lastName}", async (string firstName, string lastName) =>
-{
-    await UserDBHelper.GetUserId(firstName, lastName);
-}).WithTags("User Endpoints");
-
-=======
 #endregion Project Endpoints
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
 
 /*app.MapPost("update-bug",
     (Bug bug) =>
