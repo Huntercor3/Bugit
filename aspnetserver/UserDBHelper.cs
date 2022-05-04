@@ -24,10 +24,6 @@ namespace aspnetserver
             {
                 connection.Open();
                 String sql = "INSERT INTO dbo.Users (FirstName, LastName, email, PhoneNumber, Hardware, Role, Password)" +
-<<<<<<< HEAD
-                    " OUTPUT INSERTED.UserId" +
-=======
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
                     " values ('"
                     + u.firstName + "', '" + u.lastName + "', '" + u.email + "', '" + u.phoneNumber + "', '" + u.hardware + "', '" + u.role.roleId.ToString() + "', '" + Encryption.Encrypt(u.password) + "')";
 
@@ -44,9 +40,6 @@ namespace aspnetserver
                 }
             }
         }
-
-<<<<<<< HEAD
-=======
         public static async void UpdateUser(User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -69,7 +62,6 @@ namespace aspnetserver
             }
         }
 
->>>>>>> e61fd9a3e09cfafcc982ca26d732fe1318241e2c
         public static async Task<List<Project>> GetProjectsForUser(int userId)
         {
             List<Project> projects = new List<Project>();
