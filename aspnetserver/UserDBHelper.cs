@@ -40,6 +40,7 @@ namespace aspnetserver
                 }
             }
         }
+
         public static async void UpdateUser(User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -96,7 +97,7 @@ namespace aspnetserver
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using(MySqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -130,6 +131,35 @@ namespace aspnetserver
                 }
             }
             return userId;
+        }
+
+        public static async Task<User> GetUserById(int userId)
+        {
+            User user = null;
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT FirstName, LastName, Email, PhoneNumber, Hardware, Role FROM dbo.Users WHERE UserID=" + userId;
+
+                using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            if (!reader.HasRows)
+                                return null;
+                            else
+                            {
+                                IDataRecord record = (IDataRecord)reader;
+                                Role role = new Role((int)record[5]);
+                                user = new User(userId, (string)record[0], (string)record[1], (string)record[2], (string)record[3], (string)record[4], role, null);
+                            }
+                        }
+                    }
+                }
+            }
+            return user;
         }
     }
 }

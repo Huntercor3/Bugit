@@ -1,7 +1,7 @@
-﻿   
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System.Data;
+
 namespace aspnetserver
 {
     public static class BugDBHelper

@@ -77,6 +77,8 @@ app.MapGet("/GetCookie", async () =>
     return cookies.GetAllCookies();
 }).WithTags("User Endpoints");
 
+app.MapGet("GetUserById", async (int i) =>
+    await UserDBHelper.GetUserById(i)).WithTags("User Endpoints");
 
 app.MapGet("/get-userID-by-first-last/{firstName}/{lastName}", async (string firstName, string lastName) =>
     await UserDBHelper.GetUserId(firstName, lastName)).WithTags("User Endpoints");
@@ -101,8 +103,7 @@ app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 }).WithTags("Bug Endpoints");
 
 app.MapPost("/get-all-bugs", async () =>
- await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
-
+    await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
