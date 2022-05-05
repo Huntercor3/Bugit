@@ -40,6 +40,7 @@ namespace aspnetserver
                 }
             }
         }
+
         public static async void UpdateUser(User u)
         {
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -96,7 +97,7 @@ namespace aspnetserver
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     connection.Open();
-                    using(MySqlDataReader reader = command.ExecuteReader())
+                    using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (await reader.ReadAsync())
                         {
@@ -114,7 +115,7 @@ namespace aspnetserver
             int userId = 0;
             using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "SELECT * FROM dbo.Users WHERE FirstName=" + firstName + " AND LastName=" + lastName;
+                String sql = "SELECT * FROM dbo.Users WHERE FirstName='" + firstName + "' AND LastName='" + lastName + "';";
 
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
