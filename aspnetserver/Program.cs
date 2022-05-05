@@ -61,6 +61,9 @@ app.MapPost("/loginController",
 app.MapPost("/registerController",
     async (RegisterModel user) => await RegisterController.RegisterUser(user)).WithTags("User Endpoints");
 
+app.MapDelete("/logoutController",
+    () => LogoutController.LogoutUser(cookies)).WithTags("User Endpoints");
+
 app.MapGet("/GetCookie", async () =>
 {
     return cookies.GetAllCookies();

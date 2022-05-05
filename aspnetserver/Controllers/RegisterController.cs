@@ -61,9 +61,6 @@ namespace aspnetserver
 
                     UserDBHelper.AddUser(userToRegister);
 
-                    login.EmailAddress = userToRegister.email;
-                    login.Password = userToRegister.password;
-
                     return 200;
                 }
             }

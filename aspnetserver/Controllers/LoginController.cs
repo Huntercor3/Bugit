@@ -1,9 +1,7 @@
 ﻿using aspnetserver.Services;
 using aspnetserver.Models;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-6.0
 
@@ -14,38 +12,56 @@ namespace aspnetserver.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<int> LoginUser(LoginModel user, CookieContainer cookieCollection)
+        public static async Task<int> LoginUser(LoginModel user, CookieContainer cookieContainer)
         {
             IUserService service = new UserService();
 
+            // Checks to make sure there is data being entered
             if (!string.IsNullOrEmpty(user.EmailAddress) &&
                 !string.IsNullOrEmpty(user.Password))
             {
+                // Checks to see if the username is valid
                 if (service.CheckUserInDBOBool(user.EmailAddress))
                 {
+                    // Checks username and password
                     var loggedInUser = service.CheckUserInDBO(user);
+                    // Returns a fail if there is not a match for the username and password
                     if (loggedInUser == null)
                         return 400;
-                    var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
-                    new Claim(ClaimTypes.Role, loggedInUser.Role)
-                };
-                    var identity = new ClaimsIdentity(
-                        claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
+
+                    // Sets the domain for the cookies
                     string domain = "purple-ground-019dc9c0f.1.azurestaticapps.net";
-                    Cookie usernameCookie = new Cookie("Username", loggedInUser.EmailAddress.ToString(), "", domain);
-                    Cookie userRole = new Cookie("UserRole", loggedInUser.Role.ToString(), "", domain);
 
-                    cookieCollection.Add(usernameCookie);
-                    cookieCollection.Add(userRole);
+                    // Creates the cookies
+                    Cookie usernameCookie = new Cookie("Username", loggedInUser.EmailAddress, "", domain),
+                        userRole = new Cookie("UserRole", loggedInUser.Role, "", domain),
+                        userFirstName = new Cookie("UserFirstName", loggedInUser.FirstName, "", domain),
+                        userLastName = new Cookie("UserLastName", loggedInUser.LastName, "", domain);
 
+                    // Sets expire time on the cookies
+                    DateTime dateTime = DateTime.Now;
+                    usernameCookie.Expires = dateTime.AddMinutes(5);
+                    userRole.Expires = dateTime.AddMinutes(5);
+                    userFirstName.Expires = dateTime.AddMinutes(5);
+                    userLastName.Expires = dateTime.AddMinutes(5);
+
+                    // Sets the cookies to discard after they expire
+                    usernameCookie.Discard = true;
+                    userRole.Discard = true;
+                    userFirstName.Discard = true;
+                    userLastName.Discard = true;
+
+                    // Adds the cookies to the cookieContainer
+                    cookieContainer.Add(usernameCookie);
+                    cookieContainer.Add(userRole);
+                    cookieContainer.Add(userFirstName);
+                    cookieContainer.Add(userLastName);
+
+                    // Returns a success
                     return 200;
                 }
-                else
-                    return 400;
             }
+            // Returns a false if there is no entered user data or it is not a valid username
             return 400;
         }
     }

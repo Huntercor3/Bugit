@@ -35,7 +35,7 @@ namespace aspnetserver.Services
             {
                 // SQL command
                 string password = Encryption.Encrypt(userLogin.Password);
-                String sql = "SELECT email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + password + "';";
+                String sql = "SELECT FirstName, LastName, Email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + password + "';";
 
                 MySqlCommand cmd = new MySqlCommand(sql, connection);
                 try
@@ -44,8 +44,10 @@ namespace aspnetserver.Services
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.HasRows && reader.Read())
                     {
-                        user.EmailAddress = reader["email"].ToString();
+                        user.EmailAddress = reader["Email"].ToString();
                         user.Role = reader["Role"].ToString();
+                        user.FirstName = reader["FirstName"].ToString();
+                        user.LastName = reader["LastName"].ToString();
                     }
                     if (!reader.HasRows)
                         check = false;
