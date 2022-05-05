@@ -1,5 +1,5 @@
 import React from 'react'
-import BugItLogo from '../images/BugItLogo.jpg'
+import BugItLogo from '../images/BugItLogo.png'
 const MemberList = () => {
   return (
     <React.Fragment>

@@ -17,7 +17,7 @@ import {
   SToggleThumb,
 } from './styles'
 
-import BugItLogo from '../images/BugItLogo.jpg'
+import BugItLogo from '../images/BugItLogo.png'
 
 import {
   AiOutlineApartment,

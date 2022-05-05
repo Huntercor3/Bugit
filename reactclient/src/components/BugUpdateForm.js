@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import Select from "react-select";
 import "./CSS/CreateBug.css";
-import BugItLogo from "./images/BugItLogo.jpg";
+import BugItLogo from "./images/BugItLogo.png";
 import { Modal, Button, Form } from "react-bootstrap";
 export default function BugUpdateForm() {
   //////////////////////////////////GET BUG BY ID//////////////////////////////////////////
