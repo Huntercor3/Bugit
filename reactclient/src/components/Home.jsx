@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
-//import BugItLogo from './images/BugItLogo.jpg';
+//import BugItLogo from './images/BugItLogo.png';
 import './CSS/home.css'
 import Data from './data.json'
 import { Button } from 'react-bootstrap'

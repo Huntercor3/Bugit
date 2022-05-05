@@ -1,5 +1,5 @@
 ///import { render } from '@testing-library/react'
-//import BugItLogo from './images/BugItLogo.jpg';
+//import BugItLogo from './images/BugItLogo.png';
 import './CSS/home.css'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 import React, { useContext, useState, useEffect } from 'react'

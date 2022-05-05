@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
-import BugItLogo from './images/BugItLogo.jpg'
+import BugItLogo from './images/BugItLogo.png'
 
 const NewCreateAccount = () => {
   const [emailAddress, setEmail] = useState('')
