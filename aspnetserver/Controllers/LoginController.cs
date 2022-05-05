@@ -36,7 +36,8 @@ namespace aspnetserver.Controllers
                     Cookie usernameCookie = new Cookie("Username", loggedInUser.EmailAddress, "", domain),
                         userRole = new Cookie("UserRole", loggedInUser.Role, "", domain),
                         userFirstName = new Cookie("UserFirstName", loggedInUser.FirstName, "", domain),
-                        userLastName = new Cookie("UserLastName", loggedInUser.LastName, "", domain);
+                        userLastName = new Cookie("UserLastName", loggedInUser.LastName, "", domain),
+                        userId = new Cookie("UserId", loggedInUser.UserID.ToString(), "", domain);
 
                     // Sets expire time on the cookies
                     DateTime dateTime = DateTime.Now;
@@ -44,18 +45,21 @@ namespace aspnetserver.Controllers
                     userRole.Expires = dateTime.AddMinutes(5);
                     userFirstName.Expires = dateTime.AddMinutes(5);
                     userLastName.Expires = dateTime.AddMinutes(5);
+                    userId.Expires = dateTime.AddMinutes(5);
 
                     // Sets the cookies to discard after they expire
                     usernameCookie.Discard = true;
                     userRole.Discard = true;
                     userFirstName.Discard = true;
                     userLastName.Discard = true;
+                    userId.Discard = true;
 
                     // Adds the cookies to the cookieContainer
                     cookieContainer.Add(usernameCookie);
                     cookieContainer.Add(userRole);
                     cookieContainer.Add(userFirstName);
                     cookieContainer.Add(userLastName);
+                    cookieContainer.Add(userId);
 
                     // Returns a success
                     return 200;

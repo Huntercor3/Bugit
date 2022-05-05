@@ -44,11 +44,11 @@ namespace aspnetserver.Services
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.HasRows && reader.Read())
                     {
-                        user.EmailAddress = (string)reader["Email"];
-                        user.Role = (string)reader["Role"];
+                        user.UserID = (int)reader["UserID"];
                         user.FirstName = (string)reader["FirstName"];
                         user.LastName = (string)reader["LastName"];
-                        user.UserID = (int)reader["UserID"];
+                        user.EmailAddress = (string)reader["Email"];
+                        user.Role = reader["Role"].ToString();
                     }
                     if (!reader.HasRows)
                         check = false;
