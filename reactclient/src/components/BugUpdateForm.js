@@ -144,20 +144,20 @@ export default function BugUpdateForm() {
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
 
   const priorityOptions = [
-    { label: "High", value: "high" },
-    { label: "Moderate", value: "moderate" },
-    { label: "Low", value: "low" },
+    { label: "High", value: "High" },
+    { label: "Moderate", value: "Moderate" },
+    { label: "Low", value: "Low" },
   ];
 
   const typeOptions = [
-    { label: "Optimize", value: "optimize" },
-    { label: "Crash", value: "crash" },
-    { label: "Upgrade", value: "upgrade" },
+    { label: "Optimize", value: "Optimize" },
+    { label: "Crash", value: "Crash" },
+    { label: "Upgrade", value: "Upgrade" },
   ];
 
   const statusOptions = [
-    { label: "In progress", value: "inProgress" },
-    { label: "Stuck", value: "stuck" },
+    { label: "In progress", value: "In progress" },
+    { label: "Stuck", value: "Stuck" },
   ];
 
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
