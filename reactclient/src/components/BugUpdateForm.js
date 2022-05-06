@@ -30,6 +30,14 @@ export default function BugUpdateForm() {
 
   const [bugData, setBugData] = useState({});
   const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] = useState({});
+  const bugId = bugIDToSearch;
+  const [creator, setOwner] = useState(0);
+  const [description, setBugDescription] = useState("");
+  const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
+  const [priority, setPriority] = useState("");
+  const [estimatedTime, setEstimatedTime] = useState("");
+  const [redirect, setRedirect] = useState(false);
   async function getBugById() {
     await fetch(getBugUrl, {
       method: "GET",
@@ -37,6 +45,12 @@ export default function BugUpdateForm() {
       .then((response) => response.json())
       .then((bugFromServer) => {
         setBugData(bugFromServer);
+        setPriority(bugFromServer.priority);
+        setOwner(bugFromServer.creator);
+        setType(bugFromServer.type);
+        setEstimatedTime(bugFromServer.estimatedTime);
+        setStatus(bugFromServer.status);
+        setBugDescription(bugFromServer.description);
       })
       .then(function(data) {
         console.log("Data: ", data);
@@ -91,14 +105,6 @@ export default function BugUpdateForm() {
 */
 
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
-  const bugId = bugIDToSearch;
-  const [creator, setOwner] = useState(0);
-  const [description, setBugDescription] = useState("");
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
-  const [priority, setPriority] = useState("");
-  const [estimatedTime, setEstimatedTime] = useState("");
-  const [redirect, setRedirect] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -111,12 +117,12 @@ export default function BugUpdateForm() {
       credentials: "include",
       body: JSON.stringify({
         bugId: bugId,
-        creator: document.getElementById("OwnerInput").value,
-        description: document.getElementById("DescriptionInput").value,
-        type: document.getElementById("TypeInput").value,
-        status: document.getElementById("StatusInput").value,
-        priority: document.getElementById("PriorityInput").value,
-        estimatedTime: document.getElementById("EstimatedTimeInput").value,
+        creator: creator,
+        description: description,
+        type: type,
+        status: status,
+        priority: priority,
+        estimatedTime: estimatedTime,
       }),
     }).then(function(response) {
       console.log(response.status);
@@ -137,11 +143,21 @@ export default function BugUpdateForm() {
 
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
 
+  const priorityOptions = [
+    { label: "High", value: "high" },
+    { label: "Moderate", value: "moderate" },
+    { label: "Low", value: "low" },
+  ];
+
   const typeOptions = [
-    { label: "N/A", value: "N/A" },
-    { label: "Optimize", value: "Optimize" },
-    { label: "Crash", value: "Crash" },
-    { label: "Upgrade", value: "Upgrade" },
+    { label: "Optimize", value: "optimize" },
+    { label: "Crash", value: "crash" },
+    { label: "Upgrade", value: "upgrade" },
+  ];
+
+  const statusOptions = [
+    { label: "In progress", value: "inProgress" },
+    { label: "Stuck", value: "stuck" },
   ];
 
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
@@ -185,39 +201,46 @@ export default function BugUpdateForm() {
                       <div className="col-sm-6 mb-3 mb-sm-0">
                         <label className="h5 form-label">Owner</label>
                         <input
-                          id="OwnerInput"
                           type="text"
                           required
                           defaultValue={bugData.creator}
-                          //onChange={(e) => setOwner(e.target.value)}
+                          onChange={(e) => setOwner(e.target.value)}
                           className="form-control"
                           //placeholder={bugData.creator}
                         />
                       </div>
                       <div className="col-sm-6">
                         <label className="h5 form-label">Type</label>
-                        <input
-                          id="TypeInput"
+                        {/* <input
                           type="text"
                           required
                           defaultValue={bugData.type}
-                          //onChange={(e) => setOwner(e.target.value)}
+                          onChange={(e) => setType(e.target.value)}
                           className="form-control"
                           //placeholder={bugData.creator}
+                        /> */}
+                        <Select
+                          options={typeOptions}
+                          onChange={(e) => setType(e.value)}
+                          placeholder={bugData.type}
                         />
                       </div>
                     </div>
                     <div className="form-group row">
                       <div className="col-sm-6 ">
                         <label className="h5 form-label">Status</label>
-                        <input
-                          id="StatusInput"
+                        {/* <input
                           type="text"
                           required
                           defaultValue={bugData.status}
-                          //onChange={(e) => setStatus(e.target.value)}
+                          onChange={(e) => setStatus(e.target.value)}
                           className="form-control"
                           //placeholder={bugData.status}
+                        /> */}
+                        <Select
+                          options={statusOptions}
+                          onChange={(e) => setStatus(e.value)}
+                          placeholder={bugData.status}
                         />
                         {/* <Select
                        options={this.state.typeOptions} 
@@ -227,20 +250,24 @@ export default function BugUpdateForm() {
                       </div>
                       <div className="col-sm-6 ">
                         <label className="h5 form-label">Priority</label>
-                        <input
-                          id="PriorityInput"
+                        {/* <input
                           type="text"
                           required
                           defaultValue={bugData.priority}
-                          //onChange={(e) => setPriority(e.target.value)}
+                          onChange={(e) => setPriority(e.target.value)}
                           className="form-control"
                           //placeholder={bugData.priority}
-                        />
+                        /> */}
                         {/*<Select
                        options={statusOptions} 
                        onChange = {setStatus}
                        placeholder = 'Set status'
                        />  */}
+                        <Select
+                          options={priorityOptions}
+                          onChange={(e) => setPriority(e.value)}
+                          placeholder={bugData.priority}
+                        />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -249,26 +276,20 @@ export default function BugUpdateForm() {
                           Estimated Time
                         </label>
                         <input
-                          id="EstimatedTimeInput"
                           type="text"
                           required
                           defaultValue={bugData.estimatedTime}
-                          //onChange={(e) => setEstimatedTime(e.target.value)}
+                          onChange={(e) => setEstimatedTime(e.target.value)}
                           className="form-control"
                           //placeholder={bugData.estimatedTime}
                         />
-                        {/*<Select
-                       options={priorityOptions} 
-                       onChange = {setPriority}
-                       placeholder = 'Set Priority'                      
-                       /> */}
                       </div>
                       <div className="col-sm-12">
                         <label className="h5 form-label">Bug Description</label>
                         <textarea
-                          id="DescriptionInput"
                           required
                           defaultValue={bugData.description}
+                          onChange={(e) => setBugDescription(e.target.value)}
                           className="form-control"
                         ></textarea>
                         {/* <Editor
