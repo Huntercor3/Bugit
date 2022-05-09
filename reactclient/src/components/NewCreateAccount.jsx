@@ -11,6 +11,7 @@ const NewCreateAccount = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [hardware, setHardware] = useState('')
 
   const submit = async (e) => {
     e.preventDefault()
@@ -20,7 +21,7 @@ const NewCreateAccount = () => {
       return
     }
 
-    await fetch('https://bugitserver.azurewebsites.net/registerController', {
+    await fetch('https://localhost:7075/registerController', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,6 +33,7 @@ const NewCreateAccount = () => {
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
+        hardware: hardware,
       }),
     }).then(function(response) {
       if (response.status === 200) setRedirect(true)
@@ -135,6 +137,16 @@ const NewCreateAccount = () => {
                         className='form-control'
                         placeholder='Phone Number'
                       />
+                    </div>
+                    <div className='col'>
+                      <label className='h5 form-label'>Hardware</label>
+                      <textarea
+                        required
+                        //defaultValue={bugData.description}
+                        onChange={(e) => setHardware(e.target.value)}
+                        className='form-control'
+                        placeholder='What Hardware do you have?'
+                      ></textarea>
                     </div>
                   </div>
                   <div className='row justify-content-center'>

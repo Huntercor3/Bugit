@@ -76,6 +76,15 @@ const CreateAccount = () => (
                     placeholder='BugIt'
                   />
                 </div>
+                <div>
+                  <textarea
+                    required
+                    //defaultValue={bugData.description}
+                    //onChange={(e) => setBugDescription(e.target.value)}
+                    className='form-control'
+                    placeholder='What Hardware do you have?'
+                  ></textarea>
+                </div>
                 <div class='col text-center'>
                   <a
                     href='/#home'
@@ -94,4 +103,4 @@ const CreateAccount = () => (
   </React.Fragment>
 )
 
-export default CreateAccount;
+export default CreateAccount

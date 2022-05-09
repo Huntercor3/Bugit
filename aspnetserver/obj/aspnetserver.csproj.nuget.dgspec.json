@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
+    "C:\\Users\\jonas\\OneDrive\\Desktop\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj": {
+    "C:\\Users\\jonas\\OneDrive\\Desktop\\Bugit\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "C:\\Users\\jonas\\OneDrive\\Desktop\\Bugit\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\Jarod\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jarod\\Source\\Repos\\Bugit\\aspnetserver\\obj\\",
+        "projectPath": "C:\\Users\\jonas\\OneDrive\\Desktop\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\jonas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jonas\\OneDrive\\Desktop\\Bugit\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Jarod\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jonas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
