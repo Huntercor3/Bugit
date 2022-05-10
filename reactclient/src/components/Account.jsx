@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.png'
 
-const CreateAccount = () => {
+const Account = () => {
   const [email, setEmail] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [firstName, setFirstName] = useState('')
@@ -29,7 +29,7 @@ const CreateAccount = () => {
         hardware: hardware,
         role: role,
       }),
-    }).then(function (response) {
+    }).then(function(response) {
       if (response.status == 200) setRedirect(true)
       else alert('Invalid credientials, please try again')
     })
@@ -140,4 +140,4 @@ const CreateAccount = () => {
     </div>
   )
 }
-export default CreateAccount
+export default Account
