@@ -11,12 +11,9 @@ namespace aspnetserver.Controllers
 {
     public class LoginController : Controller
     {
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<int> LoginUser(LoginModel user, CookieContainer cookieCollection)
+        public async Task<IActionResult> LoginUser(LoginModel user, CookieContainer cookieCollection, IUserService service)
         {
-            IUserService service = new UserService();
+            //IUserService service = new UserService();
 
             if (!string.IsNullOrEmpty(user.EmailAddress) &&
                 !string.IsNullOrEmpty(user.Password))
@@ -25,7 +22,7 @@ namespace aspnetserver.Controllers
                 {
                     var loggedInUser = service.CheckUserInDBO(user);
                     if (loggedInUser == null)
-                        return 400;
+                        return (IActionResult)Results.BadRequest();
                     var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
@@ -41,12 +38,12 @@ namespace aspnetserver.Controllers
                     cookieCollection.Add(usernameCookie);
                     cookieCollection.Add(userRole);
 
-                    return 200;
+                    return (IActionResult)Results.Ok();
                 }
                 else
-                    return 400;
+                    return (IActionResult)Results.BadRequest();
             }
-            return 400;
+            return (IActionResult)Results.BadRequest();
         }
     }
 }

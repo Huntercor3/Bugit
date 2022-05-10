@@ -12,6 +12,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Web;
 using aspnetserver.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,7 +69,7 @@ CookieContainer cookies = new CookieContainer();
 #region User Endpoints
 
 app.MapPost("/loginController",
-    async (LoginModel user) => await LoginController.LoginUser(user, cookies)).WithTags("User Endpoints");
+    async (LoginModel user, IUserService service) => { loginCon.LoginUser(user, cookies, service); });
 
 app.MapPost("/registerController",
     (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
@@ -76,7 +78,6 @@ app.MapGet("/GetCookie", async () =>
 {
     return cookies.GetAllCookies();
 }).WithTags("User Endpoints");
-
 
 app.MapGet("/get-userID-by-first-last/{firstName}/{lastName}", async (string firstName, string lastName) =>
     await UserDBHelper.GetUserId(firstName, lastName)).WithTags("User Endpoints");
@@ -102,7 +103,6 @@ app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 
 app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
-
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {
