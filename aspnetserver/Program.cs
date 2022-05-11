@@ -42,8 +42,8 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipelineLoginController.
+if (!app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
@@ -56,8 +56,9 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 });
 
 // HTTP request pipeline
-app.UseRouting();
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseEndpoints(endpoints => { });
 app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
@@ -69,7 +70,7 @@ CookieContainer cookies = new CookieContainer();
 #region User Endpoints
 
 app.MapPost("/loginController",
-    async (LoginModel user, IUserService service) => { loginCon.LoginUser(user, cookies, service); });
+    (LoginModel user, IUserService service) => loginCon.LoginUser(user, cookies, service));
 
 app.MapPost("/registerController",
     (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");

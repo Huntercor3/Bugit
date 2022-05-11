@@ -1,9 +1,9 @@
 ﻿using aspnetserver.Services;
 using aspnetserver.Models;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-6.0
 
@@ -11,7 +11,13 @@ namespace aspnetserver.Controllers
 {
     public class LoginController : Controller
     {
-        public async Task<IActionResult> LoginUser(LoginModel user, CookieContainer cookieCollection, IUserService service)
+        /// <summary>
+        ///  Takes user data and logs the user in or returns if the parameters don't match.
+        /// </summary>
+        /// <response code="200">Logs the user into the system</response>
+        /// <response code="400">User entered credentials aren't valid</response>
+        [HttpPost]
+        public async Task<IResult> LoginUser(LoginModel user, CookieContainer cookieCollection, IUserService service)
         {
             //IUserService service = new UserService();
 
@@ -22,7 +28,7 @@ namespace aspnetserver.Controllers
                 {
                     var loggedInUser = service.CheckUserInDBO(user);
                     if (loggedInUser == null)
-                        return (IActionResult)Results.BadRequest();
+                        return Results.BadRequest();
                     var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Email, loggedInUser.EmailAddress),
@@ -38,12 +44,12 @@ namespace aspnetserver.Controllers
                     cookieCollection.Add(usernameCookie);
                     cookieCollection.Add(userRole);
 
-                    return (IActionResult)Results.Ok();
+                    return Results.Ok();
                 }
                 else
-                    return (IActionResult)Results.BadRequest();
+                    return Results.BadRequest();
             }
-            return (IActionResult)Results.BadRequest();
+            return Results.BadRequest();
         }
     }
 }
