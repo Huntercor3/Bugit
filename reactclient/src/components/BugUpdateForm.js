@@ -143,6 +143,18 @@ export default function BugUpdateForm() {
 
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
 
+  function customTheme(theme) {
+    return {
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary25: "#ccfff2",
+        primary: "#4abdac",
+        dangerLight: "blue",
+      },
+    };
+  }
+
   const priorityOptions = [
     { label: "High", value: "High" },
     { label: "Moderate", value: "Moderate" },
@@ -158,6 +170,7 @@ export default function BugUpdateForm() {
   const statusOptions = [
     { label: "In progress", value: "In progress" },
     { label: "Stuck", value: "Stuck" },
+    { label: "Completed", value: "Completed" },
   ];
 
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
@@ -221,6 +234,7 @@ export default function BugUpdateForm() {
                         /> */}
                         <Select
                           options={typeOptions}
+                          theme={customTheme}
                           onChange={(e) => setType(e.value)}
                           placeholder={bugData.type}
                         />
@@ -239,6 +253,7 @@ export default function BugUpdateForm() {
                         /> */}
                         <Select
                           options={statusOptions}
+                          theme={customTheme}
                           onChange={(e) => setStatus(e.value)}
                           placeholder={bugData.status}
                         />
@@ -265,6 +280,7 @@ export default function BugUpdateForm() {
                        />  */}
                         <Select
                           options={priorityOptions}
+                          theme={customTheme}
                           onChange={(e) => setPriority(e.value)}
                           placeholder={bugData.priority}
                         />

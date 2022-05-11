@@ -73,9 +73,21 @@ const CreateBug = () => {
   }
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
 
+  function customTheme(theme) {
+    return{
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary25: '#ccfff2',
+        primary: '#4abdac',
+        dangerLight:"blue"
+      }
+    }
+  }
+
   const priorityOptions = [
     { label: "High", value: "High" },
-    { label: "Moderate", value: "Moderate" },
+    { label: "Moderate", value: "Moderate"},
     { label: "Low", value: "Low" },
   ];
 
@@ -134,6 +146,7 @@ const CreateBug = () => {
                         
                         <Select
                           options={priorityOptions}
+                          theme={customTheme}
                           onChange={(e) => setPriority(e.value)}
                           placeholder='Set Priority'
                         />
@@ -147,6 +160,7 @@ const CreateBug = () => {
                         
                         <Select
                           options={typeOptions}
+                          theme={customTheme}
                           onChange={(e) => setType(e.value)}
                           placeholder='Set Type'
                         />
@@ -154,13 +168,14 @@ const CreateBug = () => {
                       </div>
                       <div className='col-sm-6 '>
                         <label className='h5 form-label'>Status</label>
-                        
+                        <div class="react-select-container">
                         <Select
                           options={statusOptions}
+                          theme={customTheme}
                           onChange={(e) => setStatus(e.value)}
                           placeholder='Set status'
                         />
-                        
+                        </div>
                       </div>
                     </div>
                     <div className='form-group row'>

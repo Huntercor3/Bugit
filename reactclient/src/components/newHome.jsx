@@ -309,7 +309,7 @@ console.log("UserName value: ", userName)
     },
     {
       dataField: 'creator',
-      text: 'Name',
+      text: 'Owner',
       //sort: true,
       filter: textFilter(),
     },
