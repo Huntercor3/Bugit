@@ -19,8 +19,6 @@ namespace aspnetserver.Controllers
         [HttpPost]
         public async Task<IResult> LoginUser(LoginModel user, CookieContainer cookieCollection, IUserService service)
         {
-            //IUserService service = new UserService();
-
             if (!string.IsNullOrEmpty(user.EmailAddress) &&
                 !string.IsNullOrEmpty(user.Password))
             {

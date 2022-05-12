@@ -8,10 +8,9 @@ namespace aspnetserver
 {
     public class RegisterController : Controller
     {
-        public IActionResult RegisterUser(RegisterModel userEntry)
+        public async Task<IResult> RegisterUser(RegisterModel userEntry, CookieContainer cookieCollection, IUserService service)
         {
             LoginModel login = new LoginModel();
-            UserService service = new UserService();
 
             if (!string.IsNullOrEmpty(userEntry.emailAddress) &&
                 !string.IsNullOrEmpty(userEntry.password))
@@ -23,7 +22,7 @@ namespace aspnetserver
                     loginModel.EmailAddress = userEntry.emailAddress;
                     loginModel.Password = userEntry.password;
                     if (service.CheckUserInDBOBool(loginModel.EmailAddress.ToString()) == true)
-                        return BadRequest("User already exists");
+                        return Results.BadRequest();
 
                     int validConditions = 0;
                     foreach (char c in userEntry.password)
@@ -43,7 +42,7 @@ namespace aspnetserver
                         }
                     }
                     if (validConditions == 0)
-                        return BadRequest("Not a valid password.");
+                        return Results.BadRequest();
                     foreach (char c in userEntry.password)
                     {
                         if (c >= '0' && c <= '9')
@@ -53,12 +52,12 @@ namespace aspnetserver
                         }
                     }
                     if (validConditions == 1)
-                        return BadRequest("Not a valid password.");
+                        return Results.BadRequest();
                     if (validConditions == 2)
                     {
                         char[] special = { '@', '#', '$', '%', '^', '&', '+', '=' };
                         if (userEntry.password.IndexOfAny(special) == -1)
-                            return BadRequest("Not a valid password.");
+                            return Results.BadRequest();
                     }
 
                     UserDBHelper.AddUser(userToRegister);
@@ -66,10 +65,10 @@ namespace aspnetserver
                     login.EmailAddress = userToRegister.email;
                     login.Password = userToRegister.password;
 
-                    return Ok();
+                    return Results.Ok();
                 }
             }
-            return BadRequest("Invalid registration credentials");
+            return Results.BadRequest();
         }
     }
 }
