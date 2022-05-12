@@ -70,10 +70,10 @@ CookieContainer cookies = new CookieContainer();
 #region User Endpoints
 
 app.MapPost("/loginController",
-    (LoginModel user, IUserService service) => loginCon.LoginUser(user, cookies, service));
+    async (LoginModel user, IUserService service) => await loginCon.LoginUser(user, cookies, service)).WithTags("User Endpoints");
 
 app.MapPost("/registerController",
-    (RegisterModel user) => registerCon.RegisterUser(user)).WithTags("User Endpoints");
+    async (RegisterModel user) => await registerCon.RegisterUser(user)).WithTags("User Endpoints");
 
 app.MapGet("/GetCookie", async () =>
 {
