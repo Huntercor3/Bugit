@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kindb\\Desktop\\BugIt - Copy\\Bugit\\aspnetserver\\aspnetserver.csproj": {}
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kindb\\Desktop\\BugIt - Copy\\Bugit\\aspnetserver\\aspnetserver.csproj": {
+    "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kindb\\Desktop\\BugIt - Copy\\Bugit\\aspnetserver\\aspnetserver.csproj",
+        "projectUniqueName": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
         "projectName": "aspnetserver",
-        "projectPath": "C:\\Users\\kindb\\Desktop\\BugIt - Copy\\Bugit\\aspnetserver\\aspnetserver.csproj",
-        "packagesPath": "C:\\Users\\kindb\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kindb\\Desktop\\BugIt - Copy\\Bugit\\aspnetserver\\obj\\",
+        "projectPath": "D:\\BugItASPNETREACT\\aspnetserver\\aspnetserver.csproj",
+        "packagesPath": "C:\\Users\\hunte\\.nuget\\packages\\",
+        "outputPath": "D:\\BugItASPNETREACT\\aspnetserver\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kindb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hunte\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -84,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
