@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
 import BugItLogo from './images/BugItLogo.png'
@@ -23,6 +23,7 @@ import Select from 'react-select'
 // ]
 
 const CreateBug = () => {
+  const [userId, setuserId] = useState(0)
   const [creator, setCreator] = useState(0)
   const [timeCreated, setDate] = useState('')
   const [type, setType] = useState('')
@@ -31,9 +32,35 @@ const CreateBug = () => {
   const [estimatedTime, setEstimatedTime] = useState('')
   const [description, setBugDescription] = useState('')
   const [redirect, setRedirect] = useState(false)
+  const [firstName, setfirstName] = useState('')
+  const [lastName, setlastName] = useState('')
+////////////////////FIRSTLASTTOID//////////////////////
+const getIdByFirstLastUrl =   'https://bugitserver.azurewebsites.net/get-userID-by-first-last/jonas/walker';
+
+
+  
+  async function getIdByFirstLast() {
+    await fetch(getIdByFirstLastUrl, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((idFromServer) => {
+        setCreator(idFromServer);
+        console.log("id in func: ", idFromServer);
+      })
+      .then(function(data) {
+        setCreator(data);
+        console.log("id: ", data);
+      });
+  }
+  
+
+/////////////////////FIRSTLASTTOID//////////////////////
+  
+  
   const submit = async (e) => {
     e.preventDefault()
-
+    getIdByFirstLast();
     await fetch('https://bugitserver.azurewebsites.net/create-bug', {
       method: 'POST',
       headers: {
@@ -55,7 +82,9 @@ const CreateBug = () => {
     })
   }
   if (redirect) return <Navigate to='/newHome' />
-
+console.log(getIdByFirstLastUrl)
+console.log("id: ", userId);
+console.log("creator: ", creator);
   /*onChangeFunc=({value}) =>
   {
     (e) => {value(e.target.value)}
@@ -65,6 +94,9 @@ const CreateBug = () => {
   //   this.setState({id:e.value, name:e.label})
   //  }
 
+
+
+  
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
   function removeHTML(str) {
     var tmp = document.createElement('DIV')
@@ -132,13 +164,23 @@ const CreateBug = () => {
                   <form onSubmit={submit} className='user'>
                     <div className='form-group row'>
                       <div className='col-sm-6 mb-3 mb-sm-0'>
-                        <label className='h5 form-label'>Owner</label>
+                        <label className='h5 form-label'>First Name</label>
                         <input
                           type='text'
                           required
-                          onChange={(e) => setCreator(e.target.value)}
+                          onChange={(e) => setfirstName(e.target.value)}
                           className='form-control'
-                          placeholder='Owner'
+                          placeholder='First Name'
+                        />
+                      </div>
+                      <div className='col-sm-6 mb-3 mb-sm-0'>
+                        <label className='h5 form-label'>Last Name</label>
+                        <input
+                          type='text'
+                          required
+                          onChange={(e) => setlastName(e.target.value)}
+                          className='form-control'
+                          placeholder='Last Name'
                         />
                       </div>
                       <div className='col-sm-6'>

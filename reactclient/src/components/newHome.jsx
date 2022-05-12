@@ -397,7 +397,7 @@ console.log("UserName value: ", userName)
       },
       {
         text: 'All',
-        value: data.length,
+        value: bugData.length,
       },
     ], // A numeric array is also available. the purpose of above example is custom the text
   }
