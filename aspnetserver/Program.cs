@@ -31,8 +31,8 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipelineLoginController.
+if (!app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
@@ -45,21 +45,24 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 });
 
 // HTTP request pipeline
-app.UseRouting();
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseEndpoints(endpoints => { });
 app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
 
 CookieContainer cookies = new CookieContainer();
+LoginController loginCon = new LoginController();
+RegisterController registerCon = new RegisterController();
 
 #region User Endpoints
 
 app.MapPost("/loginController",
-    async (LoginModel user) => await LoginController.LoginUser(user, cookies)).WithTags("User Endpoints");
+    async (LoginModel user, IUserService service) => await loginCon.LoginUser(user, cookies, service)).WithTags("User Endpoints");
 
 app.MapPost("/registerController",
-    async (RegisterModel user) => await RegisterController.RegisterUser(user)).WithTags("User Endpoints");
+    async (RegisterModel user, IUserService service) => await registerCon.RegisterUser(user, service)).WithTags("User Endpoints");
 
 app.MapDelete("/logoutController",
     () => LogoutController.LogoutUser(cookies)).WithTags("User Endpoints");
@@ -68,6 +71,9 @@ app.MapGet("/GetCookie", async () =>
 {
     return cookies.GetAllCookies();
 }).WithTags("User Endpoints");
+
+app.MapGet("/get-userID-by-first-last/{firstName}/{lastName}", async (string firstName, string lastName) =>
+    await UserDBHelper.GetUserId(firstName, lastName)).WithTags("User Endpoints");
 
 #endregion User Endpoints
 
@@ -90,9 +96,6 @@ app.MapPost("/update-bug", async (Bug bugToUpdate) =>
 
 app.MapPost("/get-all-bugs", async () =>
  await BugDBHelper.GetAllBugs()).WithTags("Bug Endpoints");
-
-app.MapGet("/get-bug-by-bug-id/{bugId}", async (int bugId) =>
-    await BugDBHelper.GetBugByID(bugId)).WithTags("Bug Endpoints");
 
 app.MapGet("/get-bug-comment-by-id/{bugId}", async (int bugId) =>
 {

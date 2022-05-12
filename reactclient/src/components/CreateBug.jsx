@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
-import BugItLogo from './images/BugItLogo.jpg'
+import BugItLogo from './images/BugItLogo.png'
 import { Editor } from '@tinymce/tinymce-react'
-//import Select from 'react-select'
+import Select from 'react-select'
 
 //  const priorityOptions=[
 // {label:'High', value:'high'},
@@ -73,6 +73,23 @@ const CreateBug = () => {
   }
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
 
+  const priorityOptions = [
+    { label: "High", value: "High" },
+    { label: "Moderate", value: "Moderate" },
+    { label: "Low", value: "Low" },
+  ];
+
+  const typeOptions = [
+    { label: "Optimize", value: "Optimize" },
+    { label: "Crash", value: "Crash" },
+    { label: "Upgrade", value: "Upgrade" },
+  ];
+
+  const statusOptions = [
+    { label: "In progress", value: "In progress" },
+    { label: "Stuck", value: "Stuck" },
+  ];
+
   return (
     <React.Fragment>
       <div className='container'>
@@ -113,6 +130,41 @@ const CreateBug = () => {
                         />
                       </div>
                       <div className='col-sm-6'>
+                        <label className='h5 form-label'>Priority</label>
+                        
+                        <Select
+                          options={priorityOptions}
+                          onChange={(e) => setPriority(e.value)}
+                          placeholder='Set Priority'
+                        />
+                        
+                      </div>
+                      
+                    </div>
+                    <div className='form-group row'>
+                      <div className='col-sm-6 '>
+                        <label className='h5 form-label'>Type</label>
+                        
+                        <Select
+                          options={typeOptions}
+                          onChange={(e) => setType(e.value)}
+                          placeholder='Set Type'
+                        />
+                        
+                      </div>
+                      <div className='col-sm-6 '>
+                        <label className='h5 form-label'>Status</label>
+                        
+                        <Select
+                          options={statusOptions}
+                          onChange={(e) => setStatus(e.value)}
+                          placeholder='Set status'
+                        />
+                        
+                      </div>
+                    </div>
+                    <div className='form-group row'>
+                    <div className='col-sm-6'>
                         <label className='h5 form-label'>Date</label>
                         <input
                           type='date'
@@ -121,57 +173,6 @@ const CreateBug = () => {
                           className='form-control'
                           placeholder='Todays date'
                         />
-                      </div>
-                    </div>
-                    <div className='form-group row'>
-                      <div className='col-sm-6 '>
-                        <label className='h5 form-label'>Type</label>
-                        <input
-                          type='text'
-                          required
-                          onChange={(e) => setType(e.target.value)}
-                          className='form-control'
-                          placeholder='Set Type'
-                        />
-
-                        {/* <Select
-                       options={this.state.typeOptions} 
-                       onChange = {setStatus(this.handleChange.bind(this))}
-                       placeholder = 'Set Type' 
-                       />     */}
-                      </div>
-                      <div className='col-sm-6 '>
-                        <label className='h5 form-label'>Status</label>
-                        <input
-                          type='text'
-                          required
-                          onChange={(e) => setStatus(e.target.value)}
-                          className='form-control'
-                          placeholder='Set Status'
-                        />
-                        {/*<Select
-                       options={statusOptions} 
-                       onChange = {setStatus}
-                       placeholder = 'Set status'
-                       />  */}
-                      </div>
-                    </div>
-                    <div className='form-group row'>
-                      <div className='col-sm-6'>
-                        <label className='h5 form-label'>Priority</label>
-                        <input
-                          type='text'
-                          required
-                          onChange={(e) => setPriority(e.target.value)}
-                          className='form-control'
-                          placeholder='Set Priority'
-                        />
-
-                        {/*<Select
-                       options={priorityOptions} 
-                       onChange = {setPriority}
-                       placeholder = 'Set Priority'                      
-                       /> */}
                       </div>
                       <div className='col-sm-6'>
                         <label className='h5 form-label'>Estimated Time</label>

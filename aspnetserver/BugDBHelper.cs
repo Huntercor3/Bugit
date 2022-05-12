@@ -1,6 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
-
 namespace aspnetserver
 {
     public static class BugDBHelper
@@ -191,7 +190,6 @@ namespace aspnetserver
                  String sql = "UPDATE dbo.Bugs" +
                      " SET Archived = " + arch.ToString() +
                      " WHERE ProjectId = " + bugId.ToString();
-
                  using (SqlCommand command = new SqlCommand(sql, connection))
                  {
                      connection.Open();

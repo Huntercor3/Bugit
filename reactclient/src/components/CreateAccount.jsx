@@ -1,6 +1,6 @@
 import React from 'react'
 import './CSS/CreateAccount.css'
-import BugItLogo from './images/BugItLogo.jpg'
+import BugItLogo from './images/BugItLogo.png'
 
 const CreateAccount = () => (
   <React.Fragment>

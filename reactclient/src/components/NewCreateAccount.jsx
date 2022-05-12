@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import './CSS/CreateBug.css'
-import BugItLogo from './images/BugItLogo.jpg'
+import BugItLogo from './images/BugItLogo.png'
 
 const NewCreateAccount = () => {
   const [emailAddress, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [redirect, setRedirect] = useState(false)
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -13,6 +14,11 @@ const NewCreateAccount = () => {
 
   const submit = async (e) => {
     e.preventDefault()
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match, please try again')
+      return
+    }
 
     await fetch('https://bugitserver.azurewebsites.net/registerController', {
       method: 'POST',
@@ -63,8 +69,9 @@ const NewCreateAccount = () => {
                 <form onSubmit={submit} className='user'>
                   <div className='form-group row'>
                     <div className='col-sm-6 mb-3 mb-sm-0'>
-                    <label className="h5 form-label">Email Address</label>
+                      <label className='h5 form-label'>Email Address</label>
                       <input
+                        id='emailAddressInput'
                         type='email'
                         required
                         onChange={(e) => setEmail(e.target.value)}
@@ -73,8 +80,9 @@ const NewCreateAccount = () => {
                       />
                     </div>
                     <div className='col-sm-6'>
-                    <label className="h5 form-label">Password</label>
+                      <label className='h5 form-label'>Password</label>
                       <input
+                        id='passwordInput'
                         type='password'
                         required
                         onChange={(e) => setPassword(e.target.value)}
@@ -85,9 +93,9 @@ const NewCreateAccount = () => {
                   </div>
                   <div className='form-group row'>
                     <div className='col-sm-6'>
-                    <label className="h5 form-label">First Name</label>
+                      <label className='h5 form-label'>First Name</label>
                       <input
-                        type='firstName'
+                        id='firstNameInput'
                         required
                         onChange={(e) => setFirstName(e.target.value)}
                         className='form-control'
@@ -95,20 +103,32 @@ const NewCreateAccount = () => {
                       />
                     </div>
                     <div className='col-sm-6'>
-                    <label className="h5 form-label">Last Name</label>
+                      <label className='h5 form-label'>Confirm Password</label>
                       <input
-                        type='lastName'
+                        id='confirmPasswordInput'
+                        type='password'
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        className='form-control'
+                        placeholder='Confirm Password'
+                      />
+                    </div>
+                  </div>
+                  <div class='form-group row'>
+                    <div className='col-sm-6'>
+                      <label className='h5 form-label'>Last Name</label>
+                      <input
+                        id='lastNameInput'
                         required
                         onChange={(e) => setLastName(e.target.value)}
                         className='form-control'
                         placeholder='Last Name'
                       />
                     </div>
-                  </div>
-                  <div class='form-group row'>
                     <div className='col-sm-6'>
-                    <label className="h5 form-label">Phone Number</label>
+                      <label className='h5 form-label'>Phone Number</label>
                       <input
+                        id='phoneNumberInput'
                         type='phoneNumber'
                         required
                         onChange={(e) => setPhoneNumber(e.target.value)}

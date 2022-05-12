@@ -88,11 +88,12 @@ namespace aspnetserver
             return projects;
         }
 
-        public static async void DeleteUser(int userId)
+        public static async Task<String> GetUserName(int userId)
         {
+            String name = "";
             using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                String sql = "DELETE FROM dbo.Users WHERE UserId=" + userId.ToString();
+                String sql = "SELECT * FROM dbo.Users WHERE UserId=" + userId.ToString();
 
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
@@ -106,8 +107,40 @@ namespace aspnetserver
                 {
                     connection.Open();
                     await command.ExecuteNonQueryAsync();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            name = record[0] + " " + record[1];
+                        }
+                    }
                 }
             }
+            return name;
+        }
+
+        public static async Task<int> GetUserId(string firstName, string lastName)
+        {
+            int userId = 0;
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
+            {
+                String sql = "SELECT * FROM dbo.Users WHERE FirstName='" + firstName + "' AND LastName='" + lastName + "';";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    connection.Open();
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            IDataRecord record = (IDataRecord)reader;
+                            userId = (int)reader[0];
+                        }
+                    }
+                }
+            }
+            return userId;
         }
     }
 }

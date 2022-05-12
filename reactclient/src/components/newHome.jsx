@@ -1,8 +1,8 @@
 ///import { render } from '@testing-library/react'
-//import BugItLogo from './images/BugItLogo.jpg';
+//import BugItLogo from './images/BugItLogo.png';
 import './CSS/home.css'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import BootstrapTable from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator'
@@ -19,7 +19,38 @@ import { IconButton } from '@material-ui/core'
 import { RiDeleteBin5Fill } from 'react-icons/ri'
 import { FaRegEdit, FaEdit } from 'react-icons/fa'
 import { darkTheme } from './styles/theme'
-const Home = (props) => {
+import * as Scroll from 'react-scroll';
+import { ThemeContext } from '../App'
+
+//export const DarkContext = React.createContext(null)
+
+const Home = (props) => { 
+  
+/////////////////SETTINGTABLEDARK////////////////////
+  const { setTheme, theme } = useContext(ThemeContext)
+  const [DarkContext, setDarkContext] = useState(true)
+  var bModalLight = "light-Modal"
+  var bModalDark = "dark-Modal"
+  var bModal;
+  var bTableInputFalse = "table-hover table-bordered table-striped"
+ var bTableInputTrue = "table-hover table-bordered table-striped table-dark"
+  var bTable;
+  console.log("theme", theme)
+  if(theme === 'light')
+  {
+    bTable = bTableInputFalse;
+    bModal = bModalLight;
+  }
+  else
+  {
+    bTable = bTableInputTrue;
+    bModal = bModalDark
+  }
+
+ console.log("Bool", DarkContext)
+/////////////////SETTINGTABLEDARK////////////////////
+
+  /////////////////GETALLBUGS////////////////////
   const getBugsUrl = 'https://bugitserver.azurewebsites.net/get-all-bugs'
   const [bugData, setBugData] = useState([])
   const [bugCurrentlyBeingUpdated, setBugCurrentlyBeingUpdated] = useState(null)
@@ -32,8 +63,6 @@ const Home = (props) => {
     cache: 'default',
   }
 
-  
-
   let myRequest = new Request(getBugsUrl, myInit)
 
   async function getAllBugs() {
@@ -45,13 +74,38 @@ const Home = (props) => {
         setBugData(data)
       })
   }
+/////////////////GETALLBUGS////////////////////
 
+
+
+/////////////////GETUSERDATA////////////////////
+const getUserUrl = "https://bugitserver.azurewebsites.net/GetCookie"
+const [userData, setUserData] = useState([])
+const [userName, setUserName] = useState("")
+
+async function getUserData() {
+  await fetch(getUserUrl, {
+    method: 'GET',
+  })
+  .then(function (resp) {
+    return resp.json()
+  })
+  
+  .then(async function (data)  {
+    setUserData(data)
+   console.log("data sent in func ", data)
+   console.log(data[0].value)
+   setUserName(data[0].value)
+  })    
+} 
+console.log("UserName value: ", userName)
+
+/////////////////GETUSERDATA////////////////////
   useEffect(() => {
     getAllBugs([])
     getUserData([])
   }, [])
-  console.log(userData[0]);
-  
+  console.log(userData[0])
 
   //modal stuff
   const data = require('./data.json')
@@ -185,7 +239,7 @@ const Home = (props) => {
 
   const ModalContent = () => {
     return (
-      <Modal show={show} onHide={handleClose} size='lg' centered>
+      <Modal className = "card-b color-primary" show={show} onHide={handleClose} size='lg' centered>
         <Modal.Header closeButton>
           <Modal.Title>Bug ID: {modalInfo.bugId}</Modal.Title>
         </Modal.Header>
@@ -250,25 +304,26 @@ const Home = (props) => {
     {
       dataField: 'bugId',
       text: 'ID',
-      sort: true,
+      //sort: true,
       filter: textFilter(),
     },
     {
       dataField: 'creator',
       text: 'Name',
-      sort: true,
+      //sort: true,
       filter: textFilter(),
     },
     {
       dataField: 'timeCreated',
       text: 'Date',
-      sort: true,
+      //sort: true,
       filter: dateFilter(),
     },
     {
       dataField: 'type',
       text: 'Type',
-      sort: true,
+      //sort: true,
+      filter: textFilter(),
       // formatter: (cell) => typeSelectOptions[cell],
       // filter: selectFilter({
       //   options: typeSelectOptions,
@@ -277,7 +332,8 @@ const Home = (props) => {
     {
       dataField: 'status',
       text: 'Status',
-      sort: true,
+      filter: textFilter(),
+      //sort: true,
       // formatter: (cell) => statusSelectOptions[cell],
       // filter: selectFilter({
       //   options: statusSelectOptions,
@@ -286,7 +342,8 @@ const Home = (props) => {
     {
       dataField: 'priority',
       text: 'Priority',
-      sort: true,
+      filter: textFilter(),
+      //sort: true,
       // formatter: (cell) => prioritySelectOptions[cell],
       // filter: selectFilter({
       //   options: prioritySelectOptions,
@@ -295,14 +352,14 @@ const Home = (props) => {
     {
       dataField: 'estimatedTime',
       text: 'Estimated Time',
-      sort: true,
-      filter: textFilter(),
+      //sort: true,
+      
     },
     {
       dataField: 'description',
       text: 'Description',
-      sort: true,
-      filter: textFilter(),
+      //sort: true,
+      
     },
     {
       text: 'Modify',
@@ -347,122 +404,23 @@ const Home = (props) => {
 
   return (
     <React.Fragment>
+     
+      <h3 className="mt-5">Welcome: {userName}</h3>
+      <div className= "table-responsive" >
       <BootstrapTable
         keyField='id'
         data={bugData}
         columns={columns}
-        classes=' table-hover table-bordered table-striped'
+        
+        classes= {bTable}
         //expandRow={expandRow}
         //defaultSorted={defaultSorted}
         pagination={paginationFactory(options)}
         rowEvents={rowEvents}
-        filter={filterFactory()}
+        filter={filterFactory()}        
       />
+      </div>
       {show ? <ModalContent /> : null}
-
-      {/* {show ? <ModalContent /> : null} 
-       <div class="border-top my-3"></div>
-      <Form className="user">
-        <div className="form-group row">
-          <div className="col-sm-6 mb-3 mb-sm-0">
-            <input
-            
-              type="text"
-              required
-              defaultValue={modalInfo.creator}
-              onChange={(e) => setCreator(e.target.value)}
-              className="form-control"
-              placeholder="Owner"
-            />
-          </div>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.date}
-              onChange={(e) => setTimeCreated(e.target.value)}
-              className="form-control"
-              
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-6 ">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.type}
-              //onChange={(e) => setType(e.target.value)}
-              className="form-control"
-              placeholder="Set Type"
-            />
-
-            {/* <Select
-                       options={this.state.typeOptions} 
-                       onChange = {setStatus(this.handleChange.bind(this))}
-                       placeholder = 'Set Type' 
-                       />     
-          </div>
-          <div className="col-sm-6 ">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.status}
-              //onChange={(e) => setStatus(e.target.value)}
-              className="form-control"
-              placeholder="Set Status"
-            />
-            {/*<Select
-                       options={statusOptions} 
-                       onChange = {setStatus}
-                       placeholder = 'Set status'
-                       />  
-          </div>
-        </div>
-        <div className="form-group row">
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.priority}
-              //onChange={(e) => setPriority(e.target.value)}
-              className="form-control"
-              placeholder="Set Priority"
-            />
-
-            {/*<Select
-                       options={priorityOptions} 
-                       onChange = {setPriority}
-                       placeholder = 'Set Priority'                      
-                       /> 
-          </div>
-          <div className="col-sm-6">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.estimatedTime}
-              //onChange={(e) => setEstimatedTime(e.target.value)}
-              className="form-control"
-              placeholder="Estimated Time"
-            />
-          </div>
-          <div className="col-sm-12">
-            <input
-              type="text"
-              required
-              defaultValue={modalInfo.description}
-              //onChange={(e) => setBugDescription(e.target.value)}
-              className="form-control text-center"
-              placeholder="Bug description"
-            />
-          </div>
-        </div>
-        <div className="row justify-content-center">
-          <button className="text-center btn btn-md btn-primary" type="submit">
-            Create Bug
-          </button>
-        </div>
-      </Form> */}
     </React.Fragment>
   )
 }

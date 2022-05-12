@@ -9,14 +9,14 @@ namespace aspnetserver.Controllers
 {
     public class LoginController : Controller
     {
+        /// <summary>
+        ///  Takes user data and logs the user in or returns if the parameters don't match.
+        /// </summary>
+        /// <response code="200">Logs the user into the system</response>
+        /// <response code="400">User entered credentials aren't valid</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<int> LoginUser(LoginModel user, CookieContainer cookieContainer)
+        public async Task<IResult> LoginUser(LoginModel user, CookieContainer cookieCollection, IUserService service)
         {
-            IUserService service = new UserService();
-
-            // Checks to make sure there is data being entered
             if (!string.IsNullOrEmpty(user.EmailAddress) &&
                 !string.IsNullOrEmpty(user.Password))
             {
@@ -27,8 +27,7 @@ namespace aspnetserver.Controllers
                     var loggedInUser = service.CheckUserInDBO(user);
                     // Returns a fail if there is not a match for the username and password
                     if (loggedInUser == null)
-                        return 400;
-
+                        return Results.BadRequest();
                     // Sets the domain for the cookies
                     string domain = "purple-ground-019dc9c0f.1.azurestaticapps.net";
 
@@ -55,18 +54,20 @@ namespace aspnetserver.Controllers
                     userId.Discard = true;
 
                     // Adds the cookies to the cookieContainer
-                    cookieContainer.Add(usernameCookie);
-                    cookieContainer.Add(userRole);
-                    cookieContainer.Add(userFirstName);
-                    cookieContainer.Add(userLastName);
-                    cookieContainer.Add(userId);
+                    cookieCollection.Add(usernameCookie);
+                    cookieCollection.Add(userRole);
+                    cookieCollection.Add(userFirstName);
+                    cookieCollection.Add(userLastName);
+                    cookieCollection.Add(userId);
 
                     // Returns a success
-                    return 200;
+                    return Results.Ok();
                 }
+                // Returns a false if there is no entered user data or it is not a valid username
+                return Results.BadRequest();
             }
-            // Returns a false if there is no entered user data or it is not a valid username
-            return 400;
+            else
+                return Results.BadRequest();
         }
     }
 }
