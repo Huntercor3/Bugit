@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Data.SqlClient;
+﻿using MySql.Data.MySqlClient;
 
 namespace aspnetserver
 {
     public class DBHelper
     {
-        private SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+        private MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+
         public DBHelper()
         {
-            builder.DataSource = "bugit-server.database.windows.net";
-            builder.UserID = "bugit";
-            builder.Password = "CSBS@2201";
-            builder.InitialCatalog = "bugit-server";
+            builder = new MySqlConnectionStringBuilder
+            {
+                Server = "34.67.3.72",
+                UserID = "root",
+                Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
+            };
         }
 
         private void ExecuteCommand(string input)
         {
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(builder.ConnectionString))
             {
-                SqlCommand command = new SqlCommand(input, connection);
+                MySqlCommand command = new MySqlCommand(input, connection);
                 command.ExecuteNonQuery();
             }
         }
@@ -41,14 +42,6 @@ namespace aspnetserver
             ExecuteCommand(sql);
         }
 
-       /* public void AddBug(Bug b)
-        {
-            String sql = "INSERT INTO dbo.Bugs (Software, Creator, TimeCreated) values ("
-                + b.software + ", " + b.creator + ", " + b.timeCreated.ToString() + ")";
-
-            ExecuteCommand(sql);
-        }
-       */
         public void RemoveBug(int id)
         {
             String sql = "DELETE FROM dbo.Bugs WHERE BugId=" + id.ToString();

@@ -1,5 +1,4 @@
 ﻿using aspnetserver.Models;
-using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace aspnetserver.Services
@@ -16,6 +15,8 @@ namespace aspnetserver.Services
                 Server = "34.67.3.72",
                 UserID = "root",
                 Password = "CSBS@2201"
+                // This is for if we remove `dbo.` in our functions
+                //Database = "dbo"
             };
         }
 
@@ -34,7 +35,7 @@ namespace aspnetserver.Services
             {
                 // SQL command
                 string password = Encryption.Encrypt(userLogin.Password);
-                String sql = "SELECT email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + password + "';";
+                String sql = "SELECT UserID, FirstName, LastName, Email, Role FROM dbo.Users WHERE email='" + userLogin.EmailAddress + "' AND Password='" + password + "';";
 
                 MySqlCommand cmd = new MySqlCommand(sql, connection);
                 try
@@ -43,13 +44,16 @@ namespace aspnetserver.Services
                     MySqlDataReader reader = cmd.ExecuteReader();
                     while (reader.HasRows && reader.Read())
                     {
-                        user.EmailAddress = reader["email"].ToString();
+                        user.UserID = (int)reader["UserID"];
+                        user.FirstName = (string)reader["FirstName"];
+                        user.LastName = (string)reader["LastName"];
+                        user.EmailAddress = (string)reader["Email"];
                         user.Role = reader["Role"].ToString();
                     }
                     if (!reader.HasRows)
                         check = false;
                 }
-                catch (SqlException ex)
+                catch (MySqlException ex)
                 { throw; }
                 finally
                 { connection.Close(); }
