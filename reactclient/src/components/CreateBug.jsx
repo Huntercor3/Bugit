@@ -35,9 +35,7 @@ const CreateBug = () => {
   const [firstName, setfirstName] = useState('')
   const [lastName, setlastName] = useState('')
 ////////////////////FIRSTLASTTOID//////////////////////
-const getIdByFirstLastUrl =   'https://bugitserver.azurewebsites.net/get-userID-by-first-last/jonas/walker';
-
-
+const getIdByFirstLastUrl = `${"bugitserver.azurewebsites.net/get-userID-by-first-last"}/${firstName}/${lastName}`;
   
   async function getIdByFirstLast() {
     await fetch(getIdByFirstLastUrl, {
@@ -54,7 +52,6 @@ const getIdByFirstLastUrl =   'https://bugitserver.azurewebsites.net/get-userID-
       });
   }
   
-
 /////////////////////FIRSTLASTTOID//////////////////////
   
   
