@@ -13,8 +13,9 @@ namespace aspnetserver.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string phoneNumber { get; set; }
+        
+        public string hardware { get; set; }
 
-        public string hardware = null;
         public Role role = new Role(1);
         public int userId;
     }
