@@ -47,7 +47,6 @@ app.UseSwaggerUI(swaggerUIOptionsrExtensions =>
 // HTTP request pipeline
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseEndpoints(endpoints => { });
 app.UseCors("CORSPolicy");
 
 app.UseCookiePolicy();
