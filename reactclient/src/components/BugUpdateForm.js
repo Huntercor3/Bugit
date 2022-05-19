@@ -101,6 +101,18 @@ export default function BugUpdateForm() {
 
   //////////////////////////////////UPDATE BUG//////////////////////////////////////////
 
+  function customTheme(theme) {
+    return {
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary25: '#ccfff2',
+        primary: '#4abdac',
+        dangerLight: 'blue',
+      },
+    }
+  }
+
   const priorityOptions = [
     { label: 'High', value: 'High' },
     { label: 'Moderate', value: 'Moderate' },
@@ -116,6 +128,7 @@ export default function BugUpdateForm() {
   const statusOptions = [
     { label: 'In progress', value: 'In progress' },
     { label: 'Stuck', value: 'Stuck' },
+    { label: 'Completed', value: 'Completed' },
   ]
 
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
@@ -170,6 +183,7 @@ export default function BugUpdateForm() {
                           options={typeOptions}
                           onChange={(e) => setType(e.value)}
                           placeholder={bugData.type}
+                          theme={customTheme}
                         />
                       </div>
                     </div>
@@ -180,6 +194,7 @@ export default function BugUpdateForm() {
                           options={statusOptions}
                           onChange={(e) => setStatus(e.value)}
                           placeholder={bugData.status}
+                          theme={customTheme}
                         />
                       </div>
                       <div className='col-sm-6 '>
@@ -188,6 +203,7 @@ export default function BugUpdateForm() {
                           options={priorityOptions}
                           onChange={(e) => setPriority(e.value)}
                           placeholder={bugData.priority}
+                          theme={customTheme}
                         />
                       </div>
                     </div>

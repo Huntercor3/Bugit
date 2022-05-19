@@ -24,7 +24,7 @@ const MemberList = () => {
                 <div className='p-5-b'>
                   <div className='text-center'>
                     <label className='h2 form-label'>
-                      Member List page coming Second quarter of 2022{' '}
+                      Member List page coming Third quarter of 2022{' '}
                     </label>
                   </div>
                 </div>

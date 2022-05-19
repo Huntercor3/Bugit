@@ -11,6 +11,7 @@ const CreateAccount = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [hardware, setHardware] = useState('')
 
   const submit = async (e) => {
     e.preventDefault()
@@ -32,6 +33,7 @@ const CreateAccount = () => {
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
+        hardware: hardware,
       }),
     }).then(function(response) {
       if (response.status === 200) setRedirect(true)
@@ -135,6 +137,15 @@ const CreateAccount = () => {
                         className='form-control'
                         placeholder='Phone Number'
                       />
+                    </div>
+                    <div className='col'>
+                      <label className='h5 form-label'>Hardware</label>
+                      <textarea
+                        required
+                        onChange={(e) => setHardware(e.target.value)}
+                        className='form-control'
+                        placeholder='What Hardware do you have?'
+                      ></textarea>
                     </div>
                   </div>
                   <div className='row justify-content-center'>

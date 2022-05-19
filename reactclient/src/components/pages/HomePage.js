@@ -24,7 +24,7 @@ const HomePage = () => {
                 <div className='p-5-b'>
                   <div className='text-center'>
                     <label className='h2 form-label'>
-                      Projects page coming Second quarter of 2022{' '}
+                      Projects page coming Third quarter of 2022{' '}
                     </label>
                   </div>
                 </div>

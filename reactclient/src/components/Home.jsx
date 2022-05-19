@@ -189,7 +189,7 @@ const Home = (props) => {
     },
     {
       dataField: 'creator',
-      text: 'Name',
+      text: 'Owner',
       filter: textFilter(),
     },
     {
