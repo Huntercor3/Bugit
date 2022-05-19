@@ -3,6 +3,10 @@ import { Navigate } from 'react-router-dom'
 import './CSS/CreateAccount.css'
 import BugItLogo from './images/BugItLogo.png'
 
+////////////////////////////////
+//Wanted to keep, but not in use
+////////////////////////////////
+
 const CreateAccount = () => {
   const [email, setEmail] = useState('')
   const [redirect, setRedirect] = useState(false)
@@ -29,7 +33,7 @@ const CreateAccount = () => {
         hardware: hardware,
         role: role,
       }),
-    }).then(function (response) {
+    }).then(function(response) {
       if (response.status == 200) setRedirect(true)
       else alert('Invalid credientials, please try again')
     })

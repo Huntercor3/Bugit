@@ -13,9 +13,6 @@ const Profile = () => {
             width='100px'
             height='100px'
           />
-          {/* <div className='col-sm-12 btn btn-primary' style={{ margin: '6px' }}>
-              Add New Contact
-            </div> */}
         </div>
         <div
           className='card-b o-hidden border-0 shadow-lg my-5'

@@ -32,17 +32,12 @@ import { BsPeople } from 'react-icons/bs'
 
 import { ThemeContext } from '../../App'
 import { useLocation } from 'react-router-dom'
-//import  DarkContext  from '../newHome'
 
 const Sidebar = () => {
   const searchRef = useRef(null)
   const { setTheme, theme } = useContext(ThemeContext)
-  //const [ BootStrapTableDark, setBootStrapTableDark ] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  
-  //const [DarkContex, setDarkContext] = useState(DarkContext)
   const { pathname } = useLocation()
-  //const { setDarkTheme, dark } = useContext(DarkContext)
   const searchClickHandler = () => {
     if (!sidebarOpen) {
       setSidebarOpen(true)
@@ -109,7 +104,9 @@ const Sidebar = () => {
         {sidebarOpen && <SThemeLabel>Dark Mode</SThemeLabel>}
         <SThemeToggler
           isActive={theme === 'dark'}
-          onClick={() => {setTheme((p) => (p === 'light' ? 'dark' : 'light')); /*setDarkTheme((dark) => (dark = true))*/ }}
+          onClick={() => {
+            setTheme((p) => (p === 'light' ? 'dark' : 'light'))
+          }}
         >
           <SToggleThumb style={theme === 'dark' ? { right: '1px' } : {}} />
         </SThemeToggler>
@@ -122,7 +119,7 @@ const linksArray = [
   {
     label: 'Home',
     icon: <AiOutlineHome />,
-    to: '/newHome',
+    to: '/Home',
     notification: 0,
   },
   {

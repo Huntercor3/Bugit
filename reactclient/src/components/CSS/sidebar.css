@@ -9,7 +9,6 @@ html {
 }
 
 main {
-  /* display: flex; */
   flex-wrap: nowrap;
   height: 100vh;
   height: -webkit-fill-available;
@@ -23,10 +22,6 @@ main {
   pointer-events: none;
   fill: currentColor;
 }
-
-/* .mb-auto {
-  margin-bottom: auto !important;
-} */
 
 .dropdown-toggle {
   outline: 0;

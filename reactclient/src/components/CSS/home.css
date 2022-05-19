@@ -1,6 +1,4 @@
 body {
-  /* padding-top: 0%; */
-  /* margin-top: -4%; */
   font-size: 0.875rem;
 }
 
@@ -19,30 +17,24 @@ body {
 }
 
 .dark-Modal {
-  /* margin-left: 35%; */
   width: 80%;
-  color:#333
+  color: #333;
 }
 
 .light-Modal {
-  /* margin-left: 35%; */
   width: 80%;
-  background-color: #4abdac
+  background-color: #4abdac;
 }
 
 .table-responsive {
-  max-height:800px;
-  overflow-y:scroll;
+  max-height: 800px;
+  overflow-y: scroll;
 }
 
 .sidebar {
   position: fixed;
   top: 0;
-  /* rtl:raw:
-    right: 0;
-    */
   bottom: 0;
-  /* rtl:remove */
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 0;
@@ -50,11 +42,6 @@ body {
   width: 100px;
 }
 
-/* .row {
-  margin: 0px;
-  padding: 0px;
-
-} */
 .table {
   --bs-table-striped-bg: #4abdac83; /*striped color*/
 }
@@ -103,10 +90,6 @@ body {
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-
-/*
-   * Navbar
-   */
 
 .navbar-brand {
   padding-top: 0.75rem;

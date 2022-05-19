@@ -4,7 +4,6 @@ body {
 }
 
 body {
-  /* display: flex; */
   align-items: center;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -43,14 +42,13 @@ body {
   background-color: #4abdac !important;
   width: 20%;
 }
-.btn-second{
+.btn-second {
   background-color: #57585c;
   width: 20%;
-  
 }
 
-.btn-Orange{
-  background-color: #FC4A1A;
+.btn-Orange {
+  background-color: #fc4a1a;
   color: #f8f8f8;
   width: 20%;
 }

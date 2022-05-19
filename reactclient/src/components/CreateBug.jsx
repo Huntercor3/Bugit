@@ -5,23 +5,6 @@ import BugItLogo from './images/BugItLogo.png'
 import { Editor } from '@tinymce/tinymce-react'
 import Select from 'react-select'
 
-//  const priorityOptions=[
-// {label:'High', value:'high'},
-// {label:'Moderate', value:'moderate'},
-// {label:'Low', value:'low'}
-// ]
-
-// const typeOptions=[
-// {label:'Optimize', value:'optimize'},
-// {label:'Crash', value:'crash'},
-// {label:'Upgrade', value:'upgrade'}
-// ]
-
-// const statusOptions=[
-// {label:'In progress', value:'inProgress'},
-// {label:'Stuck', value:'stuck'}
-// ]
-
 const CreateBug = () => {
   const [creator, setCreator] = useState(0)
   const [timeCreated, setDate] = useState('')
@@ -54,16 +37,7 @@ const CreateBug = () => {
       else alert('Invalid credientials, please try again')
     })
   }
-  if (redirect) return <Navigate to='/newHome' />
-
-  /*onChangeFunc=({value}) =>
-  {
-    (e) => {value(e.target.value)}
-  }
-*/
-  // function handleChange(e){
-  //   this.setState({id:e.value, name:e.label})
-  //  }
+  if (redirect) return <Navigate to='/Home' />
 
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
   function removeHTML(str) {
@@ -74,21 +48,21 @@ const CreateBug = () => {
   //////////////////////////////////REMOVE HTML FROM OUTPUT//////////////////////////////////////////
 
   const priorityOptions = [
-    { label: "High", value: "High" },
-    { label: "Moderate", value: "Moderate" },
-    { label: "Low", value: "Low" },
-  ];
+    { label: 'High', value: 'High' },
+    { label: 'Moderate', value: 'Moderate' },
+    { label: 'Low', value: 'Low' },
+  ]
 
   const typeOptions = [
-    { label: "Optimize", value: "Optimize" },
-    { label: "Crash", value: "Crash" },
-    { label: "Upgrade", value: "Upgrade" },
-  ];
+    { label: 'Optimize', value: 'Optimize' },
+    { label: 'Crash', value: 'Crash' },
+    { label: 'Upgrade', value: 'Upgrade' },
+  ]
 
   const statusOptions = [
-    { label: "In progress", value: "In progress" },
-    { label: "Stuck", value: "Stuck" },
-  ];
+    { label: 'In progress', value: 'In progress' },
+    { label: 'Stuck', value: 'Stuck' },
+  ]
 
   return (
     <React.Fragment>
@@ -102,9 +76,6 @@ const CreateBug = () => {
             width='100px'
             height='100px'
           />
-          {/* <div className='col-sm-12 btn btn-primary' style={{ margin: '6px' }}>
-          Add New Contact
-        </div> */}
         </div>
         <div
           className='card-b o-hidden border-0 shadow-lg my-5'
@@ -131,40 +102,36 @@ const CreateBug = () => {
                       </div>
                       <div className='col-sm-6'>
                         <label className='h5 form-label'>Priority</label>
-                        
+
                         <Select
                           options={priorityOptions}
                           onChange={(e) => setPriority(e.value)}
                           placeholder='Set Priority'
                         />
-                        
                       </div>
-                      
                     </div>
                     <div className='form-group row'>
                       <div className='col-sm-6 '>
                         <label className='h5 form-label'>Type</label>
-                        
+
                         <Select
                           options={typeOptions}
                           onChange={(e) => setType(e.value)}
                           placeholder='Set Type'
                         />
-                        
                       </div>
                       <div className='col-sm-6 '>
                         <label className='h5 form-label'>Status</label>
-                        
+
                         <Select
                           options={statusOptions}
                           onChange={(e) => setStatus(e.value)}
                           placeholder='Set status'
                         />
-                        
                       </div>
                     </div>
                     <div className='form-group row'>
-                    <div className='col-sm-6'>
+                      <div className='col-sm-6'>
                         <label className='h5 form-label'>Date</label>
                         <input
                           type='date'
