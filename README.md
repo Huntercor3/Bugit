@@ -9,6 +9,12 @@ Bugit is a bug tracking platform for keeping track of reported bugs, any informa
  - Remove bug
  - More features TBA ... 
 
+## Links
+
+[Website](https://purple-ground-019dc9c0f.1.azurestaticapps.net/)
+
+[Live Swagger API](https://bugitserver.azurewebsites.net/swagger)
+
 ## Announcement
 
 The latest build of the platform is currently still in Alpha utilizing ASP.NET 6.0 and React.js. Use of Bugit will be detailed when a beta release is available.
@@ -26,7 +32,7 @@ npm install
 ```
 
 ```bash
-npm run
+npm start
 ```
 
 ## Usage
@@ -68,13 +74,18 @@ With the front-end communicating with the back-end the project utilizes the Swag
   - Get all bugs associated with user/UI entered ProjectID
 - DELETE: Delete Bug by ID
   - Deleted bug by user/UI entered ID
-  - 
+ 
 #### Project Endpoints
  - POST: Add new Project by Project Name
    - Adds a Project to the database and assigns it a ProjectID
  - GET: Get Bugs in Project by ID
    - Gets bugs by user/UI entered ProjectID
 
+## Contributors
+[Hunter](https://github.com/Huntercor3)
+[Jonas](https://github.com/JonasWalker)
+[Jarod](https://github.com/JManness71)
+[Benjamin](https://github.com/BenjKind)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
